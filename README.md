@@ -35,8 +35,8 @@ No installation required. Simply visit the Style website and sign up as an artis
 2. Search for the service or artist you need.
 3. Browse profiles and select an available time to book.
 
-## TechStalk Used
+## TechStak Used
 
 - **Frontend**: JavaScript, Tailwind CSS, HTML
-- **Backend**: Django
+- **Backend**: Django, Python
 - **Hosting**: AWS
