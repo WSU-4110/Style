@@ -20,8 +20,6 @@ Style is a website designed for artists to streamline their scheduling process w
 
 ## Getting Started
 
-### Installation
-
 No installation required. Simply visit the Style website and sign up as an artist or customer.
 
 ### Sign Up as an Artist
