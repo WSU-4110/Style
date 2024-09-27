@@ -1,26 +1,24 @@
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
 # Style
 
 Style is a website designed for artists to streamline their scheduling process with customers while also helping them gain more exposure to potential clients. Our platform provides an easy-to-use scheduling feature and an algorithm that connects artists with new clients based on their preferences and service needs.
 
-## Features
-
-- **Streamlined Scheduling**: Artists can manage appointments easily, reducing the hassle of manual scheduling and giving them more time to focus on their craft.
-- **Client Exposure**: Our algorithm promotes new artists' profiles to potential clients, helping them grow their business and reach a broader audience.
-- **Artist Profiles**: Each artist has a customizable profile page where they can showcase their services, availability, and portfolio.
-- **Customer Reviews**: Clients can leave reviews after appointments, boosting the artist's credibility and reputation.
-- **Service Categories**: Supports a variety of artist types such as barbers, hair stylists, tattoo artists, nail technicians, and more.
-- **Appointment Notifications**: Automatic email notifications for both the artist and the client about upcoming and canceled appointments.
-
-## How It Works
-
-1. **Artist Registration**: Artists sign up, create a profile, and set their services availability for appointments.
-2. **Scheduling**: Clients can visit an artist's page, select a service, and book an appointment based on available time slots.
-3. **Exposure**: Our platform's algorithm continuously showcases artists to clients through a dynamic, rotating feed, ensuring a fresh selection of talent is always visible. Additionally, we highlight a special category for new artists who have been operating for less than 6 months, giving them an extra boost in exposure
-4. **Review System**: After each service, clients can leave feedback, helping other potential clients make informed decisions.
-
 ## Getting Started
 
-No installation required. Simply visit the Style website and sign up as an artist or customer.
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ### Sign Up as an Artist
 1. Visit the homepage.
@@ -33,8 +31,21 @@ No installation required. Simply visit the Style website and sign up as an artis
 2. Search for the service or artist you need.
 3. Browse profiles and select an available time to book.
 
-## TechStak Used
+## Learn More
 
-- **Frontend**: JavaScript, Tailwind CSS, HTML
-- **Backend**: Python,Django
-- **Hosting**: AWS
+To learn more about Next.js, take a look at the following resources:
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
