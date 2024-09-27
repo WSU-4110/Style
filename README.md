@@ -39,4 +39,4 @@ No installation required. Simply visit the Style website and sign up as an artis
 
 - **Frontend**: JavaScript, Tailwind CSS, HTML
 - **Backend**: Django, Python
-- **Hosting**: AWS
+- **Hosting**: localhost
