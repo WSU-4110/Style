@@ -37,6 +37,6 @@ No installation required. Simply visit the Style website and sign up as an artis
 
 ## TechStak Used
 
-- **Frontend**: JavaScript, Tailwind CSS, HTML
+- **Frontend**: Next.js, Tailwind CSS, HTML
 - **Backend**: Django, Python
 - **Hosting**: localhost
