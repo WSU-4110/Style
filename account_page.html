@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Account Creation</title>
+    <style>
+        * {
+            padding: 0; margin: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        body {
+            display: flex; justify-content: center; align-items: center; flex-direction: column;
+            height: 100vh;
+            background-color: #fcfcfc;
+        }
+
+        .header {
+            position: fixed; display: flex; align-items: center;
+            top: 0; left: 0;
+            width: 100%; padding: 23px;
+            background-color: #000000e7; color: white;
+            justify-content: space-between;
+            z-index: 1000;
+        }
+
+        .header .name {
+            font-size: 2rem;
+            font-weight: bold;
+            font-style: sans-serif;
+
+        }
+
+        .header .navigation {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header .navigation a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .header .navigation a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            display: flex;
+            width: 100%; height: 70%;
+            max-width: 1000px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(20, 20, 20, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 110px; 
+        }
+        .form-container, .image-container {
+            flex: 1;
+            padding: 30px;
+        }
+        .image-container {
+            background: url('https://as1.ftcdn.net/v2/jpg/04/44/76/14/1000_F_444761425_lrhUqmiGJ0RBkOPmoy6XJJYGCJUAhywO.jpg') no-repeat center center;
+            background-size: cover;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            text-align: center;
+        }
+        label {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #303030;
+        }
+        input[type="text"], input[type="email"], input[type="password"], input[type="submit"] {
+            width: 100%;
+            padding: 13px; margin: 11px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        input[type="submit"] {
+            background-color:#4d4f5afa; color: white;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #808991fa;
+        }
+        p {
+            text-align: center;
+            margin-top: 20px;
+        }
+        p a {
+            color: #193367;
+            text-decoration: none; font-family: sans-serif;
+        }
+        p a:hover {
+            text-decoration: underline;
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="name">Style</div>
+        <div class="navigation">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="form-container">
+            <h2 id="title">Login</h2>
+            <form id="login-form">
+                <label for="email">Email</label>
+                <input type="text" id="login-email" name="email" placeholder="Enter your email" required>
+                <br><br>
+                <label for="password">Password</label>
+                <input type="password" id="signin-password" name="password" placeholder="•••••••••••" required>
+                <input type="submit" value="Sign In">
+            </form>
+            <form id="accountcreation-form" class="hidden">
+                <label for="createacc-email">Email</label>
+                <input type="email" id="createacc-email" name="email" placeholder="example@email.com" required>
+                <label for="createacc-username">Username</label>
+                <input type="text" id="createacc-username" name="username" placeholder="Username" required>
+                <label for="createacc-password">Password</label>
+                <input type="password" id="createacc-password" name="password" placeholder="•••••••••••" required>
+                <label for="createacc-confirm-password">Confirm Password</label>
+                <input type="password" id="createacc-confirm-password" name="confirm_password" placeholder="•••••••••••" required>
+                <input type="submit" value="Create Account">
+            </form>
+            <p id="toggle-link">Don't have an account? <a href="#" onclick="toggle_forms()">Create Account</a></p>
+        </div>
+        <div class="image-container"></div>
+    </div>
+    <script>
+        function toggle_forms() {
+            const login_form = document.getElementById('login-form');
+            const create_acc_form = document.getElementById('accountcreation-form');
+            const title = document.getElementById('title');
+            const toggle_link = document.getElementById('toggle-link');
+            if (login_form.classList.contains('hidden')) {
+                login_form.classList.remove('hidden');
+                create_acc_form.classList.add('hidden');
+                title.textContent = 'Login';
+                toggle_link.innerHTML = 'Don\'t have an account? <a href="#" onclick="toggle_forms()">Create Account</a>';
+            } else {
+                login_form.classList.add('hidden');
+                create_acc_form.classList.remove('hidden');
+                title.textContent = 'Sign Up';
+                toggle_link.innerHTML = 'Already have an account? <a href="#" onclick="toggle_forms()">Login</a>';
+            }
+        }
+    </script>
+</body>
+</html>
