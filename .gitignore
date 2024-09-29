@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -34,3 +35,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+=======
+__pycache__/
+*.pyc
+venv/
+.idea/
+db.sqlite3
+*.log
+*.env
+>>>>>>> Nawal
