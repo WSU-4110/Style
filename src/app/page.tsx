@@ -1,12 +1,13 @@
 'use client'; 
 
-//import Image from "next/image";
-import { useCallback } from "react";
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  const showAlert = useCallback(() => {
-    alert("Get Started!");
-  }, []);
+  const router = useRouter();
+
+  const handleLoginClick = () => {
+    router.push('/login');
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 text-center">
@@ -14,7 +15,7 @@ export default function Home() {
         <h1 className="text-4xl font-bold">Welcome to Style</h1>
         <p className="mt-4 text-lg">Gateway to Simplified Business and Exposure</p>
         <button
-          onClick={showAlert}
+          onClick={handleLoginClick}
           className="mt-6 bg-white text-blue-500 py-2 px-4 rounded-lg shadow-lg hover:bg-blue-100"
         >
           Get Started
