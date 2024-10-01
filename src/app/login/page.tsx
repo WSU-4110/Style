@@ -1,20 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
-
 import React, { useState } from 'react'; // Import React explicitly
 import { useRouter } from 'next/navigation';  // Import useRouter
-import router from 'next/router';
-
-
 
 export default function Login() {
   const [isLogin, setIsLogin] = React.useState(true);
+  const router = useRouter(); // Correct usage of useRouter
 
   const toggleForms = () => {
     setIsLogin(!isLogin);
   };
-
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +19,7 @@ export default function Login() {
     const isAuthenticated = true; // Mock successful login/signup
 
     if (isAuthenticated) {
-      router.push('/Portfolio'); // Redirect to Portfolio page after successful login/signup
+      router.push('/portfolio'); // Redirect to Portfolio page after successful login/signup
     } else {
       alert('Authentication failed. Please try again.');
     }
@@ -37,7 +33,7 @@ export default function Login() {
         </h1>
 
         {isLogin ? (
-          <form className="w-full max-w-md">
+          <form className="w-full max-w-md" onSubmit={handleSubmit}>
             <label htmlFor="login-email" className="block text-sm text-gray-600">
               Email
             </label>
@@ -69,7 +65,7 @@ export default function Login() {
             </button>
           </form>
         ) : (
-          <form className="w-full max-w-md">
+          <form className="w-full max-w-md" onSubmit={handleSubmit}>
             <label htmlFor="createacc-email" className="block text-sm text-gray-600">
               Email
             </label>
