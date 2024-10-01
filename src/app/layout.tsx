@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import React from 'react';
 import localFont from "next/font/local";
 import "./globals.css"; // Changed to CSS, assuming you are using Tailwind CSS for global styles
 
