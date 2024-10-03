@@ -26,15 +26,15 @@ export default function CustomerLogin() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <div className="container mt-10 p-8 flex flex-col items-center justify-center bg-white shadow-lg rounded-lg">
-        <h1 className="text-4xl font-bold mb-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray">
+      <div className="container mt-10 p-8 flex flex-col items-center justify-center bg-black shadow-lg rounded-lg">
+        <h1 className="text-4xl text-white font-bold mb-6">
           {isLogin ? 'Login To Style' : 'Sign Up with Style'}
         </h1>
 
         {isLogin ? (
           <form className="w-full max-w-md" onSubmit={handleSubmit}>
-            <label htmlFor="login-email" className="block text-sm text-gray-600">
+            <label htmlFor="login-email" className="block text-sm text-[#f4d9a0]">
               Email
             </label>
             <input
@@ -45,7 +45,7 @@ export default function CustomerLogin() {
               required
               className="w-full p-3 mt-2 border rounded-md"
             />
-            <label htmlFor="login-password" className="block text-sm text-gray-600 mt-4">
+            <label htmlFor="login-password" className="block text-sm text-[#f4d9a0] mt-4">
               Password
             </label>
             <input
@@ -59,14 +59,14 @@ export default function CustomerLogin() {
 
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg mt-6 hover:bg-blue-600"
+              className="w-full bg-[#f4d9a0] text-black py-2 px-4 rounded-lg mt-6 hover:bg-gray-600"
             >
               Login
             </button>
           </form>
         ) : (
           <form className="w-full max-w-md" onSubmit={handleSubmit}>
-            <label htmlFor="createacc-email" className="block text-sm text-gray-600">
+            <label htmlFor="createacc-email" className="block text-sm text-[#f4d9a0]">
               Email
             </label>
             <input
@@ -77,7 +77,7 @@ export default function CustomerLogin() {
               required
               className="w-full p-3 mt-2 border rounded-md"
             />
-            <label htmlFor="createacc-username" className="block text-sm text-gray-600 mt-4">
+            <label htmlFor="createacc-username" className="block text-sm text-[#f4d9a0] mt-4">
               Username
             </label>
             <input
@@ -88,7 +88,7 @@ export default function CustomerLogin() {
               required
               className="w-full p-3 mt-2 border rounded-md"
             />
-            <label htmlFor="createacc-password" className="block text-sm text-gray-600 mt-4">
+            <label htmlFor="createacc-password" className="block text-sm text-[#f4d9a0] mt-4">
               Password
             </label>
             <input
@@ -99,7 +99,7 @@ export default function CustomerLogin() {
               required
               className="w-full p-3 mt-2 border rounded-md"
             />
-            <label htmlFor="createacc-confirm-password" className="block text-sm text-gray-600 mt-4">
+            <label htmlFor="createacc-confirm-password" className="block text-sm text-[#f4d9a0] mt-4">
               Confirm Password
             </label>
             <input
@@ -112,19 +112,19 @@ export default function CustomerLogin() {
             />
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg mt-6 hover:bg-blue-600"
+              className="w-full bg-[#f4d9a0] text-black py-2 px-4 rounded-lg mt-6 hover:bg-gray-600"
             >
               Create Account
             </button>
           </form>
         )}
 
-        <p className="mt-4">
+        <p className="mt-4 text-white">
           {isLogin ? 'Need a Style account?' : 'Already have an account?'}{' '}
           <a
             href="#"
             onClick={toggleForms}
-            className="text-blue-500 hover:underline"
+            className="text-[#f4d9a0] hover:underline"
           >
             {isLogin ? 'Create Account' : 'Login'}
           </a>
