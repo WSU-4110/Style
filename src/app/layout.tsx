@@ -26,18 +26,13 @@ export default function RootLayout({
       <body
         className={`${sinera.variable} ${sinera.variable} antialiased bg-gradient-to-br from-yellow-50 via-pink-50 to-orange-100 text-gray-900`} // Gradient background for a summery vibe
       >
-        {/* Global Header */}
-        <header className="bg-gradient-to-r from-orange-400 via-pink-400 to-yellow-400 text-white py-8 text-center shadow-lg rounded-b-xl">
-          <h1 className="text-5xl font-bold tracking-wide">Style</h1>
-        </header>
-
         {/* Content */}
         <main className="min-h-screen p-6 md:p-12 lg:p-16">
           {children}
         </main>
 
         {/* Global Footer */}
-        <footer className="bg-gradient-to-r from-yellow-500 via-orange-500 to-pink-500 text-white py-8 text-center rounded-t-xl shadow-lg">
+        <footer className="bg-black text-white py-8 text-center rounded-t-xl shadow-lg">
           <p className="text-lg font-light">&copy; 2024 Style. All rights reserved.</p>
           <div className="mt-4">
             <a href="#" className="text-white hover:underline mx-4">Privacy Policy</a>

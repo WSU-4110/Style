@@ -21,9 +21,9 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-white-100">
       {/* Header */}
-      <header className="bg-white-400 text-orange p-8 w-full text-center">
-        <h1 className="text-4xl font-bold">The Place</h1>
-        <p className="mt-2 text-lg">Where Artists and Customers Connect Effortlessly</p>
+      <header className="text-black py-8 text-center">
+          <h1 className="text-5xl font-bold tracking-wide">Style</h1>
+          <p className="mt-2 text-lg">Where Artists and Customers Connect Effortlessly</p>
       </header>
 
       {/* Main Split Section */}
@@ -63,11 +63,6 @@ export default function Home() {
             </button>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="bg-yellow-600 text-white py-8 text-center w-full">
-        <p>&copy; 2024 Style. All rights reserved.</p>
-      </footer>
     </div>
   );
 }
