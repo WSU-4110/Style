@@ -3,11 +3,7 @@ import React from 'react';
 import localFont from "next/font/local";
 import "./globals.css"; // Assuming Tailwind CSS is used for global styles
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
+
 // Import Sinera font
 const sinera = localFont({
   src: "./fonts/Sinera.woff",
