@@ -35,6 +35,7 @@ export default function RootLayout({
         <footer className="bg-black text-white py-8 text-center rounded-t-xl shadow-lg">
           <p className="text-lg font-light">&copy; 2024 Style. All rights reserved.</p>
           <div className="mt-4">
+            <a href="/" className="text-white hover:underline mx-4">Home Page</a>
             <a href="#" className="text-white hover:underline mx-4">Privacy Policy</a>
             <a href="#" className="text-white hover:underline mx-4">Terms of Service</a>
           </div>

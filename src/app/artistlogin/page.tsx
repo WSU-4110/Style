@@ -28,7 +28,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray">
       <div className="container mt-10 p-8 flex flex-col items-center justify-center bg-white shadow-lg rounded-lg">
         <h1 className="text-4xl font-bold mb-6">
           {isLogin ? 'Login To Style' : 'Sign Up with Style'}
@@ -61,7 +61,7 @@ export default function Login() {
 
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg mt-6 hover:bg-blue-600"
+              className="w-full bg-teal-400 text-white py-2 px-4 rounded-lg mt-6 hover:bg-teal-600"
             >
               Login
             </button>
@@ -114,7 +114,7 @@ export default function Login() {
             />
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg mt-6 hover:bg-blue-600"
+              className="w-full bg-teal-400 text-white py-2 px-4 rounded-lg mt-6 hover:bg-teal-600"
             >
               Create Account
             </button>
@@ -126,7 +126,7 @@ export default function Login() {
           <a
             href="#"
             onClick={toggleForms}
-            className="text-blue-500 hover:underline"
+            className="text-teal-600 hover:underline"
           >
             {isLogin ? 'Create Account' : 'Login'}
           </a>
