@@ -56,7 +56,7 @@ export default function Home() {
             </p>
             <button className="mt-6 bg-[#f4d9a0] text-black py-2 px-6 rounded-lg shadow-md hover:bg-[#e7c68e]"
               >
-              Button Text
+              Sign Up To Explore
             </button>
         </div>
       </main>
