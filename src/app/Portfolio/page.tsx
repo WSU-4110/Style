@@ -1,12 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation'; // Import useRouter for navigation
 
 export default function Portfolio() {
   const [businessName, setBusinessName] = useState('');
   const [bio, setBio] = useState('');
   const [description, setDescription] = useState('');
   const [photos, setPhotos] = useState<FileList | null>(null);
+
+  const router = useRouter(); // Initialize useRouter hook for navigation
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -21,6 +24,10 @@ export default function Portfolio() {
     console.log('Bio:', bio);
     console.log('Description:', description);
     console.log('Photos:', photos);
+  };
+
+  const handleGoBack = () => {
+    router.push('/'); // Navigate back to the homepage
   };
 
   return (
@@ -98,6 +105,14 @@ export default function Portfolio() {
             Save Portfolio
           </button>
         </form>
+
+        {/* Go Back to Homepage Button */}
+        <button
+          onClick={handleGoBack}
+          className="w-full bg-gray-500 text-white py-2 px-4 rounded-lg mt-6 hover:bg-gray-600"
+        >
+          Go Back to Homepage
+        </button>
       </div>
     </div>
   );
