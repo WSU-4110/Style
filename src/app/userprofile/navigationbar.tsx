@@ -1,31 +1,21 @@
 'use client'
 
 import React from 'react';
-import Link from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
 
-const Navbar: React.FC<{ userType: 'customer' | 'artist' }> = ({ userType }) => {
+export default function Navbar() {
+  const router = useRouter();
+
   return (
     <nav>
       <ul>
-        <li><Link href="/home">Home</Link></li> {/*  */}
-        <li><Link href="/about">About</Link></li>
-        {userType === 'customer' ? (
-          <>
-            <li><Link href="/appointments">My Appointments</Link></li>
-            <li><Link href="/favorites">Favorites</Link></li>
-          </>
-        ) : (
-          <>
-            <li><Link href="/business-dashboard">Dashboard</Link></li>
-            <li><Link href="/clients">Client List</Link></li>
-          </>
-        )}
-        <li><Link href="/profile">Profile</Link></li>
-        <li><Link href="/help">Help</Link></li>
-        <li><Link href="/logout">Log Out</Link></li>
+        <li><button onClick={() => router.push('/home')}>Home</button></li>
+        <li><button onClick={() => router.push('/about')}>About</button></li>
+        <li><button onClick={() => router.push('/profile')}>Profile</button></li>
+        <li><button onClick={() => router.push('/help')}>Help</button></li>
+        <li><button onClick={() => router.push('/logout')}>Log Out</button></li>
       </ul>
     </nav>
   );
-}; 
-
+}
 
