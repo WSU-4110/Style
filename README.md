@@ -22,17 +22,18 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Sign Up as an Artist
 1. Visit the homepage.
-2. Click on "Join as an Artist".
-3. Fill in the required details and create your profile.
+2. Create a artist business account.
+3. Fill in the required details and create your portfolio.
 4. Start adding your services and availability.
 
 ### Sign Up as a Customer
 1. Visit the homepage.
+2. Create a customer account
 2. Search for the service or artist you need.
-3. Browse profiles and select an available time to book.
+3. Browse bussiness pages and select an available time to book.
 
 ## TechStalk Used
 
 - **Frontend**: JavaScript, Tailwind CSS, HTML
 - **Backend**: Django
-- **Hosting**: AWS
+- **Hosting**: Vercel
