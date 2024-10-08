@@ -20,7 +20,7 @@ def register_view(request):
             user.save()
             login(request, user)
             print("user registered and logged in sucessfully")
-            return redirect('http://localhost:3000/')
+            return redirect('portfolio')
         except Exception as e:
             messages.error(request, str(e))
             return render(request, 'profiles/account_page.html')
