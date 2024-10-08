@@ -1,18 +1,28 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
-
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Import useRouter for navigation
+import React, { useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import './portfolio.css'; // Import the portfolio-specific CSS
 
 export default function Portfolio() {
   const [businessName, setBusinessName] = useState('');
   const [bio, setBio] = useState('');
-  const [description, setDescription] = useState('');
+  const [profilePicture, setProfilePicture] = useState<File | null>(null);
   const [photos, setPhotos] = useState<FileList | null>(null);
+  const [services, setServices] = useState([{ name: '', price: '', time: '' }]);
+  
+  const router = useRouter();
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
 
-  const router = useRouter(); // Initialize useRouter hook for navigation
+  const handleProfilePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setProfilePicture(e.target.files[0]);
+    }
+  };
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -20,103 +30,147 @@ export default function Portfolio() {
     }
   };
 
+  const handleDragStart = (e: React.MouseEvent) => {
+    isDragging.current = true;
+    startX.current = e.pageX - (carouselRef.current?.offsetLeft || 0);
+    scrollLeft.current = carouselRef.current?.scrollLeft || 0;
+  };
+
+  const handleDragMove = (e: React.MouseEvent) => {
+    if (!isDragging.current) return;
+    e.preventDefault();
+    const x = e.pageX - (carouselRef.current?.offsetLeft || 0);
+    const walk = (x - startX.current) * 2; // Increase drag speed
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft = scrollLeft.current - walk;
+    }
+  };
+
+  const handleDragEnd = () => {
+    isDragging.current = false;
+  };
+
+  const handleServiceChange = (index: number, field: string, value: string) => {
+    const updatedServices = [...services];
+    updatedServices[index] = { ...updatedServices[index], [field]: value };
+    setServices(updatedServices);
+  };
+
+  const addService = () => {
+    setServices([...services, { name: '', price: '', time: '' }]);
+  };
+
+  const deleteService = (index: number) => {
+    const updatedServices = services.filter((_, i) => i !== index);
+    setServices(updatedServices);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here (e.g., save data to the backend)
     console.log('Business Name:', businessName);
     console.log('Bio:', bio);
-    console.log('Description:', description);
+    console.log('Profile Picture:', profilePicture);
     console.log('Photos:', photos);
+    console.log('Services:', services);
   };
 
   const handleGoBack = () => {
-    router.push('/'); // Navigate back to the homepage
+    router.push('/');
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <div className="container mt-10 p-8 flex flex-col items-center justify-center bg-white shadow-lg rounded-lg w-full max-w-2xl">
-        <h1 className="text-4xl font-bold mb-6">Your Portfolio</h1>
+    <div className="container">
+      <div className="business-name">
+        <input
+          type="text"
+          placeholder="Enter Business Name"
+          value={businessName}
+          onChange={(e) => setBusinessName(e.target.value)}
+          required
+        />
+      </div>
 
-        <form onSubmit={handleSubmit} className="w-full">
-          {/* Business Name */}
-          <div className="mb-4">
-            <label htmlFor="businessName" className="block text-sm text-gray-600">
-              Business Name
-            </label>
-            <input
-              type="text"
-              id="businessName"
-              value={businessName}
-              onChange={(e) => setBusinessName(e.target.value)}
-              placeholder="Enter your business name"
-              required
-              className="w-full p-3 mt-2 border rounded-md"
-            />
-          </div>
-
-          {/* Bio */}
-          <div className="mb-4">
-            <label htmlFor="bio" className="block text-sm text-gray-600">
-              Bio
-            </label>
-            <textarea
-              id="bio"
-              value={bio}
-              onChange={(e) => setBio(e.target.value)}
-              placeholder="Write a short bio about yourself"
-              required
-              className="w-full p-3 mt-2 border rounded-md"
-            />
-          </div>
-
-          {/* Description */}
-          <div className="mb-4">
-            <label htmlFor="description" className="block text-sm text-gray-600">
-              Description
-            </label>
-            <textarea
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Describe your business or services"
-              required
-              className="w-full p-3 mt-2 border rounded-md"
-            />
-          </div>
-
-          {/* Photos */}
-          <div className="mb-6">
-            <label htmlFor="photos" className="block text-sm text-gray-600">
-              Upload Photos
-            </label>
+      <div className="content-wrapper">
+        <div className="carousel-wrapper">
+          <div className="profile-picture-wrapper">
             <input
               type="file"
-              id="photos"
+              accept="image/*"
+              onChange={handleProfilePictureUpload}
+            />
+            {profilePicture && <img src={URL.createObjectURL(profilePicture)} alt="Profile" className="profile-picture" />}
+          </div>
+          <div
+            className="carousel"
+            ref={carouselRef}
+            onMouseDown={handleDragStart}
+            onMouseMove={handleDragMove}
+            onMouseUp={handleDragEnd}
+            onMouseLeave={handleDragEnd}
+          >
+            <input
+              type="file"
               multiple
               accept="image/*"
               onChange={handlePhotoUpload}
-              className="w-full p-2 mt-2 border rounded-md"
             />
+            {photos && Array.from(photos).map((file, index) => (
+              <img key={index} src={URL.createObjectURL(file)} alt={`Carousel ${index}`} className="carousel-image" />
+            ))}
           </div>
+        </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-          >
-            Save Portfolio
-          </button>
-        </form>
+        <div className="description-wrapper">
+          <h2>Description</h2>
+          <textarea
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+            placeholder="Write a short description"
+          />
+        </div>
+      </div>
 
-        {/* Go Back to Homepage Button */}
-        <button
-          onClick={handleGoBack}
-          className="w-full bg-gray-500 text-white py-2 px-4 rounded-lg mt-6 hover:bg-gray-600"
-        >
-          Go Back to Homepage
+      <div className="services-wrapper">
+        <h2>Services Offered</h2>
+        {services.map((service, index) => (
+          <div key={index} className="service-item">
+            <input
+              type="text"
+              placeholder="Service Name"
+              value={service.name}
+              onChange={(e) => handleServiceChange(index, 'name', e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Price"
+              value={service.price}
+              onChange={(e) => handleServiceChange(index, 'price', e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Time"
+              value={service.time}
+              onChange={(e) => handleServiceChange(index, 'time', e.target.value)}
+              required
+            />
+            <button type="button" onClick={() => deleteService(index)} className="delete-service-button">
+              Delete
+            </button>
+          </div>
+        ))}
+        <button type="button" onClick={addService} className="add-service-button">
+          + Add Service
         </button>
       </div>
+
+      <button type="submit" onClick={handleSubmit} className="button">
+        Save Portfolio
+      </button>
+      <button onClick={handleGoBack} className="button mt-6">
+        Go Back to Homepage
+      </button>
     </div>
   );
 }
