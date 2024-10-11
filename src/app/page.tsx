@@ -8,7 +8,7 @@ import artistImage from '../public/artist_barber.jpg';
 import customerImage from '../public/customer.jpg';
 import Image from 'next/image';
 
-export default function Home() {
+export default function LandingPage() {
   const router = useRouter();
 
   const handleLoginClick = () => {
