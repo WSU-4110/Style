@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import React from 'react';
 import localFont from "next/font/local";
 import "./globals.css"; // Assuming Tailwind CSS is used for global styles
-import Navbar from '../components/navigationbar.tsx';
+//import Navbar from '../components/navigationbar.tsx';
 
 // Import Sinera font
 const sinera = localFont({
