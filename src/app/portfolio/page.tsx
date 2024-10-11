@@ -96,6 +96,7 @@ export default function Portfolio() {
                 <button key={index} type="button" className="w-3 h-3 rounded-full" aria-current={index === 0} aria-label={`Slide ${index + 1}`} data-carousel-slide-to={index}></button>
               ))}
             </div>
+            {/* Left Arrow */}
             <button type="button" className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
               <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
                 <svg className="w-4 h-4 text-teal rtl:rotate-180" fill="none" viewBox="0 0 6 10">
@@ -104,6 +105,8 @@ export default function Portfolio() {
                 <span className="sr-only">Previous</span>
               </span>
             </button>
+
+            {/* Right Arrow */}
             <button type="button" className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
               <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
                 <svg className="w-4 h-4 text-teal rtl:rotate-180" fill="none" viewBox="0 0 6 10">
@@ -115,7 +118,7 @@ export default function Portfolio() {
           </div>
         </div>
         
-        {/* Move Description Below Carousel */}
+        {/* Description */}
         <div className="description-wrapper">
           <h2>Description</h2>
           <textarea
@@ -126,6 +129,9 @@ export default function Portfolio() {
         </div>
       </div>
 
+
+
+      {/* Services */}
       <div className="services-wrapper">
         <h2>Services Offered</h2>
         {services.map((service, index) => (

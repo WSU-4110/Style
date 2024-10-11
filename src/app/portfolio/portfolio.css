@@ -39,7 +39,8 @@
     height: 150px;
     overflow: hidden;
     border-radius: 50%;
-    border: 3px solid #0ba3ad;
+    border: 1px solid #0ba3ad;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
   }
   
   .profile-picture-wrapper input[type="file"] {
@@ -67,12 +68,12 @@
   }
   
   .description-wrapper {
-    width: 500px;
+    width: 400px;
     height: 300px;
     background-color: #f9f9f9;
     padding: 1rem;
     border-radius: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
   }
   
   .description-wrapper h2 {
@@ -82,7 +83,7 @@
   
   .description-wrapper textarea {
     width: 100%;
-    height: 150px;
+    height: 75%;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 0.5rem;
@@ -114,7 +115,7 @@
   }
   
   .delete-service-button:hover {
-    background-color: #c0392b;
+    background-color: #862216;
   }
   
   .add-service-button {
