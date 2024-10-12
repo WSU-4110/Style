@@ -1,154 +1,182 @@
-/* src/app/portfolio.css */
+/* ===== Layout and Container ===== */
 
+/* Defines the main container with a max width, centered alignment, and padding */
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  
-  .business-name input {
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-    width: 100%;
-    border: none;
-    border-radius: 10px;
-    border-bottom: 2px solid #0ba3ad;
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    outline: none;
-  }
-  
-  .content-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-  
-  .carousel-wrapper {
-    position: relative;
-    width: 700px;
-    height: 500px;
-  }
-  
-  .profile-picture-wrapper {
-    position: absolute;
-    bottom: 30px;
-    left: 20px;
-    width: 150px;
-    height: 150px;
-    overflow: hidden;
-    border-radius: 50%;
-    border: 1px solid #0ba3ad;
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .profile-picture-wrapper input[type="file"] {
-    display: none;
-  }
-  
-  .profile-picture {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .carousel {
-    display: flex;
-    overflow-x: scroll;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-  }
-  
-  .carousel-image {
-    height: 300px;
-    width: 700px;
-    margin-right: 8px;
-    border-radius: 8px;
-  }
-  
-  .description-wrapper {
-    width: 400px;
-    height: 300px;
-    background-color: #f9f9f9;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .description-wrapper h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .description-wrapper textarea {
-    width: 100%;
-    height: 75%;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 0.5rem;
-  }
-  
-  .services-wrapper {
-    margin-top: 2rem;
-  }
-  
-  .service-item {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .service-item input {
-    flex: 1;
-    padding: 0.5rem;
-  }
-  
-  .delete-service-button {
-    background-color: #0ba3ad;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .delete-service-button:hover {
-    background-color: #862216;
-  }
-  
-  .add-service-button {
-    background-color: #0ba3ad;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .add-service-button:hover {
-    background-color: #0a8088;
-  }
-  
-  .button {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.75rem 1.5rem;
-    background-color: #000000;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .button:hover {
-    background-color: #424242;
-  }
-  
-  .mt-6 {
-    margin-top: 1rem;
-  }
-  
+  max-width: 0 auto;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Wrapper for main content, setting up a flex layout for side-by-side items */
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/* ===== Business Name Input ===== */
+/* Styles for the business name input field - bold text, centered, and decorative bottom border */
+.business-name input {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  border-bottom: 2px solid #0ba3ad;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  outline: none;
+}
+
+/* ===== Carousel ===== */
+/* Wrapper for carousel - sets the size and positions child elements */
+.carousel-wrapper {
+  position: relative;
+  width: 700px;
+  height: 500px;
+}
+
+/* Carousel container - scrollable with a border and rounded corners */
+.carousel {
+  display: flex;
+  overflow-x: scroll;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Individual carousel images with specific size and rounded corners */
+.carousel-image {
+  width: 700px;
+  height: 500px;
+  margin-right: 8px;
+  border-radius: 8px;
+}
+
+/* ===== Profile Picture ===== */
+/* Wrapper for profile picture - circular, with border and shadow effect */
+.profile-picture-wrapper {
+  position: absolute;
+  bottom: 30px;
+  left: 20px;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1px solid #0ba3ad;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* Brings it to the front*/
+  cursor: pointer;
+}
+
+/* Hides file input field for profile picture upload */
+.profile-picture-wrapper input[type="file"] {
+  display: none;
+}
+
+/* Profile picture styling - ensures it fills the wrapper and covers nicely */
+.profile-picture {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== Description Section ===== */
+
+/* Wrapper for description text area - includes padding, background color, and shadow */
+.description-wrapper {
+  width: 400px;
+  height: 300px;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for header within the description section */
+.description-wrapper h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Textarea for description with rounded corners and internal padding */
+.description-wrapper textarea {
+  width: 100%;
+  height: 75%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+/* ===== Services Section ===== */
+
+/* Container for service items - creates a margin above for spacing */
+.services-wrapper {
+  margin-top: 2rem;
+}
+
+/* Styles each service item with gap between elements and bottom margin */
+.service-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Styles input fields within the service items */
+.service-item input {
+  flex: 1;
+  padding: 0.5rem;
+}
+
+/* ===== Button Styles ===== */
+
+/* General styles for all buttons - text color, border radius, and transition for hover effect */
+.button, .add-service-button, .delete-service-button {
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Main button styling - black background with hover effect */
+.button {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #000000;
+}
+
+/* Changes background color on hover for the main button */
+.button:hover {
+  background-color: #424242;
+}
+
+/* Styling for the add service button - teal background with padding */
+.add-service-button {
+  background-color: #0ba3ad;
+  padding: 0.5rem 1rem;
+}
+
+/* Hover effect for add service button */
+.add-service-button:hover {
+  background-color: #0a8088;
+}
+
+/* Styling for delete service button - teal background, same as add button */
+.delete-service-button {
+  background-color: #0ba3ad;
+  padding: 0.5rem 1rem;
+}
+
+/* Changes background color to red on hover for delete button */
+.delete-service-button:hover {
+  background-color: #862216;
+}
+
+/* ===== Miscellaneous Styles ===== */
+
+/* Utility class for additional top margin */
+.mt-6 {
+  margin-top: 1rem;
+}
