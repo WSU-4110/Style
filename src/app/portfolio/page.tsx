@@ -1,22 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import './portfolio.css'; // Import the portfolio-specific CSS
+import './portfolio.css';
 
 export default function Portfolio() {
   const [businessName, setBusinessName] = useState('');
   const [bio, setBio] = useState('');
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
-  const [photos, setPhotos] = useState<FileList | null>(null);
+  const [photos, setPhotos] = useState<string[]>([]);
   const [services, setServices] = useState([{ name: '', price: '', time: '' }]);
-  
+
   const router = useRouter();
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const isDragging = useRef(false);
-  const startX = useRef(0);
-  const scrollLeft = useRef(0);
 
   const handleProfilePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -26,28 +22,9 @@ export default function Portfolio() {
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setPhotos(e.target.files);
+      const newPhotos = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
+      setPhotos(newPhotos);
     }
-  };
-
-  const handleDragStart = (e: React.MouseEvent) => {
-    isDragging.current = true;
-    startX.current = e.pageX - (carouselRef.current?.offsetLeft || 0);
-    scrollLeft.current = carouselRef.current?.scrollLeft || 0;
-  };
-
-  const handleDragMove = (e: React.MouseEvent) => {
-    if (!isDragging.current) return;
-    e.preventDefault();
-    const x = e.pageX - (carouselRef.current?.offsetLeft || 0);
-    const walk = (x - startX.current) * 2; // Increase drag speed
-    if (carouselRef.current) {
-      carouselRef.current.scrollLeft = scrollLeft.current - walk;
-    }
-  };
-
-  const handleDragEnd = () => {
-    isDragging.current = false;
   };
 
   const handleServiceChange = (index: number, field: string, value: string) => {
@@ -100,26 +77,48 @@ export default function Portfolio() {
             />
             {profilePicture && <img src={URL.createObjectURL(profilePicture)} alt="Profile" className="profile-picture" />}
           </div>
-          <div
-            className="carousel"
-            ref={carouselRef}
-            onMouseDown={handleDragStart}
-            onMouseMove={handleDragMove}
-            onMouseUp={handleDragEnd}
-            onMouseLeave={handleDragEnd}
-          >
-            <input
-              type="file"
-              multiple
-              accept="image/*"
-              onChange={handlePhotoUpload}
-            />
-            {photos && Array.from(photos).map((file, index) => (
-              <img key={index} src={URL.createObjectURL(file)} alt={`Carousel ${index}`} className="carousel-image" />
-            ))}
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={handlePhotoUpload}
+          />
+          <div id="default-carousel" className="relative w-full" data-carousel="slide">
+            <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
+              {photos.map((photo, index) => (
+                <div key={index} className={`hidden duration-700 ease-in-out`} data-carousel-item>
+                  <img src={photo} className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt={`Carousel ${index}`} />
+                </div>
+              ))}
+            </div>
+            <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+              {photos.map((_, index) => (
+                <button key={index} type="button" className="w-3 h-3 rounded-full" aria-current={index === 0} aria-label={`Slide ${index + 1}`} data-carousel-slide-to={index}></button>
+              ))}
+            </div>
+            {/* Left Arrow */}
+            <button type="button" className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
+                <svg className="w-4 h-4 text-teal rtl:rotate-180" fill="none" viewBox="0 0 6 10">
+                  <path stroke="teal" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4"/>
+                </svg>
+                <span className="sr-only">Previous</span>
+              </span>
+            </button>
+
+            {/* Right Arrow */}
+            <button type="button" className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
+                <svg className="w-4 h-4 text-teal rtl:rotate-180" fill="none" viewBox="0 0 6 10">
+                  <path stroke="teal" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
+                </svg>
+                <span className="sr-only">Next</span>
+              </span>
+            </button>
           </div>
         </div>
-
+        
+        {/* Description */}
         <div className="description-wrapper">
           <h2>Description</h2>
           <textarea
@@ -130,6 +129,9 @@ export default function Portfolio() {
         </div>
       </div>
 
+
+
+      {/* Services */}
       <div className="services-wrapper">
         <h2>Services Offered</h2>
         {services.map((service, index) => (
