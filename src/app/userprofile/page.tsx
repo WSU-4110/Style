@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import React from 'react';
+import Navbar from '../../components/navigationbar';
 
 export default function UserProfile() {
   const [fullname, set_fullname] = useState('');
@@ -29,12 +30,12 @@ export default function UserProfile() {
 
   const handlePfpUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      set_profpic(e.target.files[0]); // Set the selected profile picture
+      set_profpic(e.target.files[0]);
     }
   };
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray p-6">
+      <Navbar />
       <div className="container max-w-[60rem] p-12 bg-black shadow-lg rounded-lg text-center">
         <h1 className="text-4xl font-bold mb-6 text-[#f4d9a0]">Your Profile</h1>
         <form onSubmit={handleSubmit}>
