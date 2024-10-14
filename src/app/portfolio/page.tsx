@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './portfolio.css';
+import Navbar from '../../components/navbar_artist';
 
 export default function Portfolio() {
   const [businessName, setBusinessName] = useState('');
@@ -57,6 +58,7 @@ export default function Portfolio() {
 
   return (
     <div className="container">
+      <Navbar />
       <div className="business-name">
         <input
           type="text"
