@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-//import './navigationbar.css';
+import './navbar_artist.css';
 import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
@@ -14,7 +14,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav>
+    <nav className="navigation">
       <ul>
         <li><button onClick={() => router.push('/homepage')}>Home</button></li>
         <li><button onClick={() => router.push('/portfolio')}>Portfolio</button></li>

@@ -1,4 +1,4 @@
-/* navigationbar.tsx */
+/*navbar_artist.tsx*/
 
 .container {
     margin-top: 6rem;
@@ -6,6 +6,7 @@
 
 .navigation {
     background-color: rgb(0, 0, 0);
+    
     padding: 13px 35px;
     margin: 0;
     width: 100%;
@@ -37,6 +38,6 @@
   }
   
   .navigation button:hover {
-    color: #f3cf9a;
+    color: #b5b2ac;
   }
   
