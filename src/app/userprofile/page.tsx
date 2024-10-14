@@ -34,7 +34,8 @@ export default function UserProfile() {
     }
   };
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray p-6">
+    
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray p-6"> {/*took out items-center justify-center for flex flex-col*/}
       <Navbar />
       <div className="container max-w-[60rem] p-12 bg-black shadow-lg rounded-lg text-center">
         <h1 className="text-4xl font-bold mb-6 text-[#f4d9a0]">Your Profile</h1>
@@ -104,14 +105,7 @@ export default function UserProfile() {
             Save Profile
           </button>
         </form>
-
         <div className="mt-8">
-          <button
-            onClick={() => router.push('/')}
-            className="bg-blue-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition mb-4"
-          >
-            Go to Homepage
-          </button>
         </div>
       </div>
     </div>
