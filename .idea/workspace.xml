@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="96fdc895-484c-4585-a1b0-96f0171f80cf" name="Changes" comment="Moving google verification to public directory">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/accounts/accounts/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/accounts/accounts/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/accounts/profiles/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/accounts/profiles/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/accounts/profiles/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/accounts/profiles/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +20,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
