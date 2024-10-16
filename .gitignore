@@ -53,3 +53,5 @@ workspace.xml
 # Python virtual environment (venv)
 venv/
 __pycache__/
+
+/keys/

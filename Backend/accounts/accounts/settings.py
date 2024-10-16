@@ -133,7 +133,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 import firebase_admin
 from firebase_admin import credentials
 
-cred = credentials.Certificate('path/to/your-firebase-adminsdk.json')  # Replace with your actual path
+cred = credentials.Certificate('keys', 'style-438016-firebase-adminsdk-f35zz-7640467c21.json')
 firebase_admin.initialize_app(cred)
 
 # Google OAuth settings
