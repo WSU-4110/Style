@@ -1,12 +1,18 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎨 Style - Streamline Your Scheduling and Exposure
 
-# Style
+Welcome to **Style**, a website designed for artists to easily manage their schedules and connect with potential clients. Our platform simplifies the booking process while providing an algorithm that helps artists gain exposure by matching them with customers based on preferences and service needs.
 
-Style is a website designed for artists to streamline their scheduling process with customers while also helping them gain more exposure to potential clients. Our platform provides an easy-to-use scheduling feature and an algorithm that connects artists with new clients based on their preferences and service needs.
+This project is built with [Next.js](https://nextjs.org), bootstrapped using [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+---
 
-First, run the development server:
+## 🚀 Getting Started
+
+To access our website, you can join by using the following link:
+
+## [https://style-rho-gilt.vercel.app/](https://style-rho-gilt.vercel.app/)
+
+To run the development server, use one of the following commands:
 
 ```bash
 npm run dev
@@ -18,22 +24,35 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🧑‍🎨 How to Sign Up
 
-### Sign Up as an Artist
+### For Artists
 1. Visit the homepage.
-2. Create a artist business account.
-3. Fill in the required details and create your portfolio.
-4. Start adding your services and availability.
+2. Create an artist business account.
+3. Fill in the required details and set up your portfolio.
+4. Add your services and set your availability.
+5. Start attracting new clients!
 
-### Sign Up as a Customer
+### For Customers
 1. Visit the homepage.
-2. Create a customer account
-2. Search for the service or artist you need.
-3. Browse bussiness pages and select an available time to book.
+2. Create a customer account.
+3. Search for the desired service or artist.
+4. Browse artist pages and book an available time slot.
+5. Enjoy the service!
 
-## TechStalk Used
+## 🛠️ Tech Stack Used
 
-- **Frontend**: JavaScript, Tailwind CSS, HTML
-- **Backend**: Django
-- **Hosting**: Vercel
+| **Category** | **Technologies**                  |
+|--------------|----------------------------------|
+| Frontend     | JavaScript, Tailwind CSS, HTML   |
+| Backend      | Django                            |
+| Hosting      | Vercel                            |
+
+## 📚 Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Learn Next.js](https://nextjs.org/learn)
+
+You can also visit the official [Next.js GitHub repository](https://github.com/vercel/next.js).
