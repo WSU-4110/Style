@@ -5,6 +5,8 @@
 
 import React, { useState } from 'react'; // Import React explicitly
 import { useRouter } from 'next/navigation';  // Import useRouter
+import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'; // Import Firebase functions
+import { auth, googleProvider } from '../firebase';
 
 export default function Login() {
   const [isLogin, setIsLogin] = React.useState(true);
@@ -14,18 +16,35 @@ export default function Login() {
     setIsLogin(!isLogin);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Mock authentication logic (replace with actual login/signup logic)
-    const isAuthenticated = true; // Mock successful login/signup
-
-    if (isAuthenticated) {
-      router.push('/portfolio'); // Redirect to Portfolio page after successful login/signup
-    } else {
-      alert('Authentication failed. Please try again.');
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      router.push('/userprofile'); // Redirect to User Profile page
+    } catch (error) {
+      alert('Google login failed. Please try again.');
     }
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const email = e.currentTarget.email.value;
+    const password = e.currentTarget.password.value;
+
+    if (isLogin) {
+      // Login logic
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        router.push('/portfolio'); // Redirect to Portfolio page after successful login
+      } catch (error) {
+        alert('Authentication failed. Please try again.');
+      }
+    } else {
+      // Signup logic
+      alert('Signup is not implemented yet.');
+    }
+  };
+
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray">
@@ -33,6 +52,13 @@ export default function Login() {
         <h1 className="text-4xl font-bold mb-6">
           {isLogin ? 'Login To Style' : 'Sign Up with Style'}
         </h1>
+
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full bg-[#f4d9a0] text-black py-2 px-4 rounded-lg mt-6 hover:bg-gray-600"
+        >
+          Login with Google
+        </button>
 
         {isLogin ? (
           <form className="w-full max-w-md" onSubmit={handleSubmit}>
