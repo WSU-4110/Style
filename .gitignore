@@ -54,4 +54,4 @@ workspace.xml
 venv/
 __pycache__/
 
-/keys/
+keys/*.json

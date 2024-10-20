@@ -12,22 +12,23 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import firebase_admin
+from firebase_admin import credentials
+from decouple import config
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ti&_%rc$r!4j6cf$nadn1l(n*4o$)5gs(o7j#xjlbme^-cazla'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool, default=False)
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -122,19 +123,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Firebase Admin SDK setup
-import firebase_admin
-from firebase_admin import credentials
-
-cred = credentials.Certificate('keys', 'style-438016-firebase-adminsdk-f35zz-7640467c21.json')
-firebase_admin.initialize_app(cred)
+# Firebase credentials: Load path from .env
+cred_path = config('FIREBASE_SERVICE_ACCOUNT_KEY')
+firebase_cred = credentials.Certificate(os.path.join(BASE_DIR, 'keys', cred_path))
+firebase_admin.initialize_app(firebase_cred)
 
 # Google OAuth settings
 SITE_ID = 1

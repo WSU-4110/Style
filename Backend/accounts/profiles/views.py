@@ -5,10 +5,21 @@ from django.contrib import messages
 from allauth.socialaccount.models import SocialAccount
 import firebase_admin
 from firebase_admin import credentials, auth
+from decouple import config
+import os
+from pathlib import Path
 
+# Build paths inside the project
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Firebase credentials: Load path from .env
+cred_path = config('FIREBASE_SERVICE_ACCOUNT_KEY')
 #Firebase app
-cred = credentials.Certificate("..")
+cred = credentials.Certificate(os.path.join(BASE_DIR, 'keys', cred_path))
 firebase_admin.initialize_app(cred)
+
+# Initialize Firestore
+db = firestore.client()
 
 #user registration viewing
 def register_view(request):
@@ -45,6 +56,17 @@ def register_view(request):
 
     return render(request, 'profiles/account_page.html')
 
+# Function to save user data to Firestore
+def save_user_data_to_firestore(user_uid, username, email):
+    try:
+        db.collection('users').document(user_uid).set({
+            'username': username,
+            'email': email,
+            'createdAt': firestore.SERVER_TIMESTAMP,
+        })
+    except Exception as e:
+        print(f"Error saving user data to Firestore: {e}")
+
 #user login viewing
 def login_view(request):
     if request.method == "POST":
@@ -58,13 +80,17 @@ def login_view(request):
             django_user = User.objects.get(email=email_or_username)
             user = authenticate(request, username=django_user.username, password=password)
 
-        if user is not None:
-            login(request, user)
-            message.success(request, "user logged in succesfully")
-            return redirect('portfolio')
+            if user is not None:
+                login(request, user)
+                messages.success(request, "user logged in succesfully")
+                return redirect('portfolio')
 
-        else:
-            messages.error(request, "Invalid login credentials.")
+            else:
+                messages.error(request, "Invalid login credentials.")
+                return render(request, 'profiles/account_page.html')
+
+        except Exception as e:
+            messages.error(request, str(e))
             return render(request, 'profiles/account_page.html')
 
     return render(request, 'profiles/account_page.html')
