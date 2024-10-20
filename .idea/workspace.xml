@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96fdc895-484c-4585-a1b0-96f0171f80cf" name="Changes" comment="Moving google verification to public directory">
+      <change afterPath="$PROJECT_DIR$/src/app/firebase.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
