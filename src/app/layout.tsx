@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import React from 'react';
 import localFont from "next/font/local";
 import "./globals.css"; // Assuming Tailwind CSS is used for global styles
-
+//import Navbar from '../components/navigationbar';
 
 // Import Sinera font
 const sinera = localFont({
@@ -26,6 +26,7 @@ export default function RootLayout({
       <body
         className={`${sinera.variable} ${sinera.variable} antialiased bg-gradient-to-br from-yellow-50 via-pink-50 to-orange-100 text-gray-900`} // Gradient background for a summery vibe
       >
+        {/*<Navbar />*/}
         {/* Content */}
         <main className="min-h-screen p-6 md:p-12 lg:p-16">
           {children}
