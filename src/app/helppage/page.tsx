@@ -8,7 +8,6 @@ import Navbar from '../components/navigationbar';
 
 const HelpPage = () => {
     const router = useRouter();
-
     return (
         <div className="min-h-screen bg-gray">
             <Navbar />
