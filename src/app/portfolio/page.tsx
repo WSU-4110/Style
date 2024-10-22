@@ -84,9 +84,12 @@ export default function Portfolio() {
       </div>
 
       <div className="content-wrapper">
-        <div className="carousel-wrapper">
+        <div className="carousel-wrapper relative">
           {/* Profile Picture Upload */}
-          <div className="profile-picture-wrapper" onClick={triggerProfileUpload}>
+          <div
+            className="profile-picture-upload group"
+            onClick={triggerProfileUpload}
+          >
             <input
               type="file"
               ref={profileInputRef}
@@ -94,12 +97,26 @@ export default function Portfolio() {
               onChange={handleProfilePictureUpload}
               style={{ display: 'none' }}
             />
-            {profilePicture ? (
-              <img src={URL.createObjectURL(profilePicture)} alt="Profile" className="profile-picture" />
-            ) : (
-              <div className="placeholder-picture">Upload Profile Picture</div>
-            )}
+            <div className="relative w-full h-full">
+              {profilePicture ? (
+                <img
+                  className="w-full h-full rounded-full object-cover"
+                  src={URL.createObjectURL(profilePicture)}
+                  alt="Profile"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-200 rounded-full"></div>
+              )}
+              <div className="absolute inset-0 flex items-center justify-center rounded-full bg-gray-200 opacity-0 group-hover:opacity-60 transition-opacity">
+                <img
+                  className="w-8"
+                  src="https://www.svgrepo.com/show/33565/upload.svg"
+                  alt="Upload Icon"
+                />
+              </div>
+            </div>
           </div>
+
           
           {/* Photo Upload and Carousel */}
           <input
