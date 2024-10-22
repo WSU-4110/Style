@@ -18,7 +18,7 @@ export default function Nav_bar() {
       <ul>
         <li><button onClick={() => router.push('/homepage')}>Home</button></li>
         <li><button onClick={() => router.push('/portfolio')}>Portfolio</button></li>
-        <li><button onClick={() => router.push('/appointments')}>Clients</button></li>
+        <li><button onClick={() => router.push('/clients')}>Clients</button></li>
         <li><button onClick={() => router.push('/helppage')}>Help</button></li>
         <li><button onClick={handlelogout}>Log Out</button></li>
       </ul>
