@@ -5,7 +5,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import React from 'react';
-import Navbar from '../../components/navigationbar';
+import Navbar from '../components/navigationbar';
 
 export default function UserProfile() {
   const [fullname, set_fullname] = useState('');
