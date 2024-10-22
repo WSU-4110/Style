@@ -4,7 +4,7 @@ import React from 'react';
 import './navbar_artist.css';
 import { useRouter } from 'next/navigation';
 
-export default function Navbar() {
+export default function Nav_bar() {
   const router = useRouter();
 
   const handlelogout = () => {
