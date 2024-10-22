@@ -5,7 +5,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import React from 'react';
-import Navbar from '../../components/navigationbar';
+import Navbar from '../components/navigationbar';
 
 export default function UserProfile() {
   const [fullname, set_fullname] = useState('');
@@ -40,7 +40,7 @@ export default function UserProfile() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray p-6"> {/*took out items-center justify-center for flex flex-col*/}
       <Navbar />
       <div className="container max-w-[60rem] p-12 bg-black shadow-lg rounded-lg text-center">
-        <h1 className="text-4xl font-bold mb-6 text-[#f4d9a0]">Your Profile</h1>
+        <h1 className="text-4xl font-bold mb-5 text-[#f4d9a0]">Your Profile</h1>
         <form onSubmit={handleSubmit}>
         <div className="mb-4">
             <label className="block text-[#f4d9a0] text-left">Profile Picture</label>

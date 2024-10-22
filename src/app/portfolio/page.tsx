@@ -3,7 +3,7 @@
 import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './portfolio.css';
-import Navbar from '../../components/navbar_artist';
+import Navbar from '../components/navbar_artist';
 
 export default function Portfolio() {
   const [businessName, setBusinessName] = useState('');
