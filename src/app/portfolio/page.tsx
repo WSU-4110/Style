@@ -3,7 +3,7 @@
 import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './portfolio.css';
-import Navbar from '../components/navbar_artist';
+import Nav_bar from '../components/navbar_artist';
 
 export default function Portfolio() {
   const [businessName, setBusinessName] = useState('');
@@ -72,7 +72,7 @@ export default function Portfolio() {
 
   return (
     <div className="container">
-      <Navbar />
+      <Nav_bar />
       <div className="business-name">
         <input
           type="text"
