@@ -13,7 +13,7 @@ const HelpPage = () => {
             <div className="max-w-screen-xl mx-auto p-12 bg-white shadow-lg rounded-lg"> {/* Centered content with max width */}
                 <h1 className="text-4xl font-bold text-center mb-6">Help Page</h1>
                 <p className="text-center">How can we help?</p>
-            </div>
+            </div>   
         </div>
     );
 };
