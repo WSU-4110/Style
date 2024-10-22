@@ -31,6 +31,7 @@ const Clients: React.FC = () => {
                         <div key={booking.id} className="bg-white p-7 border border-teal-500 rounded-lg shadow">
                             <h3 className="text-xl font-normal">{booking.clientName}</h3>
                             <p className="text-gray-400">Service Requested: {booking.service}</p>
+                            <p className="text-gray-400">Date of Service: {booking.date}</p>
                             <p className="text-gray-400">Amount Due: {booking.amountDue}</p>
                         </div>
                     ))}
