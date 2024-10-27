@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
-
-
 import React, { useState } from 'react'; // Import React explicitly
 import { useRouter } from 'next/navigation';  // Import useRouter
-import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'; // Import Firebase functions
+import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPassword } from 'firebase/auth'; // Import Firebase functions
 import { auth, googleProvider } from '../firebase';
 
 export default function Login() {
@@ -19,7 +17,7 @@ export default function Login() {
   const handleGoogleLogin = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      router.push('/userprofile'); // Redirect to User Profile page
+      router.push('/portfolio'); // Redirect to portfolio
     } catch (error) {
       alert('Google login failed. Please try again.');
     }
@@ -35,13 +33,24 @@ export default function Login() {
       // Login logic
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        router.push('/portfolio'); // Redirect to Portfolio page after successful login
+        router.push('/portfolio'); // Redirect to portfolio
       } catch (error) {
         alert('Authentication failed. Please try again.');
       }
     } else {
       // Signup logic
-      alert('Signup is not implemented yet.');
+      const confirmPassword = e.currentTarget.confirm_password.value;
+      if (password !== confirmPassword) {
+        alert('Passwords do not match. Please try again.');
+        return;
+      }
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        alert('Signup successful! Redirecting...');
+        router.push('/portfolio'); // Redirect after successful signup
+      } catch (error) {
+        alert(`Signup failed: ${error.message}`);
+      }
     }
   };
 

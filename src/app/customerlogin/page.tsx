@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react'; // Import React explicitly
 import { useRouter } from 'next/navigation';  // Import useRouter
-import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'; // Import Firebase functions
+import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPassword } from 'firebase/auth'; // Import Firebase functions
 import { auth, googleProvider } from '../firebase';
 
 export default function CustomerLogin() {
@@ -33,13 +33,24 @@ export default function CustomerLogin() {
       // Login logic
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        router.push('/portfolio'); // Redirect to Portfolio page after successful login
+        router.push('/userprofile'); // Redirect to Portfolio page after successful login
       } catch (error) {
         alert('Authentication failed. Please try again.');
       }
     } else {
       // Signup logic
-      alert('Signup is not implemented yet.');
+      const confirmPassword = e.currentTarget.confirm_password.value;
+      if (password !== confirmPassword) {
+        alert('Passwords do not match. Please try again.');
+        return;
+      }
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        alert('Signup successful! Redirecting...');
+        router.push('/userprofile'); // Redirect after successful signup
+      } catch (error) {
+        alert(`Signup failed: ${error.message}`);
+      }
     }
   };
 
