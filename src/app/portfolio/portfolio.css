@@ -53,32 +53,53 @@
   border-radius: 8px;
 }
 
-/* ===== Profile Picture ===== */
-/* Wrapper for profile picture - circular, with border and shadow effect */
-.profile-picture-wrapper {
+/* ===== Profile Picture Upload ===== */
+/* Moves the profile picture upload to the bottom left of the carousel */
+.profile-picture-upload {
   position: absolute;
-  bottom: 30px;
-  left: 20px;
-  width: 150px;
-  height: 150px;
+  bottom: 10px;
+  left: 10px;
+  width: 180px;
+  height: 180px;
   overflow: hidden;
   border-radius: 50%;
-  border: 1px solid #0ba3ad;
+  border: 2px solid #0ba3ad;
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-  z-index: 10; /* Brings it to the front*/
   cursor: pointer;
+  z-index: 10; /* Ensures it stays in front */
 }
 
-/* Hides file input field for profile picture upload */
-.profile-picture-wrapper input[type="file"] {
-  display: none;
+.profile-picture-upload .relative {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
-/* Profile picture styling - ensures it fills the wrapper and covers nicely */
-.profile-picture {
+/* Image styling */
+.profile-picture-upload img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Overlay and icon container */
+.profile-picture-upload .absolute {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  border-radius: 50%;
+  transition: opacity 0.3s;
+}
+
+/* Hides the overlay initially, reveals it on hover */
+.profile-picture-upload .group-hover\\:opacity-60 {
+  opacity: 0; /* Initially hidden */
+}
+
+.profile-picture-upload:hover .group-hover\\:opacity-60 {
+  opacity: 0.6; /* Visible on hover */
 }
 
 /* ===== Description Section ===== */
@@ -106,6 +127,7 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 0.5rem;
+  resize: none; /* Prevents resizing */
 }
 
 /* ===== Services Section ===== */

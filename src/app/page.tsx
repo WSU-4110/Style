@@ -12,10 +12,12 @@ export default function LandingPage() {
   const router = useRouter();
 
   const handleLoginClick = () => {
+    //localStorage.setItem('userType', 'artist');
     router.push('/artistlogin');
   };
 
   const handleCustomerClick = () => {
+    //localStorage.setItem('userType', 'customer');
     router.push('/customerlogin');
   };
 
