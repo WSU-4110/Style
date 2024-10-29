@@ -3,6 +3,8 @@
 
 import React, { useState } from 'react'; // Import React explicitly
 import { useRouter } from 'next/navigation';  // Import useRouter
+import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPassword } from 'firebase/auth'; // Import Firebase functions
+import { auth, googleProvider } from '../firebase';
 
 export default function CustomerLogin() {
   const [isLogin, setIsLogin] = useState(true);
@@ -12,18 +14,46 @@ export default function CustomerLogin() {
     setIsLogin(!isLogin);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Mock authentication logic (replace with actual login/signup logic)
-    const isAuthenticated = true; // Mock successful login/signup
-
-    if (isAuthenticated) {
-      router.push('/userprofile'); // Redirect to User Profile page after successful login/signup
-    } else {
-      alert('Authentication failed. Please try again.');
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      router.push('/userprofile'); // Redirect to User Profile page
+    } catch (error) {
+      alert('Google login failed. Please try again.');
     }
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const email = e.currentTarget.email.value;
+    const password = e.currentTarget.password.value;
+
+    if (isLogin) {
+      // Login logic
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        router.push('/userprofile'); // Redirect to Portfolio page after successful login
+      } catch (error) {
+        alert('Authentication failed. Please try again.');
+      }
+    } else {
+      // Signup logic
+      const confirmPassword = e.currentTarget.confirm_password.value;
+      if (password !== confirmPassword) {
+        alert('Passwords do not match. Please try again.');
+        return;
+      }
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        alert('Signup successful! Redirecting...');
+        router.push('/userprofile'); // Redirect after successful signup
+      } catch (error) {
+        alert(`Signup failed: ${error.message}`);
+      }
+    }
+  };
+
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray">
@@ -31,6 +61,13 @@ export default function CustomerLogin() {
         <h1 className="text-4xl text-white font-bold mb-6">
           {isLogin ? 'Login To Style' : 'Sign Up with Style'}
         </h1>
+
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full bg-[#f4d9a0] text-black py-2 px-4 rounded-lg mt-6 hover:bg-gray-600"
+        >
+          Login with Google
+        </button>
 
         {isLogin ? (
           <form className="w-full max-w-md" onSubmit={handleSubmit}>
