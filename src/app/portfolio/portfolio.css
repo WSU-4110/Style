@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* ===== Layout and Container ===== */
 
 /* Defines the main container with a max width, centered alignment, and padding */

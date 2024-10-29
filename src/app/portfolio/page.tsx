@@ -118,7 +118,7 @@ export default function Portfolio() {
           </div>
 
           
-          {/* Photo Upload and Carousel */}
+          {/* Portfolio Photos Upload*/}
           <input
             type="file"
             multiple
@@ -139,6 +139,7 @@ export default function Portfolio() {
             </div>
             
             {/* Carousel Navigation */}
+            {/* Left Arrow */}
             <button type="button" onClick={handlePrevPhoto} className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
               <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
                 <svg className="w-4 h-4 text-teal rtl:rotate-180" fill="none" viewBox="0 0 6 10">
@@ -147,6 +148,8 @@ export default function Portfolio() {
                 <span className="sr-only">Previous</span>
               </span>
             </button>
+
+            {/* Right Arrow */}
             <button type="button" onClick={handleNextPhoto} className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
               <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
                 <svg className="w-4 h-4 text-teal rtl:rotate-180" fill="none" viewBox="0 0 6 10">
