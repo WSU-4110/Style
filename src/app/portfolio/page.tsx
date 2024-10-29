@@ -84,6 +84,7 @@ export default function Portfolio() {
       </div>
 
       <div className="content-wrapper">
+        {/* Carousel Section */}
         <div className="carousel-wrapper relative">
           {/* Profile Picture Upload */}
           <div
@@ -126,7 +127,7 @@ export default function Portfolio() {
             onChange={handlePhotoUpload}
           />
           <div id="default-carousel" className="relative w-full" data-carousel="slide">
-            <div className="relative h-96 overflow-hidden rounded-lg md:h-96">
+            <div className="relative h-[500px] w-[900px] overflow-hidden rounded-lg">
               {photos.length > 0 && (
                 <div className="duration-700 ease-in-out">
                   <img
