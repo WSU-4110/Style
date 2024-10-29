@@ -3,7 +3,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '../components/navigationbar';
 
 const sampleAppointments = [
@@ -37,6 +37,31 @@ const sampleAppointments = [
 ];
 
 const Appointment = () => {
+    const [appointments, setAppointments] = useState([]);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchAppointments = async () => {
+             try {
+                  const response = await fetch('/api/appointments/');
+                  if (!response.ok) {
+                      throw new Error('Network response was not ok');
+                  }
+                  const data = await response.json();
+                  setAppointments(data);
+              } catch (err) {
+                  setError(err.message);
+              } finally {
+                  setLoading(false);
+              }
+          };
+
+          fetchAppointments();
+      }, []);
+
+      if (loading) return <p>Loading appointments...</p>;
+      if (error) return <p>Error: {error}</p>;
+
     return (
         <div className="min-h-screen flex flex-col bg-gray">
             <Navbar />
