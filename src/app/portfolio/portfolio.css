@@ -15,7 +15,7 @@
 /* Wrapper for main content, setting up a flex layout for side-by-side items */
 .content-wrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-start;
   gap: 10rem;
 }
@@ -141,7 +141,8 @@
 
 /* Container for service items - creates a margin above for spacing */
 .services-wrapper {
-  margin-top: 2rem;
+  margin-top: 10rem;
+  margin-left: -10rem;
 }
 
 /* Styles each service item with gap between elements and bottom margin */
