@@ -1,2 +1,10 @@
-env/
 ./Backend/db.sqlite3
+
+# Ignore the env directory
+env/
+
+# Ignore the keys directory
+keys/*.json
+
+# Ignore the .env file
+.env
