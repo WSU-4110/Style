@@ -1,0 +1,21 @@
+{% extends 'partials/base.html' %}
+{% block content %}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Business Type</th>
+        <th scope="col">Business Name</th>
+        <th scope="col">Zipcode</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in data %}
+      <tr>
+        <td>{{ data.business_type }}</td>
+        <td>{{ data.business_name }}</td>
+        <td>{{ data.zipcode }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

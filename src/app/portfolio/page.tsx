@@ -1,22 +1,20 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-'use client';
+'use client'
 
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import './portfolio.css'; // Import the portfolio-specific CSS
+import './portfolio.css';
+import Nav_bar from '../components/navbar_artist';
 
 export default function Portfolio() {
   const [businessName, setBusinessName] = useState('');
   const [bio, setBio] = useState('');
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
-  const [photos, setPhotos] = useState<FileList | null>(null);
+  const [photos, setPhotos] = useState<string[]>([]);
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [services, setServices] = useState([{ name: '', price: '', time: '' }]);
-  
+
+  const profileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const isDragging = useRef(false);
-  const startX = useRef(0);
-  const scrollLeft = useRef(0);
 
   const handleProfilePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -24,30 +22,24 @@ export default function Portfolio() {
     }
   };
 
+  const triggerProfileUpload = () => {
+    profileInputRef.current?.click();
+  };
+
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setPhotos(e.target.files);
+      const newPhotos = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
+      setPhotos(newPhotos);
+      setCurrentPhotoIndex(0);
     }
   };
 
-  const handleDragStart = (e: React.MouseEvent) => {
-    isDragging.current = true;
-    startX.current = e.pageX - (carouselRef.current?.offsetLeft || 0);
-    scrollLeft.current = carouselRef.current?.scrollLeft || 0;
+  const handleNextPhoto = () => {
+    setCurrentPhotoIndex((prevIndex) => (prevIndex + 1) % photos.length);
   };
 
-  const handleDragMove = (e: React.MouseEvent) => {
-    if (!isDragging.current) return;
-    e.preventDefault();
-    const x = e.pageX - (carouselRef.current?.offsetLeft || 0);
-    const walk = (x - startX.current) * 2; // Increase drag speed
-    if (carouselRef.current) {
-      carouselRef.current.scrollLeft = scrollLeft.current - walk;
-    }
-  };
-
-  const handleDragEnd = () => {
-    isDragging.current = false;
+  const handlePrevPhoto = () => {
+    setCurrentPhotoIndex((prevIndex) => (prevIndex - 1 + photos.length) % photos.length);
   };
 
   const handleServiceChange = (index: number, field: string, value: string) => {
@@ -80,6 +72,7 @@ export default function Portfolio() {
 
   return (
     <div className="container">
+      <Nav_bar />
       <div className="business-name">
         <input
           type="text"
@@ -91,35 +84,81 @@ export default function Portfolio() {
       </div>
 
       <div className="content-wrapper">
-        <div className="carousel-wrapper">
-          <div className="profile-picture-wrapper">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleProfilePictureUpload}
-            />
-            {profilePicture && <img src={URL.createObjectURL(profilePicture)} alt="Profile" className="profile-picture" />}
-          </div>
+        <div className="carousel-wrapper relative">
+          {/* Profile Picture Upload */}
           <div
-            className="carousel"
-            ref={carouselRef}
-            onMouseDown={handleDragStart}
-            onMouseMove={handleDragMove}
-            onMouseUp={handleDragEnd}
-            onMouseLeave={handleDragEnd}
+            className="profile-picture-upload group"
+            onClick={triggerProfileUpload}
           >
             <input
               type="file"
-              multiple
+              ref={profileInputRef}
               accept="image/*"
-              onChange={handlePhotoUpload}
+              onChange={handleProfilePictureUpload}
+              style={{ display: 'none' }}
             />
-            {photos && Array.from(photos).map((file, index) => (
-              <img key={index} src={URL.createObjectURL(file)} alt={`Carousel ${index}`} className="carousel-image" />
-            ))}
+            <div className="relative w-full h-full">
+              {profilePicture ? (
+                <img
+                  className="w-full h-full rounded-full object-cover"
+                  src={URL.createObjectURL(profilePicture)}
+                  alt="Profile"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-200 rounded-full"></div>
+              )}
+              <div className="absolute inset-0 flex items-center justify-center rounded-full bg-gray-200 opacity-0 group-hover:opacity-60 transition-opacity">
+                <img
+                  className="w-8"
+                  src="https://www.svgrepo.com/show/33565/upload.svg"
+                  alt="Upload Icon"
+                />
+              </div>
+            </div>
+          </div>
+
+          
+          {/* Photo Upload and Carousel */}
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={handlePhotoUpload}
+          />
+          <div id="default-carousel" className="relative w-full" data-carousel="slide">
+            <div className="relative h-96 overflow-hidden rounded-lg md:h-96">
+              {photos.length > 0 && (
+                <div className="duration-700 ease-in-out">
+                  <img
+                    src={photos[currentPhotoIndex]}
+                    className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                    alt={`Carousel ${currentPhotoIndex}`}
+                  />
+                </div>
+              )}
+            </div>
+            
+            {/* Carousel Navigation */}
+            <button type="button" onClick={handlePrevPhoto} className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
+                <svg className="w-4 h-4 text-teal rtl:rotate-180" fill="none" viewBox="0 0 6 10">
+                  <path stroke="teal" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4"/>
+                </svg>
+                <span className="sr-only">Previous</span>
+              </span>
+            </button>
+            <button type="button" onClick={handleNextPhoto} className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
+                <svg className="w-4 h-4 text-teal rtl:rotate-180" fill="none" viewBox="0 0 6 10">
+                  <path stroke="teal" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
+                </svg>
+                <span className="sr-only">Next</span>
+              </span>
+            </button>
           </div>
         </div>
-
+        
+        {/* Description Section */}
         <div className="description-wrapper">
           <h2>Description</h2>
           <textarea
@@ -130,6 +169,7 @@ export default function Portfolio() {
         </div>
       </div>
 
+      {/* Services Section */}
       <div className="services-wrapper">
         <h2>Services Offered</h2>
         {services.map((service, index) => (
