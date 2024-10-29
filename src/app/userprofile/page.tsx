@@ -99,7 +99,7 @@ export default function UserProfile() {
               value={fullname}
               onChange={(e) => set_fullname(e.target.value)}
               placeholder="Enter your name"
-              className="w-full p-2 border rounded text-white" 
+              className="w-full p-2 border rounded text-black" 
               required
             />
           </div>
@@ -111,7 +111,7 @@ export default function UserProfile() {
               value={city}
               onChange={(e) => set_city(e.target.value)}
               placeholder="Enter your city"
-              className="w-full p-2 border rounded text-white"
+              className="w-full p-2 border rounded text-black"
             />
           </div>
 
@@ -122,7 +122,7 @@ export default function UserProfile() {
               value={email}
               onChange={(e) => set_email(e.target.value)}
               placeholder="Enter your email"
-              className="w-full p-2 border rounded text-white"
+              className="w-full p-2 border rounded text-black"
               required
             />
           </div>
@@ -134,7 +134,7 @@ export default function UserProfile() {
               value={phone_number}
               onChange={(e) => set_phone_number(e.target.value)}
               placeholder="Enter your phone number"
-              className="w-full p-2 border rounded text-white" 
+              className="w-full p-2 border rounded text-black" 
             />
           </div>
 

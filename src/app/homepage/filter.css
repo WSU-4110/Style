@@ -1,0 +1,18 @@
+/* src/components/OptionsSelector.css */
+
+.options-selector {
+    position: fixed; /* Keep it fixed on the left side */
+    top: 20px;      /* Distance from the top */
+    left: 20px;     /* Distance from the left */
+    width: 200px;   /* Fixed width */
+    background-color: #f9f9f9; /* Background color */
+    padding: 15px;  /* Padding inside the box */
+    border: 1px solid #ccc; /* Border for better visibility */
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    z-index: 1000; /* Ensure it appears above other elements */
+  }
+  
+  .options-group {
+    margin-bottom: 15px; /* Space between groups */
+  }
+  

@@ -8,8 +8,10 @@ import customerImage from '../../public/customer.jpg';
 import Navbar from '../components/navigationbar';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import filter from '../homepage/filter';
 
 const SearchBar: React.FC = () => {
+    <filter />
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,6 +42,10 @@ const SearchBar: React.FC = () => {
 
 export default function Home() {
     const router = useRouter();
+
+    const handleRedirect = () => {
+        router.push('schedule');
+    };
     
     return (
         <div className="min-h-screen flex flex-col bg-white-100">
@@ -52,6 +58,17 @@ export default function Home() {
             <Navbar />
             {/* Search Bar */}
             <SearchBar />
+
+
+            {/* Redirect Button */}
+            <div className="flex justify-center mt-6">
+                <button 
+                    onClick={handleRedirect} 
+                    className="bg-teal-400 text-white px-4 py-2 rounded-md"
+                >
+                    Schedule An Appoinment
+                </button>
+            </div>
 
             {/* Images or other content can go here */}
             <div className="flex justify-center">
