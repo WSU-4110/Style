@@ -13,6 +13,7 @@ export default function UserProfile() {
   const [city, set_city] = useState('');
   const [phone_number, set_phone_number] = useState('');
   const [prof_pic, set_profpic] = useState<File | null>(null);
+  const [prof_pic_preview, set_profpic_preview] = useState<string | null>(null);
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -25,25 +26,44 @@ export default function UserProfile() {
   };
 
   const handleLogout = () => {
-    // Handle logout functionality here (e.g., clearing session or token)
     alert('Logging out...');
-    router.push('/login'); // Redirect back to the login page after logging out
+    router.push('/login');
   };
 
   const handlePfpUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      set_profpic(e.target.files[0]);
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      set_profpic(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        set_profpic_preview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     }
   };
+
   return (
-    
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray p-6"> {/*took out items-center justify-center for flex flex-col*/}
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray p-6">
       <Navbar />
-      <div className="container max-w-[60rem] p-12 bg-black shadow-lg rounded-lg text-center">
-        <h1 className="text-4xl font-bold mb-5 text-[#f4d9a0]">Your Profile</h1>
+      <div className="container max-w-4xl p-12 bg-white border-4 border-[#f4d9a0] shadow-lg rounded-lg text-center"> {/* Changed bg-black to white and added golden border */}
+        <h1 className="text-4xl font-bold mb-5 text-black">Your Profile</h1>
+        <br />
         <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-            <label className="block text-[#f4d9a0] text-left">Profile Picture</label>
+          <div className="mb-4">
+            {/*<label className="block text-black text-left">Profile Picture</label>*/}
+            <div className="flex justify-center mb-2">
+              <div className="w-24 h-24 border-4 border-[#f4d9a0] rounded-full flex items-center justify-center bg-transparent">
+                {prof_pic_preview ? (
+                  <img
+                    src={prof_pic_preview}
+                    alt="Profile Preview"
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                ) : (
+                  <span className="text-[#f4d9a0] text-s"> Upload image</span>
+                )}
+              </div>
+            </div>
             <input
               type="file"
               onChange={handlePfpUpload}
@@ -52,63 +72,59 @@ export default function UserProfile() {
           </div>
 
           <div className="mb-4">
-            <label className="block text-[#f4d9a0] text-left">Name*</label>
+            <br />
+            <label className="block text-black text-left">Name*</label>
             <input
               type="text"
               value={fullname}
               onChange={(e) => set_fullname(e.target.value)}
               placeholder="Enter your name"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded text-white" 
               required
             />
           </div>
-          <br/>
 
           <div className="mb-4">
-            <label className="block text-[#f4d9a0] text-left">City*</label>
+            <label className="block text-black text-left">City*</label>
             <input
               type="text"
               value={city}
               onChange={(e) => set_city(e.target.value)}
               placeholder="Enter your city"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded text-white"
             />
           </div>
-          <br/>
 
           <div className="mb-4">
-            <label className="block text-[#f4d9a0] text-left">Email*</label>
+            <label className="block text-black text-left">Email*</label>
             <input
               type="email"
               value={email}
               onChange={(e) => set_email(e.target.value)}
               placeholder="Enter your email"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded text-white"
               required
             />
           </div>
-          <br/>
 
           <div className="mb-4">
-            <label className="block text-[#f4d9a0] text-left">Phone Number (optional)</label>
+            <label className="block text-black text-left">Phone Number (optional)</label>
             <input
               type="tel"
               value={phone_number}
               onChange={(e) => set_phone_number(e.target.value)}
               placeholder="Enter your phone number"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded text-white" 
             />
           </div>
-          <br/>
+
           <button
             type="submit"
-            className="bg-blue-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition w-full"
+            className="bg-black text-white py-2 px-6 rounded-lg shadow-md hover:bg-gray-800 transition w-full" // Changed button color to black
           >
             Save Profile
           </button>
         </form>
-        <div className="mt-8">
-        </div>
       </div>
     </div>
   );
