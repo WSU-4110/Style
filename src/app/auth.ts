@@ -1,10 +1,13 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, UserCredential } from "firebase/auth";
-import { auth } from './src/app/firebase.js'; // Ensure the path is correct
+// File: src/app/auth.ts
 
+import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, UserCredential } from "firebase/auth";
+
+// Initialize Firebase Auth (if not already initialized)
+const auth = getAuth();
 const provider = new GoogleAuthProvider();
 
 // Function to sign in with Google
-const loginWithGoogle = (): void => {
+export const loginWithGoogle = (): void => {
   signInWithPopup(auth, provider)
     .then((result) => {
       const user = result.user;
@@ -16,7 +19,7 @@ const loginWithGoogle = (): void => {
 };
 
 // Function to sign up with email and password
-const signupUser = (email: string, password: string): void => {
+export const signupUser = (email: string, password: string): void => {
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential: UserCredential) => {
       const user = userCredential.user;
