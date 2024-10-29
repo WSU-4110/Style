@@ -3,7 +3,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState,  } from 'react';
 import React from 'react';
 import Navbar from '../components/navigationbar';
 
@@ -16,14 +16,34 @@ export default function UserProfile() {
   const [prof_pic_preview, set_profpic_preview] = useState<string | null>(null);
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Full Name:', fullname);
-    console.log('City:', city);
-    console.log('Email:', email);
-    console.log('Phone Number:', phone_number);
-    console.log('Profile Picture:', prof_pic);
-  };
+ const handleSubmit = async (e: React.FormEvent) => {
+   e.preventDefault();
+
+   const formData = new FormData();
+   formData.append('fullname', fullname);
+   formData.append('email', email);
+   formData.append('city', city);
+   formData.append('phone_number', phone_number);
+   if (prof_pic) formData.append('prof_pic', prof_pic);
+
+   try {
+     const response = await fetch('/api/profile', {
+           method: 'POST',
+           body: formData,
+     });
+
+     if (response.ok) {
+       alert('Profile updated successfully!');
+       router.push('/appointments'); // Redirect to appointments on success
+     } else {
+       const error = await response.json();
+       alert(`Error: ${error.message}`);
+     }
+   } catch (err) {
+     console.error('Profile update failed:', err);
+     alert('Failed to update profile. Please try again.');
+   }
+ };
 
   const handleLogout = () => {
     alert('Logging out...');

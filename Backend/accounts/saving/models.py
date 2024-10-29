@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)  # Associate with Django User
-    fullname = models.CharField(max_length=100)
+    firebase_user_id = models.CharField(max_length=128)  # Store Firebase UID for user authentication    fullname = models.CharField(max_length=100)
+    fullname = models.CharField(max_length=250)
     email = models.EmailField()
     city = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=15, blank=True, null=True)  # Optional field
@@ -14,12 +14,12 @@ class Customer(models.Model):
 
 
 class Business(models.Model):
-    owner = models.OneToOneField(User, on_delete=models.CASCADE)  # Associate with Django User
-    business_name = models.CharField(max_length=100)
-    email = models.EmailField()
-    address = models.CharField(max_length=200)
-    phone_number = models.CharField(max_length=15, blank=True, null=True)  # Optional field
-    logo = models.ImageField(upload_to='business_logos/', blank=True, null=True)
+    user_profile = models.OneToOneField(User, on_delete=models.CASCADE)
+    business_name = models.CharField(max_length=250)
+    bio = models.TextField()
+    profile_picture = models.ImageField(upload_to='artist_pics/', null=True, blank=True)
+    photos = models.JSONField()  # Store photo URLs
+    services = models.JSONField() #Store service info
 
     def __str__(self):
         return self.business_name

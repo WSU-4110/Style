@@ -57,13 +57,40 @@ export default function Portfolio() {
     setServices(updatedServices);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Business Name:', businessName);
-    console.log('Bio:', bio);
-    console.log('Profile Picture:', profilePicture);
-    console.log('Photos:', photos);
-    console.log('Services:', services);
+
+    const formData = new FormData();
+    formData.append('business_name', businessName);
+    formData.append('bio', bio);
+    if (profilePicture) formData.append('profile_picture', profilePicture);
+    photos.forEach(photo => {
+      formData.append('photos', photo); // Adjust this based on your API's expected structure
+    });
+
+    services.forEach((service, index) => {
+      formData.append(`services[${index}][name]`, service.name);
+      formData.append(`services[${index}][price]`, service.price);
+      formData.append(`services[${index}][time]`, service.time);
+    });
+
+    try {
+      const response = await fetch('/api/profile', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        alert('Portfolio saved successfully!');
+        router.push('/appointments');
+      } else {
+        const error = await response.json();
+        alert(`Error: ${error.message}`);
+      }
+    } catch (error) {
+      console.error('Error saving portfolio:', error);
+      alert('Failed to save portfolio. Please try again.');
+    }
   };
 
   const handleGoBack = () => {
