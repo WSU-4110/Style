@@ -8,8 +8,10 @@ import customerImage from '../../public/customer.jpg';
 import Navbar from '../components/navigationbar';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import filter from '../homepage/filter';
 
 const SearchBar: React.FC = () => {
+    <filter />
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
