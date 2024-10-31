@@ -1,53 +1,36 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-'use client'; 
-
 import { useRouter } from 'next/navigation';
 import artistImage from '../../public/artist_barber.jpg';
 import customerImage from '../../public/customer.jpg';
-import logoImage from '../../public/logo.jpg'; // Importing the logo image
+import logoImage from '../../public/logo.jpg';
 import Navbar from '../components/navigationbar';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import './filter.css';
 
-const SearchBar: React.FC = () => {
-    const [searchTerm, setSearchTerm] = useState('');
-
-    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
-    };
-
-    const handleSearchSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-        console.log('Searching for:', searchTerm);
-    };
-
-    return (
-        <form onSubmit={handleSearchSubmit} className="flex justify-center my-4">
-            <input
-                type="text"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={handleSearchChange}
-                className="p-2 border border-gray-300 rounded-l-md"
-            />
-            <button type="submit" className="bg-blue-500 text-white p-2 rounded-r-md">
-                Search
-            </button>
-        </form>
-    );
-};
-
-export default function Home() {
+const Home: React.FC = () => {
     const router = useRouter();
 
-    const handleRedirect = () => {
-        router.push('schedule');
-    };
+    // Memento class
+    class FilterMemento {
+        constructor(public state: { selectedFilter: string; searchTerm: string }) {}
+    }
 
+    // Caretaker class
+    class Caretaker {
+        private mementos: FilterMemento[] = [];
+
+        addMemento(memento: FilterMemento) {
+            this.mementos.push(memento);
+        }
+
+        getLastMemento(): FilterMemento | null {
+            return this.mementos.pop() || null;
+        }
+    }
+
+    const caretaker = new Caretaker();
     const [selectedFilter, setSelectedFilter] = useState<string>('filter1');
-    const [selectedItems, setSelectedItems] = useState<string[]>([]);
+    const [searchTerm, setSearchTerm] = useState('');
     const [confirmedSelection, setConfirmedSelection] = useState<boolean>(false);
 
     const filterNames: Record<string, string> = {
@@ -60,17 +43,31 @@ export default function Home() {
         setSelectedFilter(event.target.value);
     };
 
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value);
+    };
+
     const handleConfirmSelection = () => {
         setConfirmedSelection(true);
+        const memento = new FilterMemento({ selectedFilter, searchTerm });
+        caretaker.addMemento(memento);
         console.log('Confirmed Filter:', filterNames[selectedFilter]);
-        console.log('Confirmed Items:', selectedItems);
+    };
+
+    const handleUndo = () => {
+        const lastMemento = caretaker.getLastMemento();
+        if (lastMemento) {
+            const { selectedFilter, searchTerm } = lastMemento.state;
+            setSelectedFilter(selectedFilter);
+            setSearchTerm(searchTerm);
+        }
     };
 
     return (
         <div className="min-h-screen flex flex-col bg-white-100">
             {/* Logo */}
             <div className="absolute top-0 left-0">
-                <Image src={logoImage} alt="Logo" width={65} height={65} /> {/* Smaller dimensions */}
+                <Image src={logoImage} alt="Logo" width={65} height={65} />
             </div>
 
             {/* Header */}
@@ -81,7 +78,18 @@ export default function Home() {
             
             <Navbar />
             {/* Search Bar */}
-            <SearchBar />
+            <form onSubmit={(e) => { e.preventDefault(); console.log('Searching for:', searchTerm); }} className="flex justify-center my-4">
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    className="p-2 border border-gray-300 rounded-l-md"
+                />
+                <button type="submit" className="bg-blue-500 text-white p-2 rounded-r-md">
+                    Search
+                </button>
+            </form>
 
             {/* Filter Section */}
             <div className="filter">
@@ -128,6 +136,12 @@ export default function Home() {
                 >
                     Confirm Selection
                 </button>
+                <button 
+                    onClick={handleUndo}
+                    className="bg-red-500 text-white px-4 py-2 rounded-md mt-2"
+                >
+                    Undo
+                </button>
 
                 {confirmedSelection && (
                     <p className="mt-2 text-green-600">Selection confirmed!</p>
@@ -137,7 +151,7 @@ export default function Home() {
             {/* Redirect Button */}
             <div className="flex justify-center mt-6">
                 <button 
-                    onClick={handleRedirect} 
+                    onClick={() => router.push('schedule')} 
                     className="bg-teal-400 text-white px-4 py-2 rounded-md"
                 >
                     Schedule An Appointment
@@ -150,4 +164,6 @@ export default function Home() {
             </div>
         </div>
     );
-}
+};
+
+export default Home;
