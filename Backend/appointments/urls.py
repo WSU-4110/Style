@@ -5,6 +5,7 @@ from .views import (
     get_appointment,
     update_appointment,
     delete_appointment,
+    cancel_appointment,
 )
 
 urlpatterns = [
@@ -13,4 +14,6 @@ urlpatterns = [
     path('api/appointments/<int:id>/', get_appointment, name='get_appointment'),  # Get a specific appointment
     path('api/appointments/<int:id>/update/', update_appointment, name='update_appointment'),  # Update an appointment
     path('api/appointments/<int:id>/delete/', delete_appointment, name='delete_appointment'),  # Delete an appointment
+    path('api/appointments/<int:id>/cancel/', cancel_appointment, name='cancel_appointment'),  # Cancel endpoint
+
 ]
