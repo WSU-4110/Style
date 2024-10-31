@@ -1,18 +1,23 @@
-/* src/components/OptionsSelector.css */
+/* src/pages/Filter.css */
 
-.options-selector {
+.filter {
     position: fixed; /* Keep it fixed on the left side */
-    top: 20px;      /* Distance from the top */
-    left: 20px;     /* Distance from the left */
+    top: 100px;      /* Distance from the top */
+    left: 0px;     /* Distance from the left */
     width: 200px;   /* Fixed width */
-    background-color: #f9f9f9; /* Background color */
+    background-color: white; /* Black background */
+    color: black;   /* White text */
     padding: 15px;  /* Padding inside the box */
-    border: 1px solid #ccc; /* Border for better visibility */
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    border-radius: 8px; /* Rounded corners */
     z-index: 1000; /* Ensure it appears above other elements */
-  }
-  
-  .options-group {
-    margin-bottom: 15px; /* Space between groups */
-  }
-  
+}
+
+.options-group {
+    margin-bottom: 25px; /* Space between groups */
+    display: flex;       /* Use flexbox to stack labels vertically */
+    flex-direction: column; /* Stack labels vertically */
+}
+
+label {
+    margin-bottom: 10px; /* Space between labels */
+}
