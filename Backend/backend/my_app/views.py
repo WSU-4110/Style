@@ -7,8 +7,7 @@ from .models import UserProfile
 from django.core.mail import EmailMessage
 from django.core.mail.backends.smtp import EmailBackend
 from django.urls import reverse
-
-
+    
 def register_view(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -81,16 +80,45 @@ def password_reset_request(request):
 def placeholder_view(request):
     return HttpResponse("Welcome to the site! This is the placeholder.")
 
-def send_user_email_with_custom_settings(user_profile, subject, message, recipient_list):
-    email_backend = EmailBackend(
-        host=user_profile.email_host,
-        port=user_profile.email_port,
-        username=user_profile.email_user,
-        password=user_profile.email_password,
-        use_tls=user_profile.use_tls,
-        fail_silently=False,
-    )
+#Original method 
+#def send_user_email_with_custom_settings(user_profile, subject, message, recipient_list):
+#    email_backend = EmailBackend(
+#        host=user_profile.email_host,
+#        port=user_profile.email_port,
+#        username=user_profile.email_user,
+#        password=user_profile.email_password,
+#        use_tls=user_profile.use_tls,
+#        fail_silently=False,
+#    )
 
+#    email = EmailMessage(
+#        subject,
+#        message,
+#        user_profile.email_user,
+#        recipient_list,
+#        connection=email_backend,
+#    )
+#   email.send()
+
+#Factory class to create EmailBackend instances 
+class EmailBackendFactory:
+    @staticmethod
+    def create_email_backend(user_profile):
+        """
+        Factory method to create an EmailBackend instance using custom settings.
+        """
+        return EmailBackend(
+            host=user_profile.email_host,
+            port=user_profile.email_port,
+            username=user_profile.email_user,
+            password=user_profile.email_password,
+            use_tls=user_profile.use_tls,
+            fail_silently=False,
+        )
+
+#Updated function using the Factory Method pattern 
+def send_user_email_with_custom_settings(user_profile, subject, message, recipient_list):
+    email_backend = EmailBackendFactory.create_email_backend(user_profile)
     email = EmailMessage(
         subject,
         message,
@@ -99,5 +127,3 @@ def send_user_email_with_custom_settings(user_profile, subject, message, recipie
         connection=email_backend,
     )
     email.send()
-
-# Create your views here.
