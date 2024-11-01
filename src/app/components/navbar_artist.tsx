@@ -3,15 +3,11 @@
 import React from 'react';
 import './navbar_artist.css';
 import { useRouter } from 'next/navigation';
+import { navbarstrat } from './navbarstrat';
 
-export default function Nav_bar() {
-  const router = useRouter();
-
-  const handlelogout = () => {
-    localStorage.removeItem('authToken');
-    alert('Logging out');
-    router.push('/');
-  }
+export class artistnavbar implements navbarstrat {
+  renderNavbar = () => {
+    const router = useRouter();
 
   return (
     <nav className="navigation">
@@ -20,8 +16,9 @@ export default function Nav_bar() {
         <li><button onClick={() => router.push('/portfolio')}>Portfolio</button></li>
         <li><button onClick={() => router.push('/clients')}>Clients</button></li>
         <li><button onClick={() => router.push('/helppage')}>Help</button></li>
-        <li><button onClick={handlelogout}>Log Out</button></li>
+        <li><button onClick={() => { localStorage.removeItem('authToken'); alert('Logging out'); router.push('/'); }}>Log Out</button></li>
       </ul>
     </nav>
   );
+}
 }

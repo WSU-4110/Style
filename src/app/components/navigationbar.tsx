@@ -2,17 +2,12 @@
 
 import React from 'react';
 import './navigationbar.css';
+import { navbarstrat } from './navbarstrat';
 import { useRouter } from 'next/navigation';
 
-export default function Navbar() {
+export class customernavbar implements navbarstrat {
+  renderNavbar = () => {
   const router = useRouter();
-
-  const handlelogout = () => {
-    localStorage.removeItem('authToken');
-    alert('Logging out');
-    router.push('/');
-  }
-
   return (
     <nav className="navigation">
       <ul>
@@ -20,8 +15,9 @@ export default function Navbar() {
         <li><button onClick={() => router.push('/appointments')}>Appointments</button></li>
         <li><button onClick={() => router.push('/userprofile')}>Profile</button></li>
         <li><button onClick={() => router.push('/helppage')}>Help</button></li>
-        <li><button onClick={handlelogout}>Log Out</button></li>
+        <li><button onClick={() => { localStorage.removeItem('authToken'); alert('Logging out'); router.push('/'); }}>Log Out</button></li>
       </ul>
     </nav>
   );
+}
 }
