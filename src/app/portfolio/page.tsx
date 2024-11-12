@@ -57,39 +57,37 @@ export default function Portfolio() {
     setServices(updatedServices);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e:React.FormEvent) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('business_name', businessName);
-    formData.append('bio', bio);
-    if (profilePicture) formData.append('profile_picture', profilePicture);
-    photos.forEach(photo => {
-      formData.append('photos', photo); // Adjust this based on your API's expected structure
-    });
-
-    services.forEach((service, index) => {
-      formData.append(`services[${index}][name]`, service.name);
-      formData.append(`services[${index}][price]`, service.price);
-      formData.append(`services[${index}][time]`, service.time);
-    });
+    const requestData = {
+      business_name: businessName,
+      service: services.map(service => `${service.name} (${service.price} - ${service.time})`).join(', '),
+      amount_due: services.reduce((total, service) => total + parseFloat(service.price || '0'), 0),
+      date: '',
+      time: '',
+      address: '',
+    };
 
     try {
       const response = await fetch('/api/profile', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
       });
 
       if (response.ok) {
-        alert('Portfolio saved successfully!');
-        router.push('/appointments');
+        const responseData = await response.json();
+        console.log('Appointment created:', responseData);
+        router.push('/homepage'); // Redirect to homepage after success
       } else {
-        const error = await response.json();
-        alert(`Error: ${error.message}`);
+        const errorData = await response.json();
+        console.error('Error creating appointment:', errorData);
       }
     } catch (error) {
-      console.error('Error saving portfolio:', error);
-      alert('Failed to save portfolio. Please try again.');
+      console.error('Unexpected error:', error);
     }
   };
 
@@ -98,150 +96,188 @@ export default function Portfolio() {
   };
 
   return (
-    <div className="container">
-      <Nav_bar />
-      <div className="business-name">
-        <input
-          type="text"
-          placeholder="Enter Business Name"
-          value={businessName}
-          onChange={(e) => setBusinessName(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="content-wrapper">
-        {/* Carousel Section */}
-        <div className="carousel-wrapper relative">
-          {/* Profile Picture Upload */}
-          <div
-            className="profile-picture-upload group"
-            onClick={triggerProfileUpload}
-          >
-            <input
-              type="file"
-              ref={profileInputRef}
-              accept="image/*"
-              onChange={handleProfilePictureUpload}
-              style={{ display: 'none' }}
-            />
-            <div className="relative w-full h-full">
-              {profilePicture ? (
-                <img
-                  className="w-full h-full rounded-full object-cover"
-                  src={URL.createObjectURL(profilePicture)}
-                  alt="Profile"
-                />
-              ) : (
-                <div className="w-full h-full bg-gray-200 rounded-full"></div>
-              )}
-              <div className="absolute inset-0 flex items-center justify-center rounded-full bg-gray-200 opacity-0 group-hover:opacity-60 transition-opacity">
-                <img
-                  className="w-8"
-                  src="https://www.svgrepo.com/show/33565/upload.svg"
-                  alt="Upload Icon"
-                />
-              </div>
-            </div>
-          </div>
-
-          
-          {/* Portfolio Photos Upload*/}
+      <div className="container">
+        <Nav_bar />
+        <div className="business-name">
           <input
-            type="file"
-            multiple
-            accept="image/*"
-            onChange={handlePhotoUpload}
+            type="text"
+            placeholder="Enter Business Name"
+            value={businessName}
+            onChange={(e) => setBusinessName(e.target.value)}
+            required
           />
-          <div id="default-carousel" className="relative w-full" data-carousel="slide">
-            <div className="relative h-[500px] w-[900px] overflow-hidden rounded-lg">
-              {photos.length > 0 && (
-                <div className="duration-700 ease-in-out">
+        </div>
+
+        <div className="content-wrapper">
+          {/* Carousel Section */}
+          <div className="carousel-wrapper relative">
+            {/* Profile Picture Upload */}
+            <div
+              className="profile-picture-upload group"
+              onClick={triggerProfileUpload}
+            >
+              <input
+                type="file"
+                ref={profileInputRef}
+                accept="image/*"
+                onChange={handleProfilePictureUpload}
+                style={{ display: 'none' }}
+              />
+              <div className="relative w-full h-full">
+                {profilePicture ? (
                   <img
-                    src={photos[currentPhotoIndex]}
-                    className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                    alt={`Carousel ${currentPhotoIndex}`}
+                    className="w-full h-full rounded-full object-cover"
+                    src={URL.createObjectURL(profilePicture)}
+                    alt="Profile"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-200 rounded-full"></div>
+                )}
+                <div className="absolute inset-0 flex items-center justify-center rounded-full bg-gray-200 opacity-0 group-hover:opacity-60 transition-opacity">
+                  <img
+                    className="w-8"
+                    src="https://www.svgrepo.com/show/33565/upload.svg"
+                    alt="Upload Icon"
                   />
                 </div>
-              )}
+              </div>
             </div>
-            
-            {/* Carousel Navigation */}
-            {/* Left Arrow */}
-            <button type="button" onClick={handlePrevPhoto} className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
-                <svg className="w-4 h-4 text-teal rtl:rotate-180" fill="none" viewBox="0 0 6 10">
-                  <path stroke="teal" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4"/>
-                </svg>
-                <span className="sr-only">Previous</span>
-              </span>
-            </button>
 
-            {/* Right Arrow */}
-            <button type="button" onClick={handleNextPhoto} className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
-                <svg className="w-4 h-4 text-teal rtl:rotate-180" fill="none" viewBox="0 0 6 10">
-                  <path stroke="teal" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
-                </svg>
-                <span className="sr-only">Next</span>
-              </span>
-            </button>
+            {/* Carousel Portfolio Photos Upload */}
+            <div id="default-carousel" className="relative w-full" data-carousel="slide">
+              <div className="relative h-[500px] w-[900px] overflow-hidden rounded-lg group">
+                {photos.length > 0 ? (
+                  <div className="duration-700 ease-in-out">
+                    <img
+                      src={photos[currentPhotoIndex]}
+                      className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                      alt={`Carousel ${currentPhotoIndex}`}
+                    />
+                  </div>
+                ) : (
+                  <div className="w-full h-full bg-gray-200 rounded-md"></div>
+                )}
+
+                {/* Hidden File Input */}
+                <input
+                  type="file"
+                  id="carousel-file-input"
+                  multiple
+                  accept="image/*"
+                  onChange={handlePhotoUpload}
+                  style={{ display: 'none' }}
+                />
+
+                {/* File Upload Overlay */}
+                <label
+                  htmlFor="carousel-file-input"
+                  className="absolute inset-0 flex items-center justify-center bg-gray-200 opacity-0 group-hover:opacity-60 transition-opacity cursor-pointer"
+                >
+                  <img
+                    className="w-10"
+                    src="https://www.svgrepo.com/show/33565/upload.svg"
+                    alt="Upload Icon"
+                  />
+                </label>
+              </div>
+
+              {/* Carousel Navigation */}
+              <button
+                type="button"
+                onClick={handlePrevPhoto}
+                className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                data-carousel-prev
+              >
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
+                  <svg
+                    className="w-4 h-4 text-teal rtl:rotate-180"
+                    fill="none"
+                    viewBox="0 0 6 10"
+                  >
+                    <path stroke="teal" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4" />
+                  </svg>
+                  <span className="sr-only">Previous</span>
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleNextPhoto}
+                className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                data-carousel-next
+              >
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
+                  <svg
+                    className="w-4 h-4 text-teal rtl:rotate-180"
+                    fill="none"
+                    viewBox="0 0 6 10"
+                  >
+                    <path stroke="teal" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
+                  </svg>
+                  <span className="sr-only">Next</span>
+                </span>
+              </button>
+            </div>
+          </div>
+
+          {/* Description Section */}
+          <div className="description-wrapper">
+            <h2>Description</h2>
+            <textarea
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              placeholder="Write a short description"
+            />
           </div>
         </div>
-        
-        {/* Description Section */}
-        <div className="description-wrapper">
-          <h2>Description</h2>
-          <textarea
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-            placeholder="Write a short description"
-          />
-        </div>
-      </div>
 
-      {/* Services Section */}
-      <div className="services-wrapper">
-        <h2>Services Offered</h2>
-        {services.map((service, index) => (
-          <div key={index} className="service-item">
-            <input
-              type="text"
-              placeholder="Service Name"
-              value={service.name}
-              onChange={(e) => handleServiceChange(index, 'name', e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Price"
-              value={service.price}
-              onChange={(e) => handleServiceChange(index, 'price', e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Time"
-              value={service.time}
-              onChange={(e) => handleServiceChange(index, 'time', e.target.value)}
-              required
-            />
-            <button type="button" onClick={() => deleteService(index)} className="delete-service-button">
-              Delete
-            </button>
-          </div>
-        ))}
-        <button type="button" onClick={addService} className="add-service-button">
-          + Add Service
+        {/* Services Section */}
+        <div className="services-wrapper">
+          <h2>Services Offered</h2>
+          {services.map((service, index) => (
+            <div key={index} className="service-item">
+              <input
+                type="text"
+                placeholder="Service Name"
+                value={service.name}
+                onChange={(e) => handleServiceChange(index, 'name', e.target.value)}
+                required
+              />
+              <div className="price-input-wrapper">
+                <span className="price-prefix">$</span>
+                <input
+                  type="text"
+                  placeholder="0.00"
+                  value={service.price}
+                  onChange={(e) => handleServiceChange(index, 'price', e.target.value)}
+                  className="price-input"
+                  required
+                />
+              </div>
+              <input
+                type="text"
+                placeholder="00:00"
+                value={service.time}
+                onChange={(e) => handleServiceChange(index, 'time', e.target.value)}
+                className="time-input"
+                required
+              />
+              <button type="button" onClick={() => deleteService(index)} className="delete-service-button">
+                Delete
+              </button>
+            </div>
+          ))}
+          <button type="button" onClick={addService} className="add-service-button">
+            + Add Service
+          </button>
+        </div>
+
+        <button type="submit" onClick={handleSubmit} className="button">
+          Save Portfolio
+        </button>
+        <button onClick={handleGoBack} className="button mt-6">
+          Go Back to Homepage
         </button>
       </div>
-
-      <button type="submit" onClick={handleSubmit} className="button">
-        Save Portfolio
-      </button>
-      <button onClick={handleGoBack} className="button mt-6">
-        Go Back to Homepage
-      </button>
-    </div>
-  );
-}
+    );
+  }

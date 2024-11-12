@@ -22,11 +22,35 @@ export default function UserProfile() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Full Name:', fullname);
-    console.log('City:', city);
-    console.log('Email:', email);
-    console.log('Phone Number:', phone_number);
-    console.log('Profile Picture:', prof_pic);
+
+    const formData = new FormData();
+    formData.append('fullname', fullname);
+    formData.append('email', email);
+    formData.append('city', city);
+    formData.append('phone_number', phone_number);
+    if (prof_pic) {
+          formData.append('profile_picture', prof_pic);
+        }
+
+        // send updated profile data to backend
+        try {
+          const response = await fetch('/api/userprofile/update', {
+            method: 'PUT',
+            body: formData,
+          });
+
+          if (response.ok) {
+            alert('Profile updated successfully!');
+            router.push('/appointments');  // Redirect to appointments page
+          } else {
+            alert('Failed to update profile');
+          }
+        } catch (error) {
+          console.error(error);
+          alert('An error occurred while updating your profile.');
+        }
+      };
+
   };
 
   const handleLogout = () => {
