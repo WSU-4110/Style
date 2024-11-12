@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 /* ===== Layout and Container ===== */
 
 /* Defines the main container with a max width, centered alignment, and padding */
@@ -10,8 +15,9 @@
 /* Wrapper for main content, setting up a flex layout for side-by-side items */
 .content-wrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-start;
+  gap: 10rem;
 }
 
 /* ===== Business Name Input ===== */
@@ -32,8 +38,8 @@
 /* ===== Carousel ===== */
 /* Wrapper for carousel - sets the size and positions child elements */
 .carousel-wrapper {
-  position: relative;
-  width: 700px;
+  flex-shrink: 0; /* Prevent shrinking */
+  width: 900px;
   height: 500px;
 }
 
@@ -47,9 +53,9 @@
 
 /* Individual carousel images with specific size and rounded corners */
 .carousel-image {
-  width: 700px;
-  height: 500px;
-  margin-right: 8px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 8px;
 }
 
@@ -64,7 +70,7 @@
   overflow: hidden;
   border-radius: 50%;
   border: 2px solid #0ba3ad;
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 4px 10px gray;
   cursor: pointer;
   z-index: 10; /* Ensures it stays in front */
 }
@@ -75,20 +81,12 @@
   height: 100%;
 }
 
-/* Image styling */
-.profile-picture-upload img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
 /* Overlay and icon container */
 .profile-picture-upload .absolute {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  background-color: gray;
   border-radius: 50%;
   transition: opacity 0.3s;
 }
@@ -112,6 +110,7 @@
   padding: 1rem;
   border-radius: 10px;
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-left: auto;
 }
 
 /* Styles for header within the description section */
@@ -134,7 +133,8 @@
 
 /* Container for service items - creates a margin above for spacing */
 .services-wrapper {
-  margin-top: 2rem;
+  margin-top: 10rem;
+  margin-left: -10rem;
 }
 
 /* Styles each service item with gap between elements and bottom margin */
@@ -172,6 +172,42 @@
 /* Changes background color on hover for the main button */
 .button:hover {
   background-color: #424242;
+}
+
+
+/* ------------- Services --------------- */
+
+/* Service Price Text Field */
+.price-input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.price-prefix {
+  font-size: 1rem;
+  margin-right: 0.25rem;
+}
+
+.price-input {
+  text-align: right;
+  width: 100px;
+}
+
+/* Service Time Text Field */
+.time-input {
+  text-align: right;
+  width: 70px;
+}
+
+.time-input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.formatted-time-output {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
 }
 
 /* Styling for the add service button - teal background with padding */

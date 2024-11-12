@@ -5,9 +5,11 @@
 import { useRouter } from 'next/navigation';
 import artistImage from '../../public/artist_barber.jpg';
 import customerImage from '../../public/customer.jpg';
+import logoImage from '../../public/logo.jpg'; // Importing the logo image
 import Navbar from '../components/navigationbar';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import './filter.css';
 
 const SearchBar: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -19,7 +21,6 @@ const SearchBar: React.FC = () => {
     const handleSearchSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         console.log('Searching for:', searchTerm);
-        // Handle search logic here (e.g., filtering data)
     };
 
     return (
@@ -40,9 +41,38 @@ const SearchBar: React.FC = () => {
 
 export default function Home() {
     const router = useRouter();
-    
+
+    const handleRedirect = () => {
+        router.push('schedule');
+    };
+
+    const [selectedFilter, setSelectedFilter] = useState<string>('filter1');
+    const [selectedItems, setSelectedItems] = useState<string[]>([]);
+    const [confirmedSelection, setConfirmedSelection] = useState<boolean>(false);
+
+    const filterNames: Record<string, string> = {
+        filter1: 'Barber',
+        filter2: 'Tutor',
+        filter3: 'Massage',
+    };
+
+    const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedFilter(event.target.value);
+    };
+
+    const handleConfirmSelection = () => {
+        setConfirmedSelection(true);
+        console.log('Confirmed Filter:', filterNames[selectedFilter]);
+        console.log('Confirmed Items:', selectedItems);
+    };
+
     return (
         <div className="min-h-screen flex flex-col bg-white-100">
+            {/* Logo */}
+            <div className="absolute top-0 left-0">
+                <Image src={logoImage} alt="Logo" width={65} height={65} /> {/* Smaller dimensions */}
+            </div>
+
             {/* Header */}
             <header className="text-black py-8 text-center">
                 <h1 className="text-5xl font-bold tracking-wide">Style</h1>
@@ -53,7 +83,67 @@ export default function Home() {
             {/* Search Bar */}
             <SearchBar />
 
-            {/* Images or other content can go here */}
+            {/* Filter Section */}
+            <div className="filter">
+                <h2 className="text-2xl font-bold">Choose Your Options</h2>
+                
+                <div className="options-group">
+                    <h3 className="text-xl font-bold">Select a Filter:</h3>
+                    <label>
+                        <input
+                            type="radio"
+                            value="filter1"
+                            checked={selectedFilter === 'filter1'}
+                            onChange={handleFilterChange}
+                        />
+                        Barber
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            value="filter2"
+                            checked={selectedFilter === 'filter2'}
+                            onChange={handleFilterChange}
+                        />
+                        Tutor
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            value="filter3"
+                            checked={selectedFilter === 'filter3'}
+                            onChange={handleFilterChange}
+                        />
+                        Massage
+                    </label>
+                </div>
+
+                <div>
+                    <h4 className="text-lg font-bold">Selected Filter: {filterNames[selectedFilter]}</h4>
+                </div>
+
+                <button 
+                    onClick={handleConfirmSelection}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4"
+                >
+                    Confirm Selection
+                </button>
+
+                {confirmedSelection && (
+                    <p className="mt-2 text-green-600">Selection confirmed!</p>
+                )}
+            </div>
+
+            {/* Redirect Button */}
+            <div className="flex justify-center mt-6">
+                <button 
+                    onClick={handleRedirect} 
+                    className="bg-teal-400 text-white px-4 py-2 rounded-md"
+                >
+                    Schedule An Appointment
+                </button>
+            </div>
+
             <div className="flex justify-center">
                 <Image src={artistImage} alt="Artist" width={200} height={200} />
                 <Image src={customerImage} alt="Customer" width={200} height={200} />
