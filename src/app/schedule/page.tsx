@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Navbar from '../components/navigationbar';
 
 const months = [
   { name: 'October 2024', year: 2024, month: 9 },
@@ -132,6 +133,7 @@ const CalendarPage: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center p-5 animate-fade-in">
+      <Navbar />
       <h1 className="text-2xl mb-5 text-gray-800 font-bold tracking-wide">Schedule Your Appointment</h1>
 
       {/* Month Selector */}
