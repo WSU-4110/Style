@@ -65,7 +65,7 @@ export default function Portfolio() {
     formData.append('bio', bio);
     if (profilePicture) formData.append('profile_picture', profilePicture);
     photos.forEach(photo => {
-      formData.append('photos', photo); // Adjust this based on your API's expected structure
+      formData.append('photos', photo);
     });
 
     services.forEach((service, index) => {
@@ -145,17 +145,10 @@ export default function Portfolio() {
             </div>
           </div>
 
-          
-          {/* Portfolio Photos Upload*/}
-          <input
-            type="file"
-            multiple
-            accept="image/*"
-            onChange={handlePhotoUpload}
-          />
+          {/* Carousel Portfolio Photos Upload */}
           <div id="default-carousel" className="relative w-full" data-carousel="slide">
-            <div className="relative h-[500px] w-[900px] overflow-hidden rounded-lg">
-              {photos.length > 0 && (
+            <div className="relative h-[500px] w-[900px] overflow-hidden rounded-lg group">
+              {photos.length > 0 ? (
                 <div className="duration-700 ease-in-out">
                   <img
                     src={photos[currentPhotoIndex]}
@@ -163,32 +156,74 @@ export default function Portfolio() {
                     alt={`Carousel ${currentPhotoIndex}`}
                   />
                 </div>
+              ) : (
+                <div className="w-full h-full bg-gray-200 rounded-md"></div>
               )}
+
+              {/* Hidden File Input */}
+              <input
+                type="file"
+                id="carousel-file-input"
+                multiple
+                accept="image/*"
+                onChange={handlePhotoUpload}
+                style={{ display: 'none' }}
+              />
+
+              {/* File Upload Overlay */}
+              <label
+                htmlFor="carousel-file-input"
+                className="absolute inset-0 flex items-center justify-center bg-gray-200 opacity-0 group-hover:opacity-60 transition-opacity cursor-pointer"
+              >
+                <img
+                  className="w-10"
+                  src="https://www.svgrepo.com/show/33565/upload.svg"
+                  alt="Upload Icon"
+                />
+              </label>
             </div>
-            
+
             {/* Carousel Navigation */}
             {/* Left Arrow */}
-            <button type="button" onClick={handlePrevPhoto} className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+            <button
+              type="button"
+              onClick={handlePrevPhoto}
+              className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+              data-carousel-prev
+            >
               <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
-                <svg className="w-4 h-4 text-teal rtl:rotate-180" fill="none" viewBox="0 0 6 10">
-                  <path stroke="teal" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4"/>
+                <svg
+                  className="w-4 h-4 text-teal rtl:rotate-180"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path stroke="teal" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4" />
                 </svg>
                 <span className="sr-only">Previous</span>
               </span>
             </button>
 
             {/* Right Arrow */}
-            <button type="button" onClick={handleNextPhoto} className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+            <button
+              type="button"
+              onClick={handleNextPhoto}
+              className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+              data-carousel-next
+            >
               <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
-                <svg className="w-4 h-4 text-teal rtl:rotate-180" fill="none" viewBox="0 0 6 10">
-                  <path stroke="teal" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
+                <svg
+                  className="w-4 h-4 text-teal rtl:rotate-180"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path stroke="teal" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
                 </svg>
                 <span className="sr-only">Next</span>
               </span>
             </button>
           </div>
         </div>
-        
+
         {/* Description Section */}
         <div className="description-wrapper">
           <h2>Description</h2>
