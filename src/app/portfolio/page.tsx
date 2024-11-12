@@ -44,9 +44,41 @@ export default function Portfolio() {
 
   const handleServiceChange = (index: number, field: string, value: string) => {
     const updatedServices = [...services];
-    updatedServices[index] = { ...updatedServices[index], [field]: value };
+
+    if (field === 'price') {
+      // Handle price formatting (from previous logic)
+      const cleanedValue = value.replace(/[^0-9]/g, ''); // Allow only numbers
+      const formattedValue = (parseFloat(cleanedValue) / 100).toFixed(2);
+      updatedServices[index] = { ...updatedServices[index], [field]: formattedValue };
+    } else if (field === 'time') {
+      // Allow only numeric input for time
+      const numericValue = value.replace(/[^0-9]/g, ''); // Filter non-numeric characters
+      updatedServices[index] = { ...updatedServices[index], [field]: numericValue };
+    } else {
+      updatedServices[index] = { ...updatedServices[index], [field]: value };
+    }
+
     setServices(updatedServices);
   };
+
+
+  {/*Service Time Format*/}
+  const formatTime = (minutes: string) => {
+    const numericMinutes = parseInt(minutes, 10);
+    if (isNaN(numericMinutes)) return '';
+
+    const hours = Math.floor(numericMinutes / 60);
+    const remainingMinutes = numericMinutes % 60;
+
+    if (hours > 0 && remainingMinutes > 0) {
+      return `${hours} hour${hours > 1 ? 's' : ''} and ${remainingMinutes} minute${remainingMinutes > 1 ? 's' : ''}`;
+    } else if (hours > 0) {
+      return `${hours} hour${hours > 1 ? 's' : ''}`;
+    } else {
+      return `${remainingMinutes} minute${remainingMinutes > 1 ? 's' : ''}`;
+    }
+  };
+
 
   const addService = () => {
     setServices([...services, { name: '', price: '', time: '' }]);
@@ -65,7 +97,7 @@ export default function Portfolio() {
     formData.append('bio', bio);
     if (profilePicture) formData.append('profile_picture', profilePicture);
     photos.forEach(photo => {
-      formData.append('photos', photo); // Adjust this based on your API's expected structure
+      formData.append('photos', photo);
     });
 
     services.forEach((service, index) => {
@@ -145,17 +177,10 @@ export default function Portfolio() {
             </div>
           </div>
 
-          
-          {/* Portfolio Photos Upload*/}
-          <input
-            type="file"
-            multiple
-            accept="image/*"
-            onChange={handlePhotoUpload}
-          />
+          {/* Carousel Portfolio Photos Upload */}
           <div id="default-carousel" className="relative w-full" data-carousel="slide">
-            <div className="relative h-[500px] w-[900px] overflow-hidden rounded-lg">
-              {photos.length > 0 && (
+            <div className="relative h-[500px] w-[900px] overflow-hidden rounded-lg group">
+              {photos.length > 0 ? (
                 <div className="duration-700 ease-in-out">
                   <img
                     src={photos[currentPhotoIndex]}
@@ -163,32 +188,72 @@ export default function Portfolio() {
                     alt={`Carousel ${currentPhotoIndex}`}
                   />
                 </div>
+              ) : (
+                <div className="w-full h-full bg-gray-200 rounded-md"></div>
               )}
+
+              {/* Hidden File Input */}
+              <input
+                type="file"
+                id="carousel-file-input"
+                multiple
+                accept="image/*"
+                onChange={handlePhotoUpload}
+                style={{ display: 'none' }}
+              />
+
+              {/* File Upload Overlay */}
+              <label
+                htmlFor="carousel-file-input"
+                className="absolute inset-0 flex items-center justify-center bg-gray-200 opacity-0 group-hover:opacity-60 transition-opacity cursor-pointer"
+              >
+                <img
+                  className="w-10"
+                  src="https://www.svgrepo.com/show/33565/upload.svg"
+                  alt="Upload Icon"
+                />
+              </label>
             </div>
-            
+
             {/* Carousel Navigation */}
-            {/* Left Arrow */}
-            <button type="button" onClick={handlePrevPhoto} className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+            <button
+              type="button"
+              onClick={handlePrevPhoto}
+              className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+              data-carousel-prev
+            >
               <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
-                <svg className="w-4 h-4 text-teal rtl:rotate-180" fill="none" viewBox="0 0 6 10">
-                  <path stroke="teal" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4"/>
+                <svg
+                  className="w-4 h-4 text-teal rtl:rotate-180"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path stroke="teal" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4" />
                 </svg>
                 <span className="sr-only">Previous</span>
               </span>
             </button>
 
-            {/* Right Arrow */}
-            <button type="button" onClick={handleNextPhoto} className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+            <button
+              type="button"
+              onClick={handleNextPhoto}
+              className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+              data-carousel-next
+            >
               <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
-                <svg className="w-4 h-4 text-teal rtl:rotate-180" fill="none" viewBox="0 0 6 10">
-                  <path stroke="teal" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
+                <svg
+                  className="w-4 h-4 text-teal rtl:rotate-180"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path stroke="teal" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
                 </svg>
                 <span className="sr-only">Next</span>
               </span>
             </button>
           </div>
         </div>
-        
+
         {/* Description Section */}
         <div className="description-wrapper">
           <h2>Description</h2>
@@ -212,18 +277,23 @@ export default function Portfolio() {
               onChange={(e) => handleServiceChange(index, 'name', e.target.value)}
               required
             />
+            <div className="price-input-wrapper">
+              <span className="price-prefix">$</span>
+              <input
+                type="text"
+                placeholder="0.00"
+                value={service.price}
+                onChange={(e) => handleServiceChange(index, 'price', e.target.value)}
+                className="price-input"
+                required
+              />
+            </div>
             <input
               type="text"
-              placeholder="Price"
-              value={service.price}
-              onChange={(e) => handleServiceChange(index, 'price', e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Time"
+              placeholder="00:00"
               value={service.time}
               onChange={(e) => handleServiceChange(index, 'time', e.target.value)}
+              className="time-input"
               required
             />
             <button type="button" onClick={() => deleteService(index)} className="delete-service-button">
