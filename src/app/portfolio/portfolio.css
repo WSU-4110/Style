@@ -81,14 +81,6 @@
   height: 100%;
 }
 
-/* Image styling */
-.profile-picture-upload img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
 /* Overlay and icon container */
 .profile-picture-upload .absolute {
   display: flex;
