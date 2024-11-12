@@ -5,7 +5,7 @@
 import { useRouter } from 'next/navigation';
 import artistImage from '../../public/artist_barber.jpg';
 import customerImage from '../../public/customer.jpg';
-import logoImage from '../../public/transparent_logo.png'; // Importing the logo image
+import logoImage from '../../public/transparent_logo.png';
 import Navbar from '../components/navigationbar';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -69,8 +69,8 @@ export default function Home() {
     return (
         <div className="min-h-screen flex flex-col bg-white-100">
             {/* Logo */}
-            <div className="bg-black fixed top-0 left-0">
-                <Image src={logoImage} alt="Logo" width={64} height={64} /> {/* Smaller dimensions */}
+            <div className="bg-black fixed top-0 left-0 inline-flex">
+                <Image src={logoImage} alt="Logo" width={64} height={30} /> {/* Smaller dimensions */}
             </div>
 
             {/* Header */}
@@ -84,7 +84,7 @@ export default function Home() {
             <SearchBar />
 
             {/* Filter Section */}
-            <div className="filter">
+            <div className="filter fixed">
                 <h2 className="text-2xl font-bold">Choose Your Options</h2>
                 
                 <div className="options-group">
@@ -147,6 +147,20 @@ export default function Home() {
             <div className="flex justify-center">
                 <Image src={artistImage} alt="Artist" width={200} height={200} />
                 <Image src={customerImage} alt="Customer" width={200} height={200} />
+            </div>
+
+            <div className="space-y-10 mt-10">
+                <section className="bg-white py-8 px-4">
+                    <h2 className="text-2xl font-bold text-left mb-4">New Businesses</h2>
+                    <div className="flex overflow-x-auto space-x-4 px-4">
+                    </div>
+                </section>
+
+                <section className="bg-white py-8 px-4">
+                    <h2 className="text-2xl font-bold text-left mb-4">Recommended</h2>
+                    <div className="flex overflow-x-auto space-x-4 px-4">
+                    </div>
+                </section>
             </div>
         </div>
     );
