@@ -70,7 +70,7 @@
   overflow: hidden;
   border-radius: 50%;
   border: 2px solid #0ba3ad;
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 4px 10px gray;
   cursor: pointer;
   z-index: 10; /* Ensures it stays in front */
 }
@@ -86,7 +86,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  background-color: gray;
   border-radius: 50%;
   transition: opacity 0.3s;
 }
@@ -172,6 +172,42 @@
 /* Changes background color on hover for the main button */
 .button:hover {
   background-color: #424242;
+}
+
+
+/* ------------- Services --------------- */
+
+/* Service Price Text Field */
+.price-input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.price-prefix {
+  font-size: 1rem;
+  margin-right: 0.25rem;
+}
+
+.price-input {
+  text-align: right;
+  width: 100px;
+}
+
+/* Service Time Text Field */
+.time-input {
+  text-align: right;
+  width: 70px;
+}
+
+.time-input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.formatted-time-output {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
 }
 
 /* Styling for the add service button - teal background with padding */

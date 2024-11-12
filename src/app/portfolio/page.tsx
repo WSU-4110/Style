@@ -44,9 +44,41 @@ export default function Portfolio() {
 
   const handleServiceChange = (index: number, field: string, value: string) => {
     const updatedServices = [...services];
-    updatedServices[index] = { ...updatedServices[index], [field]: value };
+
+    if (field === 'price') {
+      // Handle price formatting (from previous logic)
+      const cleanedValue = value.replace(/[^0-9]/g, ''); // Allow only numbers
+      const formattedValue = (parseFloat(cleanedValue) / 100).toFixed(2);
+      updatedServices[index] = { ...updatedServices[index], [field]: formattedValue };
+    } else if (field === 'time') {
+      // Allow only numeric input for time
+      const numericValue = value.replace(/[^0-9]/g, ''); // Filter non-numeric characters
+      updatedServices[index] = { ...updatedServices[index], [field]: numericValue };
+    } else {
+      updatedServices[index] = { ...updatedServices[index], [field]: value };
+    }
+
     setServices(updatedServices);
   };
+
+
+  {/*Service Time Format*/}
+  const formatTime = (minutes: string) => {
+    const numericMinutes = parseInt(minutes, 10);
+    if (isNaN(numericMinutes)) return '';
+
+    const hours = Math.floor(numericMinutes / 60);
+    const remainingMinutes = numericMinutes % 60;
+
+    if (hours > 0 && remainingMinutes > 0) {
+      return `${hours} hour${hours > 1 ? 's' : ''} and ${remainingMinutes} minute${remainingMinutes > 1 ? 's' : ''}`;
+    } else if (hours > 0) {
+      return `${hours} hour${hours > 1 ? 's' : ''}`;
+    } else {
+      return `${remainingMinutes} minute${remainingMinutes > 1 ? 's' : ''}`;
+    }
+  };
+
 
   const addService = () => {
     setServices([...services, { name: '', price: '', time: '' }]);
@@ -184,7 +216,6 @@ export default function Portfolio() {
             </div>
 
             {/* Carousel Navigation */}
-            {/* Left Arrow */}
             <button
               type="button"
               onClick={handlePrevPhoto}
@@ -203,7 +234,6 @@ export default function Portfolio() {
               </span>
             </button>
 
-            {/* Right Arrow */}
             <button
               type="button"
               onClick={handleNextPhoto}
@@ -247,18 +277,23 @@ export default function Portfolio() {
               onChange={(e) => handleServiceChange(index, 'name', e.target.value)}
               required
             />
+            <div className="price-input-wrapper">
+              <span className="price-prefix">$</span>
+              <input
+                type="text"
+                placeholder="0.00"
+                value={service.price}
+                onChange={(e) => handleServiceChange(index, 'price', e.target.value)}
+                className="price-input"
+                required
+              />
+            </div>
             <input
               type="text"
-              placeholder="Price"
-              value={service.price}
-              onChange={(e) => handleServiceChange(index, 'price', e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Time"
+              placeholder="00:00"
               value={service.time}
               onChange={(e) => handleServiceChange(index, 'time', e.target.value)}
+              className="time-input"
               required
             />
             <button type="button" onClick={() => deleteService(index)} className="delete-service-button">
