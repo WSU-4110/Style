@@ -1,23 +1,85 @@
-/* src/pages/Filter.css */
-
-.filter {
-    position: fixed; /* Keep it fixed on the left side */
-    top: 100px;      /* Distance from the top */
-    left: 0px;     /* Distance from the left */
-    width: 200px;   /* Fixed width */
-    background-color: white; /* Black background */
-    color: black;   /* White text */
-    padding: 15px;  /* Padding inside the box */
-    border-radius: 8px; /* Rounded corners */
-    z-index: 1000; /* Ensure it appears above other elements */
+/* Sidebar Styles */
+.sidebar {
+    position: fixed; /* Fix the sidebar to the left side of the screen */
+    left: 0; /* Align to the left edge of the screen */
+    top: 60px; /* Move the sidebar down 60px from the top of the screen */
+    width: 30px; /* Set width of the sidebar */
+    background-color: #2d3748; /* Dark background */
+    color: white;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    transition: width 0.3s ease, background-color 0.3s ease; /* Smooth transition for width and background */
+    z-index: 10; /* Ensure it stays on top of the content */
 }
 
-.options-group {
-    margin-bottom: 25px; /* Space between groups */
-    display: flex;       /* Use flexbox to stack labels vertically */
-    flex-direction: column; /* Stack labels vertically */
+.sidebar:hover {
+    width: 200px; /* Expand sidebar on hover */
+    background-color: #4a5568; /* Slightly lighter background on hover */
 }
 
-label {
-    margin-bottom: 10px; /* Space between labels */
+/* Sidebar navigation list */
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 1rem;
+}
+
+.sidebar nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.125rem;
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.sidebar nav ul li a:hover {
+    color: #38b2ac; /* Change color on hover */
+}
+
+/* Sidebar Item Styles */
+.sidebar-item {
+    transition: background-color 0.3s ease, border 0.3s ease; /* Smooth transition for background and border */
+}
+
+/* Sidebar item hover effect */
+.sidebar-item:hover {
+    border: 2px solid #4ade80; /* Teal border */
+    background-color: #e0f7fa; /* Light teal background */
+}
+
+/* Navbar Styles */
+.navbar {
+    position: relative; /* Keep navbar at the top of the page */
+    top: 0;
+    width: 100%;
+    background-color: #2d3748; /* Dark background */
+    color: white;
+    padding: 1rem;
+    z-index: 5; /* Keep navbar above the content, but below the sidebar */
+    text-align: center;
+}
+
+.navbar h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+/* Content Styles */
+.main-content {
+    margin-left: 240px; /* Push content right to make space for the sidebar */
+    padding: 20px;
+    padding-top: 60px; /* Add padding to top to ensure content isn't hidden behind the navbar */
+}
+
+footer {
+    background-color: #2d3748;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    margin-top: 50px; /* Optional: Space between content and footer */
 }
