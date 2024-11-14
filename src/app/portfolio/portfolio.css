@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-/* ==================================== Layout and Container ==================================== */
+/* ==================================== Main Layout and Container ==================================== */
 
 /* Defines the main container with a max width, centered alignment, and padding */
 .container {
@@ -35,222 +35,75 @@
   outline: none;
 }
 
-/* ======================================== Carousel ============================================== */
-/* Wrapper for carousel - sets the size and positions child elements */
-.carousel-wrapper {
-  flex-shrink: 0; /* Prevent shrinking */
-  width: 900px;
-  height: 500px;
-}
 
-/* Carousel container - scrollable with a border and rounded corners */
-.carousel {
-  display: flex;
-  overflow-x: scroll;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-/* Individual carousel images with specific size and rounded corners */
-.carousel-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-/* ============================================== Profile Picture Upload ========================================== */
-/* Moves the profile picture upload to the bottom left of the carousel */
-.profile-picture-upload {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  width: 180px;
-  height: 180px;
-  overflow: hidden;
-  border-radius: 50%;
-  border: 2px solid #0ba3ad;
-  box-shadow: 2px 4px 10px gray;
-  cursor: pointer;
-  z-index: 10; /* Ensures it stays in front */
-}
-
-.profile-picture-upload .relative {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-/* Overlay and icon container */
-.profile-picture-upload .absolute {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: gray;
-  border-radius: 50%;
-  transition: opacity 0.3s;
-}
-
-/* Hides the overlay initially, reveals it on hover */
-.profile-picture-upload .group-hover\\:opacity-60 {
-  opacity: 0; /* Initially hidden */
-}
-
-.profile-picture-upload:hover .group-hover\\:opacity-60 {
-  opacity: 0.6; /* Visible on hover */
-}
+/* 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000  Right Side of Page 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 */
+/* 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 */
 
 
-/* Address Box Section */
-.business-address-wrapper {
-  margin-bottom: 20px;
-}
 
-.business-address-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-/* ================================================ Description Section ========================================== */
-
-/* Wrapper for description text area - includes padding, background color, and shadow */
-.description-wrapper {
-  width: 400px;
-  height: 300px;
+/* ==================================== Mini-Map Section ==================================== */
+.mini-map {
+  width: 400px; /* Adjust width as needed */
+  height: 400px; /* Adjust height as needed */
   background-color: #f9f9f9;
   padding: 1rem;
+  border-radius: 1px;
+  margin-left: 0rem; /* Add space between carousel and map */
+}
+
+.map-box {
+  width: 350px;
+  height: 350px;
+  background-color: #e0e0e0; /* Placeholder color */
+  border-radius: 10px;
+}
+
+/* ================================= Social Media Links Section ================================= */
+
+.social-links-wrapper {
+  background-color: #f9f9f9; /* Light background for contrast */
+  padding: 1.5rem;
   border-radius: 10px;
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-  margin-left: auto;
+  margin-top: 1.5rem;
 }
 
-/* Styles for header within the description section */
-.description-wrapper h2 {
+.social-links-wrapper h2 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
+  color: #333; /* Darker text for contrast */
 }
 
-/* Textarea for description with rounded corners and internal padding */
-.description-wrapper textarea {
-  width: 100%;
-  height: 75%;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 0.5rem;
-  resize: none; /* Prevents resizing */
-}
-
-/* ================================================= Services Section ============================================= */
-
-/* Container for service items - creates a margin above for spacing */
-.services-wrapper {
-  margin-top: 10rem;
-  margin-left: -10rem;
-}
-
-/* Styles each service item with gap between elements and bottom margin */
-.service-item {
+.social-link-item {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
   margin-bottom: 1rem;
 }
 
-/* Styles input fields within the service items */
-.service-item input {
-  flex: 1;
+.social-label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #0ba3ad; /* Teal color for label */
+}
+
+.social-input {
   padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-/* ================================================= Button Styles =================================================== */
-
-/* General styles for all buttons - text color, border radius, and transition for hover effect */
-.button, .add-service-button, .delete-service-button {
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-/* Main button styling - black background with hover effect */
-.button {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 0.75rem 1.5rem;
-  background-color: #000000;
-}
-
-/* Changes background color on hover for the main button */
-.button:hover {
-  background-color: #424242;
+.social-input:focus {
+  border-color: #0ba3ad; /* Teal border on focus */
+  box-shadow: 0 0 5px rgba(11, 163, 173, 0.3);
 }
 
 
-/* ======================================================= Services ================================================ */
-
-/* Service Price Text Field */
-.price-input-wrapper {
-  display: flex;
-  align-items: center;
-}
-
-.price-prefix {
-  font-size: 1rem;
-  margin-right: 0.25rem;
-}
-
-.price-input {
-  text-align: right;
-  width: 100px;
-}
-
-/* Service Time Text Field */
-.time-input {
-  text-align: right;
-  width: 70px;
-}
-
-.time-input-wrapper {
-  display: flex;
-  flex-direction: column;
-}
-
-.formatted-time-output {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-/* Styling for the add service button - teal background with padding */
-.add-service-button {
-  background-color: #0ba3ad;
-  padding: 0.5rem 1rem;
-}
-
-/* Hover effect for add service button */
-.add-service-button:hover {
-  background-color: #0a8088;
-}
-
-/* Styling for delete service button - teal background, same as add button */
-.delete-service-button {
-  background-color: #0ba3ad;
-  padding: 0.5rem 1rem;
-}
-
-/* Changes background color to red on hover for delete button */
-.delete-service-button:hover {
-  background-color: #862216;
-}
-
-
-/* ============================================ Hour Selection ===========================================*/
+/* ====================================== Hour Selection ===========================================*/
 
 .select-hours-container {
-  margin-top: 20px;
+  margin-top: 1rem;
   text-align: left; /* Align the button to the left */
 }
 
@@ -374,9 +227,223 @@
   color: #555;
 }
 
-/* ============================ Miscellaneous Styles ========================================================== */
 
-/* Utility class for additional top margin */
-.mt-6 {
+/* 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 Left Side of Page 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 */
+/* 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 */
+
+/* ======================================== Carousel ============================================== */
+/* Wrapper for carousel - sets the size and positions child elements */
+.carousel-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  flex-shrink: 0; /* Prevent shrinking */
+  width: 900px;
+  height: 500px;
+}
+
+/* Carousel container - scrollable with a border and rounded corners */
+.carousel {
+  display: flex;
+  overflow-x: scroll;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Individual carousel images with specific size and rounded corners */
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* ===================================== Profile Picture Upload ========================================== */
+/* Moves the profile picture upload to the bottom left of the carousel */
+.profile-picture-upload {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: 180px;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 2px solid #0ba3ad;
+  box-shadow: 2px 4px 10px gray;
+  cursor: pointer;
+  z-index: 10; /* Ensures it stays in front */
+}
+
+.profile-picture-upload .relative {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Overlay and icon container */
+.profile-picture-upload .absolute {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: gray;
+  border-radius: 50%;
+  transition: opacity 0.3s;
+}
+
+/* Hides the overlay initially, reveals it on hover */
+.profile-picture-upload .group-hover\\:opacity-60 {
+  opacity: 0; /* Initially hidden */
+}
+
+.profile-picture-upload:hover .group-hover\\:opacity-60 {
+  opacity: 0.6; /* Visible on hover */
+}
+
+/* ========================================= Description Section ========================================== */
+
+/* Adjusted styles for better left alignment and spacing */
+.description-wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-left: 0;
   margin-top: 1rem;
+  float: left;
+}
+
+
+/* Styles for header within the description section */
+.description-wrapper h2 {
+  font-size: 1.5rem;
+}
+
+/* Textarea for description with rounded corners and internal padding */
+.description-wrapper textarea {
+  width: 100%;
+  height: 75%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem;
+  resize: none; /* Prevents resizing */
+}
+
+/* ===================================== Services Section ============================================= */
+
+/* Container for service items - adjusted margins for better spacing */
+.services-wrapper {
+  padding: 1rem;
+  background-color: #f9f9f9; /* Optional background for clarity */
+  border-radius: 10px;
+}
+
+/* Styles each service item with gap between elements and bottom margin */
+.service-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: center; /* Ensures vertical alignment */
+}
+
+/* Styles input fields within the service items */
+.service-item input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Price input wrapper - aligns price and label properly */
+.price-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.price-prefix {
+  font-size: 1rem;
+  color: #333; /* Adjust for better readability */
+}
+
+.price-input {
+  text-align: right;
+  width: 80px; /* Slightly smaller for a compact look */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Service Time Text Field */
+.time-input {
+  text-align: right;
+  width: 100px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.time-input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.formatted-time-output {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Styling for add and delete buttons */
+.add-service-button,
+.delete-service-button {
+  background-color: #0ba3ad;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Hover effect for add and delete buttons */
+.add-service-button:hover,
+.delete-service-button:hover {
+  background-color: #0a8088;
+}
+
+.delete-service-button:hover {
+  background-color: #862216; /* Different color for delete button */
+}
+
+
+/* ====================================== Button Styles =================================================== */
+
+/* General styles for all buttons - text color, border radius, and transition for hover effect */
+.actions-container {
+  margin-top: 1rem; /* Add spacing above the Save and Go Back buttons */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.button, .add-service-button, .delete-service-button {
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Main button styling - black background with hover effect */
+.button {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #000000;
+}
+
+/* Changes background color on hover for the main button */
+.button:hover {
+  background-color: #424242;
 }

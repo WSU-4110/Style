@@ -15,7 +15,11 @@ export default function Portfolio() {
   const [showBusinessHours, setShowBusinessHours] = useState(false);
   const [businessHours, setBusinessHours] = useState<{ [key: string]: { open: string; close: string } }>({});
   const [selectedMonth, setSelectedMonth] = useState('');
-  const [businessAddress, setBusinessAddress] = useState('');
+  const [socialLinks, setSocialLinks] = useState<{ platform: string, url: string }[]>([
+    { platform: 'Instagram', url: '' },
+    { platform: 'Facebook', url: '' },
+    { platform: 'Twitter', url: '' }
+  ]);
 
   const profileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -48,31 +52,8 @@ export default function Portfolio() {
 
   const handleServiceChange = (index: number, field: string, value: string) => {
     const updatedServices = [...services];
-    if (field === 'price') {
-      const cleanedValue = value.replace(/[^0-9]/g, '');
-      const formattedValue = (parseFloat(cleanedValue) / 100).toFixed(2);
-      updatedServices[index] = { ...updatedServices[index], [field]: formattedValue };
-    } else if (field === 'time') {
-      const numericValue = value.replace(/[^0-9]/g, '');
-      updatedServices[index] = { ...updatedServices[index], [field]: numericValue };
-    } else {
-      updatedServices[index] = { ...updatedServices[index], [field]: value };
-    }
+    updatedServices[index] = { ...updatedServices[index], [field]: value };
     setServices(updatedServices);
-  };
-
-  const formatTime = (minutes: string) => {
-    const numericMinutes = parseInt(minutes, 10);
-    if (isNaN(numericMinutes)) return '';
-    const hours = Math.floor(numericMinutes / 60);
-    const remainingMinutes = numericMinutes % 60;
-    if (hours > 0 && remainingMinutes > 0) {
-      return `${hours} hour${hours > 1 ? 's' : ''} and ${remainingMinutes} minute${remainingMinutes > 1 ? 's' : ''}`;
-    } else if (hours > 0) {
-      return `${hours} hour${hours > 1 ? 's' : ''}`;
-    } else {
-      return `${remainingMinutes} minute${remainingMinutes > 1 ? 's' : ''}`;
-    }
   };
 
   const addService = () => {
@@ -84,12 +65,17 @@ export default function Portfolio() {
     setServices(updatedServices);
   };
 
+  const handleSocialLinkChange = (index: number, field: string, value: string) => {
+    const updatedLinks = [...socialLinks];
+    updatedLinks[index] = { ...updatedLinks[index], [field]: value };
+    setSocialLinks(updatedLinks);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('business_name', businessName);
     formData.append('bio', bio);
-    formData.append('business_address', businessAddress);
     if (profilePicture) formData.append('profile_picture', profilePicture);
     photos.forEach(photo => {
       formData.append('photos', photo);
@@ -98,6 +84,10 @@ export default function Portfolio() {
       formData.append(`services[${index}][name]`, service.name);
       formData.append(`services[${index}][price]`, service.price);
       formData.append(`services[${index}][time]`, service.time);
+    });
+    socialLinks.forEach((link, index) => {
+      formData.append(`socialLinks[${index}][platform]`, link.platform);
+      formData.append(`socialLinks[${index}][url]`, link.url);
     });
     try {
       const response = await fetch('/api/profile', {
@@ -115,10 +105,6 @@ export default function Portfolio() {
       console.error('Error saving portfolio:', error);
       alert('Failed to save portfolio. Please try again.');
     }
-  };
-
-  const handleGoBack = () => {
-    router.push('/');
   };
 
   const toggleBusinessHours = () => {
@@ -139,6 +125,11 @@ export default function Portfolio() {
     }));
   };
 
+  const handleSaveBusinessHours = () => {
+    alert('Business hours saved successfully!');
+    setShowBusinessHours(false);
+  };
+
   return (
     <div className="container">
       <Nav_bar />
@@ -153,7 +144,7 @@ export default function Portfolio() {
       </div>
 
       <div className="content-wrapper">
-        {/* Carousel Section */}
+        {/* Carousel Wrapper */}
         <div className="carousel-wrapper relative">
           <div
             className="profile-picture-upload group"
@@ -257,77 +248,96 @@ export default function Portfolio() {
               </span>
             </button>
           </div>
-        </div>
 
-        {/* Business Address Section */}
-        <div className="business-address-wrapper">
-          <h2>Business Location</h2>
-          <input
-            type="text"
-            placeholder="Enter Business Address"
-            value={businessAddress}
-            onChange={(e) => setBusinessAddress(e.target.value)}
-            className="business-address-input"
-            required
-          />
-        </div>
-
-        {/* Description Section (Moved below Business Address) */}
-        <div className="description-wrapper">
-          <h2>Description</h2>
-          <textarea
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-            placeholder="Write a short description"
-          />
-        </div>
-      </div>
-
-      <div className="services-wrapper">
-        <h2>Services Offered</h2>
-        {services.map((service, index) => (
-          <div key={index} className="service-item">
-            <input
-              type="text"
-              placeholder="Service Name"
-              value={service.name}
-              onChange={(e) => handleServiceChange(index, 'name', e.target.value)}
-              required
+          {/* About Section */}
+          <div className="description-wrapper">
+            <h2>About</h2>
+            <textarea
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              placeholder="Write a short description"
             />
-            <div className="price-input-wrapper">
-              <span className="price-prefix">$</span>
-              <input
-                type="text"
-                placeholder="0.00"
-                value={service.price}
-                onChange={(e) => handleServiceChange(index, 'price', e.target.value)}
-                className="price-input"
-                required
-              />
+          </div>
+
+          {/* Services Section */}
+          <div className="services-wrapper">
+            <h2>Services Offered</h2>
+            {services.map((service, index) => (
+              <div key={index} className="service-item">
+                <input
+                  type="text"
+                  placeholder="Service Name"
+                  value={service.name}
+                  onChange={(e) => handleServiceChange(index, 'name', e.target.value)}
+                  required
+                />
+                <div className="price-input-wrapper">
+                  <span className="price-prefix">$</span>
+                  <input
+                    type="text"
+                    placeholder="0.00"
+                    value={service.price}
+                    onChange={(e) => handleServiceChange(index, 'price', e.target.value)}
+                    className="price-input"
+                    required
+                  />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Enter time (e.g., 1 hour)"
+                  value={service.time}
+                  onChange={(e) => handleServiceChange(index, 'time', e.target.value)}
+                  className="time-input"
+                />
+                <button type="button" onClick={() => deleteService(index)} className="delete-service-button">
+                  Delete
+                </button>
+              </div>
+            ))}
+            <button type="button" onClick={addService} className="add-service-button">
+              + Add Service
+            </button>
+
+            {/* Save Portfolio Button */}
+            <div className="actions-container">
+              <button type="submit" onClick={handleSubmit} className="button">
+                Save Portfolio
+              </button>
             </div>
-            <input
-              type="text"
-              placeholder="00:00"
-              value={service.time}
-              onChange={(e) => handleServiceChange(index, 'time', e.target.value)}
-              className="time-input"
-              required
-            />
-            <button type="button" onClick={() => deleteService(index)} className="delete-service-button">
-              Delete
+          </div>
+        </div>
+
+        {/* Mini-map Section */}
+        <div className="mini-map">
+          <h2>Business Location</h2>
+          <div className="map-box">
+            {/* Mini-map or location content goes here */}
+          </div>
+
+          {/* Social Media Links Section */}
+          <div className="social-links-wrapper">
+            <h2>Social Media Links</h2>
+            {socialLinks.map((link, index) => (
+              <div key={index} className="social-link-item">
+                <label className="social-label">{link.platform}</label>
+                <input
+                  type="url"
+                  className="social-input"
+                  placeholder={`Enter ${link.platform} URL`}
+                  value={link.url}
+                  onChange={(e) => handleSocialLinkChange(index, 'url', e.target.value)}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Select Hours Button */}
+          <div className="select-hours-container">
+            <button onClick={toggleBusinessHours} className="button select-hours-button">
+              Select Hours
             </button>
           </div>
-        ))}
-        <button type="button" onClick={addService} className="add-service-button">
-          + Add Service
-        </button>
-      </div>
-
-      {/* Move the Select Hours button to its own section */}
-      <div className="select-hours-container">
-        <button onClick={toggleBusinessHours} className="button select-hours-button">
-          Select Hours
-        </button>
+        </div>
       </div>
 
       {/* Business Hours Modal */}
@@ -378,22 +388,18 @@ export default function Portfolio() {
               ))}
             </div>
 
-            <button onClick={toggleBusinessHours} className="close-modal-button">
-              Close
-            </button>
+            {/* Save and Close Buttons */}
+            <div className="modal-actions">
+              <button onClick={handleSaveBusinessHours} className="button save-modal-button">
+                Save
+              </button>
+              <button onClick={toggleBusinessHours} className="button close-modal-button">
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}
-
-      {/* Save and Go Back buttons */}
-      <div className="actions-container">
-        <button type="submit" onClick={handleSubmit} className="button">
-          Save Portfolio
-        </button>
-        <button onClick={handleGoBack} className="button mt-6">
-          Go Back to Homepage
-        </button>
-      </div>
     </div>
   );
 }
