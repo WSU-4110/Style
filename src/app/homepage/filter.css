@@ -1,25 +1,25 @@
 /* Sidebar Styles */
 .sidebar {
-    position: fixed; /* Fix the sidebar to the left side of the screen */
-    left: 0; /* Align to the left edge of the screen */
-    top: 60px; /* Move the sidebar down 60px from the top of the screen */
-    width: 30px; /* Set width of the sidebar */
-    background-color: #2d3748; /* Dark background */
+    position: fixed; /* Fixed position on the left side */
+    top: 60px; /* Offset from the top */
+    left: 0;
+    width: 70px; /* Default width */
+    background-color: black; /* Dark background */
     color: white;
     padding: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    transition: width 0.3s ease, background-color 0.3s ease; /* Smooth transition for width and background */
-    z-index: 10; /* Ensure it stays on top of the content */
+    transition: width 0.3s ease, background-color 0.3s ease;
+    z-index: 10; /* Ensure sidebar is above content */
 }
 
 .sidebar:hover {
-    width: 200px; /* Expand sidebar on hover */
-    background-color: #4a5568; /* Slightly lighter background on hover */
+    width: 200px; /* Expanded width on hover */
+    background-color: black; /* Darker background on hover */
 }
 
-/* Sidebar navigation list */
+/* Sidebar Navigation Styles */
 .sidebar nav ul {
     list-style: none;
     padding: 0;
@@ -31,22 +31,21 @@
 }
 
 .sidebar nav ul li a {
-    color: white;
+    color: black;
     text-decoration: none;
     font-size: 1.125rem;
-    transition: color 0.3s ease; /* Smooth color transition on hover */
+    transition: color 0.3s ease; /* Smooth color transition */
 }
 
 .sidebar nav ul li a:hover {
-    color: #38b2ac; /* Change color on hover */
+    color: #38b2ac; /* Teal color on hover */
 }
 
 /* Sidebar Item Styles */
 .sidebar-item {
-    transition: background-color 0.3s ease, border 0.3s ease; /* Smooth transition for background and border */
+    transition: background-color 0.3s ease, border 0.3s ease; /* Smooth transition */
 }
 
-/* Sidebar item hover effect */
 .sidebar-item:hover {
     border: 2px solid #4ade80; /* Teal border */
     background-color: #e0f7fa; /* Light teal background */
@@ -54,13 +53,13 @@
 
 /* Navbar Styles */
 .navbar {
-    position: relative; /* Keep navbar at the top of the page */
+    position: relative;
     top: 0;
     width: 100%;
-    background-color: #2d3748; /* Dark background */
+    background-color: black; /* Dark background */
     color: white;
     padding: 1rem;
-    z-index: 5; /* Keep navbar above the content, but below the sidebar */
+    z-index: 5; /* Keep navbar above content but below sidebar */
     text-align: center;
 }
 
@@ -69,17 +68,18 @@
     margin: 0;
 }
 
-/* Content Styles */
+/* Main Content Styles */
 .main-content {
-    margin-left: 240px; /* Push content right to make space for the sidebar */
+    margin-left: 240px; /* Offset content to the right for sidebar */
     padding: 20px;
-    padding-top: 60px; /* Add padding to top to ensure content isn't hidden behind the navbar */
+    padding-top: 60px; /* Add top padding for navbar */
 }
 
+/* Footer Styles */
 footer {
-    background-color: #2d3748;
+    background-color: #2d3748; /* Dark footer background */
     color: white;
     padding: 1rem;
     text-align: center;
-    margin-top: 50px; /* Optional: Space between content and footer */
+    margin-top: 50px; /* Space between content and footer */
 }

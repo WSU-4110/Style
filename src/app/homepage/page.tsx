@@ -6,6 +6,10 @@ import { useRouter } from 'next/navigation';
 import artistImage from '../../public/artist_barber.jpg';
 import customerImage from '../../public/customer.jpg';
 import logoImage from '../../public/logo.jpg'; // Importing the logo image
+import nailSalonLogo from '../../public/nail_logo.png'; // Replace with actual logo
+import hairLogo from '../../public/hair_logo.png'; // Replace with actual logo
+import tattooLogo from '../../public/tattoo_logo.png'; // Replace with actual logo
+import barberLogo from '../../public/barber_logo.png'; // Replace with actual logo
 import Navbar from '../components/navigationbar';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -52,7 +56,7 @@ export default function Home() {
             <Navbar />
 
             {/* Main Content Area */}
-            <main className="flex-1 p-8">
+            <main className="flex-1 p-8 ml-64">
                 {/* Header */}
                 <div className="flex flex-col items-center justify-center mb-8 text-center">
                     <div className="flex items-center justify-center">
@@ -83,27 +87,47 @@ export default function Home() {
             </main>
 
             {/* Sidebar */}
-            <aside className="sidebar w-64 bg-gray-100 p-4 absolute left-0 top-[120px]">
+            <aside className="sidebar w-64 bg-gray-100 p-4 fixed left-0 top-[60px] z-10 transition-all duration-300 ease-in-out hover:w-64">
                 <nav>
                     <ul>
-                        <li className="mb-4">
-                            <div className="sidebar-item p-4 rounded-md">
-                                <a href="/" className="text-lg hover:text-teal-400">Barber</a>
+                        <li className="sidebar-item mb-4 flex flex-col items-center group">
+                            {/* Logo for Nail Salon */}
+                            <div className="logo-container">
+                                <Image src={nailSalonLogo} alt="Nail Salon" width={40} height={40} />
+                            </div>
+                            {/* Text for Nail Salon, hidden by default */}
+                            <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <a href="/nailsalon" className="text-lg hover:text-teal-400">Nail Salon</a>
                             </div>
                         </li>
-                        <li className="mb-4">
-                            <div className="sidebar-item p-4 rounded-md">
-                                <a href="/services" className="text-lg hover:text-teal-400">Tutor</a>
+                        <li className="sidebar-item mb-4 flex flex-col items-center group">
+                            {/* Logo for Hair Stylists */}
+                            <div className="logo-container">
+                                <Image src={hairLogo} alt="Hair Stylists" width={40} height={40} />
+                            </div>
+                            {/* Text for Hair Stylists, hidden by default */}
+                            <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <a href="/hair" className="text-lg hover:text-teal-400">Hair Stylists</a>
                             </div>
                         </li>
-                        <li className="mb-4">
-                            <div className="sidebar-item p-4 rounded-md">
-                                <a href="/about" className="text-lg hover:text-teal-400">Doctor</a>
+                        <li className="sidebar-item mb-4 flex flex-col items-center group">
+                            {/* Logo for Tattoo Artists */}
+                            <div className="logo-container">
+                                <Image src={tattooLogo} alt="Tattoo Artist" width={40} height={40} />
+                            </div>
+                            {/* Text for Tattoo Artist, hidden by default */}
+                            <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <a href="/tattoo" className="text-lg hover:text-teal-400">Tattoo Artist</a>
                             </div>
                         </li>
-                        <li className="mb-4">
-                            <div className="sidebar-item p-4 rounded-md">
-                                <a href="/contact" className="text-lg hover:text-teal-400">Counselor</a>
+                        <li className="sidebar-item mb-4 flex flex-col items-center group">
+                            {/* Logo for Barber Shops */}
+                            <div className="logo-container">
+                                <Image src={barberLogo} alt="Barber Shops" width={40} height={40} />
+                            </div>
+                            {/* Text for Barber Shops, hidden by default */}
+                            <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <a href="/barber" className="text-lg hover:text-teal-400">Barber Shops</a>
                             </div>
                         </li>
                     </ul>
