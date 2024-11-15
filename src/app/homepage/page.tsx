@@ -151,8 +151,11 @@ export default function Home() {
 
             <div className="space-y-10 mt-10">
                 <section className="bg-white py-8 px-4">
-                    <h2 className="text-2xl font-bold text-left mb-4">New Businesses</h2>
-                    <div className="flex overflow-x-auto space-x-4 px-4">
+                    <div className="text-2xl font-bold text-left mb-4">New Businesses</div>
+                        <div className="flex overflow-x-auto space-x-4 px-4">
+                        <div className="bg-gray-200 w-60 h-60 flex items-center justify-center text-center shadow-md rounded-lg">
+                            First Business
+                        </div>
                     </div>
                 </section>
 

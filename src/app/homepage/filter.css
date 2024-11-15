@@ -1,7 +1,7 @@
 /* src/pages/Filter.css */
 
 .filter {
-    position: fixed; /* Keep it fixed on the left side */
+    position: fixed;   /* Keep it fixed on the left side */
     top: 100px;      /* Distance from the top */
     left: 0px;     /* Distance from the left */
     width: 200px;   /* Fixed width */
