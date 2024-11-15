@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-/* ===== Layout and Container ===== */
+/* ==================================== Layout and Container ==================================== */
 
 /* Defines the main container with a max width, centered alignment, and padding */
 .container {
@@ -20,7 +20,7 @@
   gap: 10rem;
 }
 
-/* ===== Business Name Input ===== */
+/* =================================== Business Name Input ======================================== */
 /* Styles for the business name input field - bold text, centered, and decorative bottom border */
 .business-name input {
   font-size: 2rem;
@@ -35,7 +35,7 @@
   outline: none;
 }
 
-/* ===== Carousel ===== */
+/* ======================================== Carousel ============================================== */
 /* Wrapper for carousel - sets the size and positions child elements */
 .carousel-wrapper {
   flex-shrink: 0; /* Prevent shrinking */
@@ -59,7 +59,7 @@
   border-radius: 8px;
 }
 
-/* ===== Profile Picture Upload ===== */
+/* ============================================== Profile Picture Upload ========================================== */
 /* Moves the profile picture upload to the bottom left of the carousel */
 .profile-picture-upload {
   position: absolute;
@@ -100,7 +100,21 @@
   opacity: 0.6; /* Visible on hover */
 }
 
-/* ===== Description Section ===== */
+
+/* Address Box Section */
+.business-address-wrapper {
+  margin-bottom: 20px;
+}
+
+.business-address-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* ================================================ Description Section ========================================== */
 
 /* Wrapper for description text area - includes padding, background color, and shadow */
 .description-wrapper {
@@ -129,7 +143,7 @@
   resize: none; /* Prevents resizing */
 }
 
-/* ===== Services Section ===== */
+/* ================================================= Services Section ============================================= */
 
 /* Container for service items - creates a margin above for spacing */
 .services-wrapper {
@@ -150,7 +164,7 @@
   padding: 0.5rem;
 }
 
-/* ===== Button Styles ===== */
+/* ================================================= Button Styles =================================================== */
 
 /* General styles for all buttons - text color, border radius, and transition for hover effect */
 .button, .add-service-button, .delete-service-button {
@@ -175,7 +189,7 @@
 }
 
 
-/* ------------- Services --------------- */
+/* ======================================================= Services ================================================ */
 
 /* Service Price Text Field */
 .price-input-wrapper {
@@ -232,7 +246,135 @@
   background-color: #862216;
 }
 
-/* ===== Miscellaneous Styles ===== */
+
+/* ============================================ Hour Selection ===========================================*/
+
+.select-hours-container {
+  margin-top: 20px;
+  text-align: left; /* Align the button to the left */
+}
+
+.select-hours-button {
+  background-color: #0ba3ad;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.select-hours-button:hover {
+  background-color: #0a8088;
+}
+
+.actions-container {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 700px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.close-modal-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #0ba3ad;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100px;
+  display: block;
+  margin-left: auto;
+}
+
+.close-modal-button:hover {
+  background-color: #0ba3ad;
+}
+
+.month-select {
+  margin-bottom: 15px;
+  padding: 10px;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.hours-input-wrapper {
+  margin-top: 15px;
+}
+
+.day-input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.day-label {
+  font-weight: bold;
+  flex-basis: 20%;
+  text-align: left;
+}
+
+.time-input-group {
+  display: flex;
+  align-items: center;
+  flex-basis: 75%;
+}
+
+.time-input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 45%;
+  margin-right: 5px;
+}
+
+.time-separator {
+  font-size: 16px;
+  margin: 0 5px;
+  color: #555;
+}
+
+/* ============================ Miscellaneous Styles ========================================================== */
 
 /* Utility class for additional top margin */
 .mt-6 {

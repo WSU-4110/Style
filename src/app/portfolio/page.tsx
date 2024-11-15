@@ -12,6 +12,10 @@ export default function Portfolio() {
   const [photos, setPhotos] = useState<string[]>([]);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [services, setServices] = useState([{ name: '', price: '', time: '' }]);
+  const [showBusinessHours, setShowBusinessHours] = useState(false);
+  const [businessHours, setBusinessHours] = useState<{ [key: string]: { open: string; close: string } }>({});
+  const [selectedMonth, setSelectedMonth] = useState('');
+  const [businessAddress, setBusinessAddress] = useState('');
 
   const profileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -44,32 +48,24 @@ export default function Portfolio() {
 
   const handleServiceChange = (index: number, field: string, value: string) => {
     const updatedServices = [...services];
-
     if (field === 'price') {
-      // Handle price formatting (from previous logic)
-      const cleanedValue = value.replace(/[^0-9]/g, ''); // Allow only numbers
+      const cleanedValue = value.replace(/[^0-9]/g, '');
       const formattedValue = (parseFloat(cleanedValue) / 100).toFixed(2);
       updatedServices[index] = { ...updatedServices[index], [field]: formattedValue };
     } else if (field === 'time') {
-      // Allow only numeric input for time
-      const numericValue = value.replace(/[^0-9]/g, ''); // Filter non-numeric characters
+      const numericValue = value.replace(/[^0-9]/g, '');
       updatedServices[index] = { ...updatedServices[index], [field]: numericValue };
     } else {
       updatedServices[index] = { ...updatedServices[index], [field]: value };
     }
-
     setServices(updatedServices);
   };
 
-
-  {/*Service Time Format*/}
   const formatTime = (minutes: string) => {
     const numericMinutes = parseInt(minutes, 10);
     if (isNaN(numericMinutes)) return '';
-
     const hours = Math.floor(numericMinutes / 60);
     const remainingMinutes = numericMinutes % 60;
-
     if (hours > 0 && remainingMinutes > 0) {
       return `${hours} hour${hours > 1 ? 's' : ''} and ${remainingMinutes} minute${remainingMinutes > 1 ? 's' : ''}`;
     } else if (hours > 0) {
@@ -78,7 +74,6 @@ export default function Portfolio() {
       return `${remainingMinutes} minute${remainingMinutes > 1 ? 's' : ''}`;
     }
   };
-
 
   const addService = () => {
     setServices([...services, { name: '', price: '', time: '' }]);
@@ -91,27 +86,24 @@ export default function Portfolio() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const formData = new FormData();
     formData.append('business_name', businessName);
     formData.append('bio', bio);
+    formData.append('business_address', businessAddress);
     if (profilePicture) formData.append('profile_picture', profilePicture);
     photos.forEach(photo => {
       formData.append('photos', photo);
     });
-
     services.forEach((service, index) => {
       formData.append(`services[${index}][name]`, service.name);
       formData.append(`services[${index}][price]`, service.price);
       formData.append(`services[${index}][time]`, service.time);
     });
-
     try {
       const response = await fetch('/api/profile', {
         method: 'POST',
         body: formData,
       });
-
       if (response.ok) {
         alert('Portfolio saved successfully!');
         router.push('/appointments');
@@ -127,6 +119,24 @@ export default function Portfolio() {
 
   const handleGoBack = () => {
     router.push('/');
+  };
+
+  const toggleBusinessHours = () => {
+    setShowBusinessHours(!showBusinessHours);
+  };
+
+  const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedMonth(e.target.value);
+  };
+
+  const handleHourChange = (day: string, field: 'open' | 'close', value: string) => {
+    setBusinessHours((prev) => ({
+      ...prev,
+      [day]: {
+        ...prev[day],
+        [field]: value,
+      },
+    }));
   };
 
   return (
@@ -145,7 +155,6 @@ export default function Portfolio() {
       <div className="content-wrapper">
         {/* Carousel Section */}
         <div className="carousel-wrapper relative">
-          {/* Profile Picture Upload */}
           <div
             className="profile-picture-upload group"
             onClick={triggerProfileUpload}
@@ -177,7 +186,6 @@ export default function Portfolio() {
             </div>
           </div>
 
-          {/* Carousel Portfolio Photos Upload */}
           <div id="default-carousel" className="relative w-full" data-carousel="slide">
             <div className="relative h-[500px] w-[900px] overflow-hidden rounded-lg group">
               {photos.length > 0 ? (
@@ -192,7 +200,6 @@ export default function Portfolio() {
                 <div className="w-full h-full bg-gray-200 rounded-md"></div>
               )}
 
-              {/* Hidden File Input */}
               <input
                 type="file"
                 id="carousel-file-input"
@@ -202,7 +209,6 @@ export default function Portfolio() {
                 style={{ display: 'none' }}
               />
 
-              {/* File Upload Overlay */}
               <label
                 htmlFor="carousel-file-input"
                 className="absolute inset-0 flex items-center justify-center bg-gray-200 opacity-0 group-hover:opacity-60 transition-opacity cursor-pointer"
@@ -215,7 +221,6 @@ export default function Portfolio() {
               </label>
             </div>
 
-            {/* Carousel Navigation */}
             <button
               type="button"
               onClick={handlePrevPhoto}
@@ -254,7 +259,20 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Description Section */}
+        {/* Business Address Section */}
+        <div className="business-address-wrapper">
+          <h2>Business Location</h2>
+          <input
+            type="text"
+            placeholder="Enter Business Address"
+            value={businessAddress}
+            onChange={(e) => setBusinessAddress(e.target.value)}
+            className="business-address-input"
+            required
+          />
+        </div>
+
+        {/* Description Section (Moved below Business Address) */}
         <div className="description-wrapper">
           <h2>Description</h2>
           <textarea
@@ -265,7 +283,6 @@ export default function Portfolio() {
         </div>
       </div>
 
-      {/* Services Section */}
       <div className="services-wrapper">
         <h2>Services Offered</h2>
         {services.map((service, index) => (
@@ -306,12 +323,77 @@ export default function Portfolio() {
         </button>
       </div>
 
-      <button type="submit" onClick={handleSubmit} className="button">
-        Save Portfolio
-      </button>
-      <button onClick={handleGoBack} className="button mt-6">
-        Go Back to Homepage
-      </button>
+      {/* Move the Select Hours button to its own section */}
+      <div className="select-hours-container">
+        <button onClick={toggleBusinessHours} className="button select-hours-button">
+          Select Hours
+        </button>
+      </div>
+
+      {/* Business Hours Modal */}
+      {showBusinessHours && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Select Business Hours for {selectedMonth || 'Month'}</h3>
+            <select onChange={handleMonthChange} value={selectedMonth} className="month-select">
+              <option value="" disabled>Select Month</option>
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
+
+            <div className="hours-input-wrapper">
+              {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => (
+                <div key={day} className="day-input-wrapper">
+                  <div className="day-label">
+                    <label>{day}</label>
+                  </div>
+                  <div className="time-input-group">
+                    <input
+                      type="time"
+                      value={businessHours[day]?.open || ''}
+                      onChange={(e) => handleHourChange(day, 'open', e.target.value)}
+                      className="time-input"
+                      placeholder="Open"
+                    />
+                    <span className="time-separator">to</span>
+                    <input
+                      type="time"
+                      value={businessHours[day]?.close || ''}
+                      onChange={(e) => handleHourChange(day, 'close', e.target.value)}
+                      className="time-input"
+                      placeholder="Close"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <button onClick={toggleBusinessHours} className="close-modal-button">
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Save and Go Back buttons */}
+      <div className="actions-container">
+        <button type="submit" onClick={handleSubmit} className="button">
+          Save Portfolio
+        </button>
+        <button onClick={handleGoBack} className="button mt-6">
+          Go Back to Homepage
+        </button>
+      </div>
     </div>
   );
 }
