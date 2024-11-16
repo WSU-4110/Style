@@ -1,9 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 
-/* ===== Layout and Container ===== */
+
+/* ==================================== Main Layout and Container ==================================== */
 
 /* Defines the main container with a max width, centered alignment, and padding */
 .container {
@@ -20,7 +18,7 @@
   gap: 10rem;
 }
 
-/* ===== Business Name Input ===== */
+/* =================================== Business Name Input ======================================== */
 /* Styles for the business name input field - bold text, centered, and decorative bottom border */
 .business-name input {
   font-size: 2rem;
@@ -35,9 +33,217 @@
   outline: none;
 }
 
-/* ===== Carousel ===== */
+
+/* 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000  Right Side of Page 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 */
+/* 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 */
+
+
+
+/* ==================================== Mini-Map Section ==================================== */
+.mini-map {
+  width: 400px; /* Adjust width as needed */
+  height: 400px; /* Adjust height as needed */
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 1px;
+  margin-left: 0rem; /* Add space between carousel and map */
+}
+
+.map-box {
+  width: 350px;
+  height: 350px;
+  background-color: #e0e0e0; /* Placeholder color */
+  border-radius: 10px;
+}
+
+/* ================================= Social Media Links Section ================================= */
+
+.social-links-wrapper {
+  background-color: #f9f9f9; /* Light background for contrast */
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 1.5rem;
+}
+
+.social-links-wrapper h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333; /* Darker text for contrast */
+}
+
+.social-link-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  background-color: #fff;
+  padding: 0.75rem;
+  border-radius: 10px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0e0e0;
+}
+
+.icon-wrapper {
+  margin-right: 1rem;
+}
+
+.social-label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #0ba3ad; /* Teal color for label */
+}
+
+.social-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.social-input:focus {
+  border-color: #0ba3ad;
+  box-shadow: 0 0 5px rgba(11, 163, 173, 0.3);
+}
+
+/* ====================================== Hour Selection ===========================================*/
+
+.select-hours-container {
+  margin-top: 1rem;
+  text-align: left; /* Align the button to the left */
+}
+
+.select-hours-button {
+  background-color: #0ba3ad;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.select-hours-button:hover {
+  background-color: #0a8088;
+}
+
+.actions-container {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 700px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.close-modal-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #0ba3ad;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100px;
+  display: block;
+  margin-left: auto;
+}
+
+.close-modal-button:hover {
+  background-color: #0ba3ad;
+}
+
+.month-select {
+  margin-bottom: 15px;
+  padding: 10px;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.hours-input-wrapper {
+  margin-top: 15px;
+}
+
+.day-input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.day-label {
+  font-weight: bold;
+  flex-basis: 20%;
+  text-align: left;
+}
+
+.time-input-group {
+  display: flex;
+  align-items: center;
+  flex-basis: 75%;
+}
+
+.time-input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 45%;
+  margin-right: 5px;
+}
+
+.time-separator {
+  font-size: 16px;
+  margin: 0 5px;
+  color: #555;
+}
+
+
+/* 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 Left Side of Page 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 */
+/* 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 */
+
+/* ======================================== Carousel ============================================== */
 /* Wrapper for carousel - sets the size and positions child elements */
 .carousel-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   flex-shrink: 0; /* Prevent shrinking */
   width: 900px;
   height: 500px;
@@ -59,7 +265,7 @@
   border-radius: 8px;
 }
 
-/* ===== Profile Picture Upload ===== */
+/* ===================================== Profile Picture Upload ========================================== */
 /* Moves the profile picture upload to the bottom left of the carousel */
 .profile-picture-upload {
   position: absolute;
@@ -70,7 +276,7 @@
   overflow: hidden;
   border-radius: 50%;
   border: 2px solid #0ba3ad;
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 4px 10px gray;
   cursor: pointer;
   z-index: 10; /* Ensures it stays in front */
 }
@@ -81,20 +287,12 @@
   height: 100%;
 }
 
-/* Image styling */
-.profile-picture-upload img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
 /* Overlay and icon container */
 .profile-picture-upload .absolute {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  background-color: gray;
   border-radius: 50%;
   transition: opacity 0.3s;
 }
@@ -108,23 +306,24 @@
   opacity: 0.6; /* Visible on hover */
 }
 
-/* ===== Description Section ===== */
+/* ========================================= Description Section ========================================== */
 
-/* Wrapper for description text area - includes padding, background color, and shadow */
+/* Adjusted styles for better left alignment and spacing */
 .description-wrapper {
-  width: 400px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
   background-color: #f9f9f9;
   padding: 1rem;
   border-radius: 10px;
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-  margin-left: auto;
+  margin-left: 0;
+  margin-top: 1rem;
+  float: left;
 }
+
 
 /* Styles for header within the description section */
 .description-wrapper h2 {
   font-size: 1.5rem;
-  margin-bottom: 1rem;
 }
 
 /* Textarea for description with rounded corners and internal padding */
@@ -137,30 +336,104 @@
   resize: none; /* Prevents resizing */
 }
 
-/* ===== Services Section ===== */
+/* ===================================== Services Section ============================================= */
 
-/* Container for service items - creates a margin above for spacing */
+/* Container for service items - adjusted margins for better spacing */
 .services-wrapper {
-  margin-top: 10rem;
-  margin-left: -10rem;
+  padding: 1rem;
+  background-color: #f9f9f9; /* Optional background for clarity */
+  border-radius: 10px;
 }
 
 /* Styles each service item with gap between elements and bottom margin */
 .service-item {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 1rem;
+  align-items: center; /* Ensures vertical alignment */
 }
 
 /* Styles input fields within the service items */
 .service-item input {
   flex: 1;
   padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-/* ===== Button Styles ===== */
+/* Price input wrapper - aligns price and label properly */
+.price-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.price-prefix {
+  font-size: 1rem;
+  color: #333; /* Adjust for better readability */
+}
+
+.price-input {
+  text-align: right;
+  width: 80px; /* Slightly smaller for a compact look */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Service Time Text Field */
+.time-input {
+  text-align: right;
+  width: 100px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.time-input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.formatted-time-output {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Styling for add and delete buttons */
+.add-service-button,
+.delete-service-button {
+  background-color: #0ba3ad;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Hover effect for add and delete buttons */
+.add-service-button:hover,
+.delete-service-button:hover {
+  background-color: #0a8088;
+}
+
+.delete-service-button:hover {
+  background-color: #862216; /* Different color for delete button */
+}
+
+
+/* ====================================== Button Styles =================================================== */
 
 /* General styles for all buttons - text color, border radius, and transition for hover effect */
+.actions-container {
+  margin-top: 1rem; /* Add spacing above the Save and Go Back buttons */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .button, .add-service-button, .delete-service-button {
   color: white;
   border: none;
@@ -180,33 +453,4 @@
 /* Changes background color on hover for the main button */
 .button:hover {
   background-color: #424242;
-}
-
-/* Styling for the add service button - teal background with padding */
-.add-service-button {
-  background-color: #0ba3ad;
-  padding: 0.5rem 1rem;
-}
-
-/* Hover effect for add service button */
-.add-service-button:hover {
-  background-color: #0a8088;
-}
-
-/* Styling for delete service button - teal background, same as add button */
-.delete-service-button {
-  background-color: #0ba3ad;
-  padding: 0.5rem 1rem;
-}
-
-/* Changes background color to red on hover for delete button */
-.delete-service-button:hover {
-  background-color: #862216;
-}
-
-/* ===== Miscellaneous Styles ===== */
-
-/* Utility class for additional top margin */
-.mt-6 {
-  margin-top: 1rem;
 }
