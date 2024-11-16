@@ -1,9 +1,10 @@
-'use client'
+'use client';
 
 import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './portfolio.css';
 import Nav_bar from '../components/navbar_artist';
+import SocialMediaInput from '../components/socialmediainput'; // Default import (no curly braces)
 
 export default function Portfolio() {
   const [businessName, setBusinessName] = useState('');
@@ -318,16 +319,12 @@ export default function Portfolio() {
           <div className="social-links-wrapper">
             <h2>Social Media Links</h2>
             {socialLinks.map((link, index) => (
-              <div key={index} className="social-link-item">
-                <label className="social-label">{link.platform}</label>
-                <input
-                  type="url"
-                  className="social-input"
-                  placeholder={`Enter ${link.platform} URL`}
-                  value={link.url}
-                  onChange={(e) => handleSocialLinkChange(index, 'url', e.target.value)}
-                />
-              </div>
+              <SocialMediaInput
+                key={index}
+                platform={link.platform}
+                url={link.url}
+                onUrlChange={(url) => handleSocialLinkChange(index, 'url', url)}
+              />
             ))}
           </div>
 
