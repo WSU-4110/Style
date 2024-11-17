@@ -3,6 +3,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib import messages
 
+from django.http import HttpResponse
+
+
 #user registration viewing
 def register_view(request):
     if request.method == "POST":
@@ -20,7 +23,11 @@ def register_view(request):
             user.save()
             login(request, user)
             print("user registered and logged in sucessfully")
+
+            return redirect('placeholder')
+
             return redirect('portfolio')
+
         except Exception as e:
             messages.error(request, str(e))
             return render(request, 'profiles/account_page.html')
@@ -45,6 +52,9 @@ def login_view(request):
         if user is not None:
             login(request, user)
             print("user logged in succesfully")
+
+            return redirect('placeholder')
+
             return redirect('portfolio')
 
         else:
@@ -53,5 +63,10 @@ def login_view(request):
 
     return render(request, 'profiles/account_page.html')
 
+
+def placeholder_view(request):
+    return HttpResponse("Welcome to the site! This is the placeholder.")
+
 def portfolio_view(request):
     return render(request, 'portfolio.html')
+

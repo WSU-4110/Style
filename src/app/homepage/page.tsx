@@ -5,7 +5,7 @@
 import { useRouter } from 'next/navigation';
 import artistImage from '../../public/artist_barber.jpg';
 import customerImage from '../../public/customer.jpg';
-import logoImage from '../../public/logo.jpg'; // Importing the logo image
+import logoImage from '../../public/transparent_logo.png';
 import nailSalonLogo from '../../public/nail_logo.png'; // Replace with actual logo
 import hairLogo from '../../public/hair_logo.png'; // Replace with actual logo
 import tattooLogo from '../../public/tattoo_logo.png'; // Replace with actual logo
@@ -37,7 +37,7 @@ const SearchBar: React.FC = () => {
                 onChange={handleSearchChange}
                 className="p-2 border border-gray-300 rounded-l-md"
             />
-            <button type="submit" className="bg-blue-500 text-white p-2 rounded-r-md">
+            <button type="submit" className="bg-teal-400 text-white p-2 rounded-r-md">
                 Search
             </button>
         </form>
@@ -52,8 +52,18 @@ export default function Home() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col">
-            {/* Navbar */}
+        <div className="min-h-screen flex flex-col bg-white-100">
+            {/* Logo */}
+            <div className="bg-black fixed top-0 left-0 inline-flex">
+                <Image src={logoImage} alt="Logo" width={64} height={30} /> {/* Smaller dimensions */}
+            </div>
+
+            {/* Header */}
+            <header className="text-black py-8 text-center">
+                <h1 className="text-5xl font-bold tracking-wide">Style</h1>
+                <p className="mt-2 text-lg">Where Artists and Customers Connect Effortlessly</p>
+            </header>
+            
             <Navbar />
 
             {/* Main Content Area */}
