@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Navbar from '../components/navigationbar';
 
 const months = [
@@ -28,6 +28,26 @@ const CalendarPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedPeriod, setSelectedPeriod] = useState<string | null>(null);
 
+  const getAvailableTimes = useCallback((period: string) => {
+    const times: string[] = [];
+    let startHour = 0, endHour = 0;
+
+    if (period === 'Morning') {
+      startHour = 9; endHour = 12;
+    } else if (period === 'Afternoon') {
+      startHour = 13; endHour = 16;
+    } else if (period === 'Evening') {
+      startHour = 17; endHour = 22;
+    }
+
+    for (let hour = startHour; hour < endHour; hour++) {
+      times.push(formatTime(hour, 0));  // :00
+      times.push(formatTime(hour, 30)); // :30
+    }
+
+    return times;
+  }, []);
+
   useEffect(() => {
     if (selectedDate && selectedPeriod) {
       setIsLoading(true);
@@ -36,7 +56,7 @@ const CalendarPage: React.FC = () => {
         setIsLoading(false);
       }, 500);
     }
-  }, [selectedDate, selectedPeriod]);
+  }, [selectedDate, selectedPeriod, getAvailableTimes]);
 
   const handleMonthChange = (month: typeof selectedMonth) => {
     setSelectedMonth(month);
@@ -72,26 +92,6 @@ const CalendarPage: React.FC = () => {
     }
   };
 
-  const getAvailableTimes = (period: string) => {
-    let times: string[] = [];
-    let startHour = 0, endHour = 0;
-
-    if (period === 'Morning') {
-      startHour = 9; endHour = 12;
-    } else if (period === 'Afternoon') {
-      startHour = 13; endHour = 16;
-    } else if (period === 'Evening') {
-      startHour = 17; endHour = 22;
-    }
-
-    for (let hour = startHour; hour < endHour; hour++) {
-      times.push(formatTime(hour, 0));  // :00
-      times.push(formatTime(hour, 30)); // :30
-    }
-
-    return times;
-  };
-
   const formatTime = (hour: number, minutes: number) => {
     const period = hour >= 12 ? 'PM' : 'AM';
     const adjustedHour = hour > 12 ? hour - 12 : hour;
@@ -109,7 +109,6 @@ const CalendarPage: React.FC = () => {
 
   const renderCalendarDates = () => {
     const { year, month } = selectedMonth;
-    const firstDayOfMonth = new Date(year, month, 1);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
     return Array.from({ length: daysInMonth }, (_, i) => {
@@ -135,7 +134,6 @@ const CalendarPage: React.FC = () => {
     <div className="flex flex-col items-center p-5 animate-fade-in">
       <Navbar />
       <h1 className="text-2xl mb-5 text-gray-800 font-bold tracking-wide">Schedule Your Appointment</h1>
-
       {/* Month Selector */}
       <div className="mb-6 w-full max-w-md">
         <label htmlFor="month-select" className="block text-lg text-gray-700 mb-2 font-medium">

@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation'; // Ensure `useRouter` is imported correctly.
-import axios from 'axios'; // Ensure you have `axios` installed and imported.
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
@@ -36,9 +38,9 @@ export default function Login() {
       // Redirect to the Portfolio page after successful login
       router.push("/Portfolio");
 
-    } catch (error: any) {
-      console.error('Login failed', error.message);
-      if (error.response) {
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        console.error('Login failed', error.message);
         switch (error.response.status) {
           case 400:
             setError("User does not exist");
@@ -55,6 +57,9 @@ export default function Login() {
           default:
             setError("An unexpected error occurred");
         }
+      } else {
+        console.error('An unexpected error occurred', error);
+        setError("An unexpected error occurred");
       }
     }
   };
