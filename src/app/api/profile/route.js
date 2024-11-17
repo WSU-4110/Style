@@ -1,16 +1,14 @@
-import admin from '../../firebase-admin'; 
+import admin from '../../firebase-admin';
 import { NextResponse } from 'next/server';
 import { setDoc, doc } from 'firebase/firestore';
-import { db, storage } from '../../firebase-admin'; 
+import { db, storage } from '../../firebase-admin';
+import { ref, uploadBytes } from 'firebase/storage'; 
 
 export async function POST(request) {
   try {
-    // Parse form data from the request
-    const formData = await request.formData();
-    const businessName = formData.get('business_name');
-    const bio = formData.get('bio');
-    const profilePic = formData.get('profile_picture');
-    const photos = formData.getAll('photos'); 
+    // Parse JSON data from the request body
+    const data = await request.json();
+    const { businessName, bio, profilePic, photos } = data;
 
     // Extract and verify the token from the request headers
     const authHeader = request.headers.get("Authorization");
@@ -43,7 +41,7 @@ export async function POST(request) {
     }
 
     // Handle additional photos if needed
-    if (photos.length > 0) {
+    if (photos && photos.length > 0) {
       photos.forEach(async (photo) => {
         const storageRef = ref(storage, `business_photos/${userId}/${photo.name}`);
         await uploadBytes(storageRef, photo);
