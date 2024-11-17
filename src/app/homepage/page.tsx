@@ -10,6 +10,7 @@ import nailSalonLogo from '../../public/nail_logo.png'; // Replace with actual l
 import hairLogo from '../../public/hair_logo.png'; // Replace with actual logo
 import tattooLogo from '../../public/tattoo_logo.png'; // Replace with actual logo
 import barberLogo from '../../public/barber_logo.png'; // Replace with actual logo
+import newLogo from '../../public/new_logo.png'; // Replace with actual logo
 import Navbar from '../components/navigationbar';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -128,6 +129,17 @@ export default function Home() {
                             {/* Text for Barber Shops, hidden by default */}
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <a href="/barber" className="text-lg hover:text-teal-400">Barber Shops</a>
+                            </div>
+                        </li>
+                        {/* New Section: Under 6 Months */}
+                        <li className="sidebar-item mb-4 flex flex-col items-center group">
+                            {/* Logo for Under 6 Months */}
+                            <div className="logo-container">
+                                <Image src={newLogo} alt="Under 6 Months" width={40} height={40} />
+                            </div>
+                            {/* Text for Under 6 Months, hidden by default */}
+                            <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <a href="/under6months" className="text-lg hover:text-teal-400">Under 6 Months</a>
                             </div>
                         </li>
                     </ul>
