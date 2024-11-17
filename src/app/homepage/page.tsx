@@ -1,11 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-'use client'; 
+'use client';
 
 import { useRouter } from 'next/navigation';
 import artistImage from '../../public/artist_barber.jpg';
 import customerImage from '../../public/customer.jpg';
 import logoImage from '../../public/transparent_logo.png';
+import nailSalonLogo from '../../public/nail_logo.png'; // Replace with actual logo
+import hairLogo from '../../public/hair_logo.png'; // Replace with actual logo
+import tattooLogo from '../../public/tattoo_logo.png'; // Replace with actual logo
+import barberLogo from '../../public/barber_logo.png'; // Replace with actual logo
+import newLogo from '../../public/new_logo.png'; // Replace with actual logo
 import Navbar from '../components/navigationbar';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -46,26 +51,6 @@ export default function Home() {
         router.push('schedule');
     };
 
-    const [selectedFilter, setSelectedFilter] = useState<string>('filter1');
-    const [selectedItems, setSelectedItems] = useState<string[]>([]);
-    const [confirmedSelection, setConfirmedSelection] = useState<boolean>(false);
-
-    const filterNames: Record<string, string> = {
-        filter1: 'Barber',
-        filter2: 'Tutor',
-        filter3: 'Massage',
-    };
-
-    const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedFilter(event.target.value);
-    };
-
-    const handleConfirmSelection = () => {
-        setConfirmedSelection(true);
-        console.log('Confirmed Filter:', filterNames[selectedFilter]);
-        console.log('Confirmed Items:', selectedItems);
-    };
-
     return (
         <div className="min-h-screen flex flex-col bg-white-100">
             {/* Logo */}
@@ -80,91 +65,96 @@ export default function Home() {
             </header>
             
             <Navbar />
-            {/* Search Bar */}
-            <SearchBar />
 
-            {/* Filter Section */}
-            <div className="filter fixed">
-                <h2 className="text-2xl font-bold">Choose Your Options</h2>
-                
-                <div className="options-group">
-                    <h3 className="text-xl font-bold">Select a Filter:</h3>
-                    <label>
-                        <input
-                            type="radio"
-                            value="filter1"
-                            checked={selectedFilter === 'filter1'}
-                            onChange={handleFilterChange}
-                        />
-                        Barber
-                    </label>
-                    <label>
-                        <input
-                            type="radio"
-                            value="filter2"
-                            checked={selectedFilter === 'filter2'}
-                            onChange={handleFilterChange}
-                        />
-                        Tutor
-                    </label>
-                    <label>
-                        <input
-                            type="radio"
-                            value="filter3"
-                            checked={selectedFilter === 'filter3'}
-                            onChange={handleFilterChange}
-                        />
-                        Massage
-                    </label>
+            {/* Main Content Area */}
+            <main className="flex-1 p-8 ml-64">
+                {/* Header */}
+                <div className="flex flex-col items-center justify-center mb-8 text-center">
+                    <div className="flex items-center justify-center">
+                        <Image src={logoImage} alt="Logo" width={65} height={65} />
+                        <h1 className="text-5xl font-bold tracking-wide ml-4">Style</h1>
+                    </div>
+                    <p className="mt-2 text-lg">Where Artists and Customers Connect Effortlessly</p>
                 </div>
 
-                <div>
-                    <h4 className="text-lg font-bold">Selected Filter: {filterNames[selectedFilter]}</h4>
+                {/* Search Bar */}
+                <SearchBar />
+
+                {/* Redirect Button */}
+                <div className="flex justify-center mt-6">
+                    <button
+                        onClick={handleRedirect}
+                        className="bg-teal-400 text-white px-4 py-2 rounded-md"
+                    >
+                        Schedule An Appointment
+                    </button>
                 </div>
 
-                <button 
-                    onClick={handleConfirmSelection}
-                    className="bg-teal-400 text-white px-4 py-2 rounded-md mt-4"
-                >
-                    Confirm Selection
-                </button>
+                {/* Images Section */}
+                <div className="flex justify-center mt-6 space-x-4">
+                    <Image src={artistImage} alt="Artist" width={200} height={200} />
+                    <Image src={customerImage} alt="Customer" width={200} height={200} />
+                </div>
+            </main>
 
-                {confirmedSelection && (
-                    <p className="mt-2 text-green-600">Selection confirmed!</p>
-                )}
-            </div>
-
-            {/* Redirect Button */}
-            <div className="flex justify-center mt-6">
-                <button 
-                    onClick={handleRedirect} 
-                    className="bg-teal-500 text-white px-4 py-2 rounded-md"
-                >
-                    Book
-                </button>
-            </div>
-
-            <div className="flex justify-center">
-                <Image src={artistImage} alt="Artist" width={200} height={200} />
-                <Image src={customerImage} alt="Customer" width={200} height={200} />
-            </div>
-
-            <div className="space-y-10 mt-10">
-                <section className="bg-white py-8 px-4">
-                    <div className="text-2xl font-bold text-left mb-4">New Businesses</div>
-                        <div className="flex overflow-x-auto space-x-4 px-4">
-                        <div className="bg-gray-200 w-60 h-60 flex items-center justify-center text-center shadow-md rounded-lg">
-                            First Business
-                        </div>
-                    </div>
-                </section>
-
-                <section className="bg-white py-8 px-4">
-                    <h2 className="text-2xl font-bold text-left mb-4">Recommended</h2>
-                    <div className="flex overflow-x-auto space-x-4 px-4">
-                    </div>
-                </section>
-            </div>
+            {/* Sidebar */}
+            <aside className="sidebar w-64 bg-gray-100 p-4 fixed left-0 top-[60px] z-10 transition-all duration-300 ease-in-out hover:w-64">
+                <nav>
+                    <ul>
+                        <li className="sidebar-item mb-4 flex flex-col items-center group">
+                            {/* Logo for Nail Salon */}
+                            <div className="logo-container">
+                                <Image src={nailSalonLogo} alt="Nail Salon" width={40} height={40} />
+                            </div>
+                            {/* Text for Nail Salon, hidden by default */}
+                            <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <a href="/nailsalon" className="text-lg hover:text-teal-400">Nail Salon</a>
+                            </div>
+                        </li>
+                        <li className="sidebar-item mb-4 flex flex-col items-center group">
+                            {/* Logo for Hair Stylists */}
+                            <div className="logo-container">
+                                <Image src={hairLogo} alt="Hair Stylists" width={40} height={40} />
+                            </div>
+                            {/* Text for Hair Stylists, hidden by default */}
+                            <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <a href="/hair" className="text-lg hover:text-teal-400">Hair Stylists</a>
+                            </div>
+                        </li>
+                        <li className="sidebar-item mb-4 flex flex-col items-center group">
+                            {/* Logo for Tattoo Artists */}
+                            <div className="logo-container">
+                                <Image src={tattooLogo} alt="Tattoo Artist" width={40} height={40} />
+                            </div>
+                            {/* Text for Tattoo Artist, hidden by default */}
+                            <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <a href="/tattoo" className="text-lg hover:text-teal-400">Tattoo Artist</a>
+                            </div>
+                        </li>
+                        <li className="sidebar-item mb-4 flex flex-col items-center group">
+                            {/* Logo for Barber Shops */}
+                            <div className="logo-container">
+                                <Image src={barberLogo} alt="Barber Shops" width={40} height={40} />
+                            </div>
+                            {/* Text for Barber Shops, hidden by default */}
+                            <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <a href="/barber" className="text-lg hover:text-teal-400">Barber Shops</a>
+                            </div>
+                        </li>
+                        {/* New Section: Under 6 Months */}
+                        <li className="sidebar-item mb-4 flex flex-col items-center group">
+                            {/* Logo for Under 6 Months */}
+                            <div className="logo-container">
+                                <Image src={newLogo} alt="Under 6 Months" width={40} height={40} />
+                            </div>
+                            {/* Text for Under 6 Months, hidden by default */}
+                            <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <a href="/under6months" className="text-lg hover:text-teal-400">Under 6 Months</a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
         </div>
     );
 }
