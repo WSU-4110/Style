@@ -6,7 +6,7 @@ import { getFirestore } from "firebase/firestore"; // Import Firestore if needed
 import { getStorage } from "firebase/storage"; // Added import for Storage
 
 
-// Your web app's Firebase configuration
+// Style web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyA1ErM21A7dbnz-kZbmy0JUKgSw8rQjx48",
   authDomain: "style-438016.firebaseapp.com",
