@@ -13,6 +13,7 @@
     transition: width 0.3s ease, background-color 0.3s ease;
     z-index: 10; /* Ensure sidebar is above content */
 }
+
 .sidebar:hover {
     width: 200px; /* Expanded width on hover */
     background-color: black; /* Darker background on hover */
@@ -81,16 +82,4 @@ footer {
     padding: 1rem;
     text-align: center;
     margin-top: 50px; /* Space between content and footer */
-}
-
-.filter {
-    position: fixed;   /* Keep it fixed on the left side */
-    top: 100px;      /* Distance from the top */
-    left: 0px;     /* Distance from the left */
-    width: 200px;   /* Fixed width */
-    background-color: black; /* Black background */
-    color: white;   /* White text */
-    padding: 15px;  /* Padding inside the box */
-    border-radius: 8px; /* Rounded corners */
-    z-index: 1000; /* Ensure it appears above other elements */
 }
