@@ -6,11 +6,11 @@ import { useRouter } from 'next/navigation';
 import artistImage from '../../public/artist_barber.jpg';
 import customerImage from '../../public/customer.jpg';
 import logoImage from '../../public/transparent_logo.png';
-import nailSalonLogo from '../../public/nail_logo.png'; // Replace with actual logo
-import hairLogo from '../../public/hair_logo.png'; // Replace with actual logo
-import tattooLogo from '../../public/tattoo_logo.png'; // Replace with actual logo
-import barberLogo from '../../public/barber_logo.png'; // Replace with actual logo
-import newLogo from '../../public/new_logo.png'; // Replace with actual logo
+import nailSalonLogo from '../../public/nail_logo.png'; 
+import hairLogo from '../../public/hair_logo.png'; 
+import tattooLogo from '../../public/tattoo_logo.png'; 
+import barberLogo from '../../public/barber_logo.png'; 
+import newLogo from '../../public/new_logo.png'; 
 import Navbar from '../components/navigationbar';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
@@ -124,7 +124,7 @@ export default function Home() {
                         onClick={handleRedirect}
                         className="bg-teal-400 text-white px-4 py-2 rounded-md"
                     >
-                        Schedule An Appointment
+                        Book
                     </button>
                 </div>
 
@@ -144,7 +144,9 @@ export default function Home() {
                                 <Image src={nailSalonLogo} alt="Nail Salon" width={40} height={40} />
                             </div>
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <a href="/nailsalon" className="text-lg hover:text-teal-400">Nail Salon</a>
+                                <button onClick={() => router.push('/nailsalon')} className="text-lg hover:text-teal-400">
+                                 Nail Salon
+                                 </button>
                             </div>
                         </li>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
