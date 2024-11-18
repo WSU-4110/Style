@@ -57,12 +57,6 @@ export default function Home() {
             <div className="bg-black fixed top-0 left-0 inline-flex">
                 <Image src={logoImage} alt="Logo" width={64} height={30} /> {/* Smaller dimensions */}
             </div>
-
-            {/* Header */}
-            <header className="text-black py-8 text-center">
-                <h1 className="text-5xl font-bold tracking-wide">Style</h1>
-                <p className="mt-2 text-lg">Where Artists and Customers Connect Effortlessly</p>
-            </header>
             
             <Navbar />
 
