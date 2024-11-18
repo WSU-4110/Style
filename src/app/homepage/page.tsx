@@ -13,11 +13,10 @@ import barberLogo from '../../public/barber_logo.png'; // Replace with actual lo
 import newLogo from '../../public/new_logo.png'; // Replace with actual logo
 import Navbar from '../components/navigationbar';
 import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import './filter.css';
 
-const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch }) => {
+const SearchBar: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +25,7 @@ const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch })
 
     const handleSearchSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        onSearch(searchTerm);
+        console.log('Searching for:', searchTerm);
     };
 
     return (
@@ -47,29 +46,6 @@ const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch })
 
 export default function Home() {
     const router = useRouter();
-    const [categories, setCategories] = useState([]);
-    const [searchResults, setSearchResults] = useState([]);
-
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const response = await axios.get('http://127.0.0.1:8000/api/category/categories/');
-                setCategories(response.data);
-            } catch (error) {
-                console.error('Error fetching categories:', error);
-            }
-        };
-        fetchCategories();
-    }, []);
-
-    const handleSearch = async (term: string) => {
-        try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/search/search/?q=${term}`);
-            setSearchResults(response.data);
-        } catch (error) {
-            console.error('Error fetching search results:', error);
-        }
-    };
 
     const handleRedirect = () => {
         router.push('schedule');
@@ -79,12 +55,12 @@ export default function Home() {
         <div className="min-h-screen flex flex-col bg-white-100">
             {/* Logo */}
             <div className="bg-black fixed top-0 left-0 inline-flex">
-                <Image src={logoImage} alt="Logo" width={64} height={30} />
+                <Image src={logoImage} alt="Logo" width={64} height={30} /> {/* Smaller dimensions */}
             </div>
             
             <Navbar />
 
-            {/* Header/ Main Content Area */}
+            {/* Main Content Area */}
             <main className="flex-1 p-8 ml-64">
                 {/* Header */}
                 <div className="flex flex-col items-center justify-center mb-8 text-center">
@@ -96,27 +72,7 @@ export default function Home() {
                 </div>
 
                 {/* Search Bar */}
-                <SearchBar onSearch={handleSearch} />
-
-                {/* Categories Section */}
-                <h2 className="text-xl font-bold mt-8">Categories</h2>
-                <ul className="list-disc ml-6">
-                    {categories.map((category, index) => (
-                        <li key={index}>{category.name}</li>
-                    ))}
-                </ul>
-
-                {/* Search Results Section */}
-                {searchResults.length > 0 && (
-                    <div>
-                        <h2 className="text-xl font-bold mt-8">Search Results</h2>
-                        <ul className="list-disc ml-6">
-                            {searchResults.map((result, index) => (
-                                <li key={index}>{result.name}</li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
+                <SearchBar />
 
                 {/* Redirect Button */}
                 <div className="flex justify-center mt-6">
@@ -140,41 +96,52 @@ export default function Home() {
                 <nav>
                     <ul>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
+                            {/* Logo for Nail Salon */}
                             <div className="logo-container">
                                 <Image src={nailSalonLogo} alt="Nail Salon" width={40} height={40} />
                             </div>
+                            {/* Text for Nail Salon, hidden by default */}
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <a href="/nailsalon" className="text-lg hover:text-teal-400">Nail Salon</a>
                             </div>
                         </li>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
+                            {/* Logo for Hair Stylists */}
                             <div className="logo-container">
                                 <Image src={hairLogo} alt="Hair Stylists" width={40} height={40} />
                             </div>
+                            {/* Text for Hair Stylists, hidden by default */}
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <a href="/hair" className="text-lg hover:text-teal-400">Hair Stylists</a>
                             </div>
                         </li>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
+                            {/* Logo for Tattoo Artists */}
                             <div className="logo-container">
                                 <Image src={tattooLogo} alt="Tattoo Artist" width={40} height={40} />
                             </div>
+                            {/* Text for Tattoo Artist, hidden by default */}
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <a href="/tattoo" className="text-lg hover:text-teal-400">Tattoo Artist</a>
                             </div>
                         </li>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
+                            {/* Logo for Barber Shops */}
                             <div className="logo-container">
                                 <Image src={barberLogo} alt="Barber Shops" width={40} height={40} />
                             </div>
+                            {/* Text for Barber Shops, hidden by default */}
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <a href="/barber" className="text-lg hover:text-teal-400">Barber Shops</a>
                             </div>
                         </li>
+                        {/* New Section: Under 6 Months */}
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
+                            {/* Logo for Under 6 Months */}
                             <div className="logo-container">
                                 <Image src={newLogo} alt="Under 6 Months" width={40} height={40} />
                             </div>
+                            {/* Text for Under 6 Months, hidden by default */}
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <a href="/under6months" className="text-lg hover:text-teal-400">Under 6 Months</a>
                             </div>
