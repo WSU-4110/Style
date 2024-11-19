@@ -10,7 +10,7 @@ export default function Portfolio() {
   const [businessName, setBusinessName] = useState('');
   const [bio, setBio] = useState('');
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
-  const [photos, setPhotos] = useState<string[]>([]);
+  const [photos, setPhotos] = useState<File[]>([]);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [services, setServices] = useState([{ name: '', price: '', time: '' }]);
   const [showBusinessHours, setShowBusinessHours] = useState(false);
@@ -37,7 +37,7 @@ export default function Portfolio() {
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const newPhotos = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
+      const newPhotos = Array.from(e.target.files);
       setPhotos(newPhotos);
       setCurrentPhotoIndex(0);
     }
@@ -78,8 +78,8 @@ export default function Portfolio() {
     formData.append('business_name', businessName);
     formData.append('bio', bio);
     if (profilePicture) formData.append('profile_picture', profilePicture);
-    photos.forEach(photo => {
-      formData.append('photos', photo);
+    photos.forEach((photo, index) => {
+      formData.append(`photos[${index}]`, photo);
     });
     services.forEach((service, index) => {
       formData.append(`services[${index}][name]`, service.name);
@@ -101,7 +101,7 @@ export default function Portfolio() {
         router.push('/appointments');
       } else {
         const errorData = await response.json();
-        alert(`Error: ${errorData.detail}`);
+        alert(`Error: ${errorData.detail || 'Failed to save portfolio'}`);
       }
     } catch (error) {
       console.error('Error saving portfolio:', error);
@@ -148,10 +148,7 @@ export default function Portfolio() {
       <div className="content-wrapper">
         {/* Carousel Wrapper */}
         <div className="carousel-wrapper relative">
-          <div
-            className="profile-picture-upload group"
-            onClick={triggerProfileUpload}
-          >
+          <div className="profile-picture-upload group" onClick={triggerProfileUpload}>
             <input
               type="file"
               ref={profileInputRef}
@@ -184,7 +181,7 @@ export default function Portfolio() {
               {photos.length > 0 ? (
                 <div className="duration-700 ease-in-out">
                   <img
-                    src={photos[currentPhotoIndex]}
+                    src={URL.createObjectURL(photos[currentPhotoIndex])}
                     className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                     alt={`Carousel ${currentPhotoIndex}`}
                   />
@@ -192,7 +189,6 @@ export default function Portfolio() {
               ) : (
                 <div className="w-full h-full bg-gray-200 rounded-md"></div>
               )}
-
               <input
                 type="file"
                 id="carousel-file-input"
@@ -201,7 +197,6 @@ export default function Portfolio() {
                 onChange={handlePhotoUpload}
                 style={{ display: 'none' }}
               />
-
               <label
                 htmlFor="carousel-file-input"
                 className="absolute inset-0 flex items-center justify-center bg-gray-200 opacity-0 group-hover:opacity-60 transition-opacity cursor-pointer"
@@ -313,10 +308,9 @@ export default function Portfolio() {
         <div className="mini-map">
           <h2>Business Location</h2>
           <div className="map-box">
-            {/* Mini-map or location content goes here */}
-
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2949.9842084360585!2d-83.18184352326212!3d42.32153557119643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x883b349109787615%3A0x5d1bcd26a0b4d1aa!2s4710%20Horger%20St%2C%20Dearborn%2C%20MI%2048126!5e0!3m2!1sen!2sus!4v1731987936453!5m2!1sen!2sus"                width="380"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2949.9842084360585!2d-83.18184352326212!3d42.32153557119643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x883b349109787615%3A0x5d1bcd26a0b4d1aa!2s4710%20Horger%20St%2C%20Dearborn%2C%20MI%2048126!5e0!3m2!1sen!2sus!4v1731987936453!5m2!1sen!2sus"
+              width="380"
               height="350"
               style={{ border: '0' }}
               allowFullScreen
