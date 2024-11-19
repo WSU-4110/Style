@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 'use client';
 
 import { useRouter } from 'next/navigation';
@@ -16,6 +14,17 @@ import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './filter.css';
+
+// Define the interface for Category and Result types
+interface Category {
+    name: string;
+    // Add other properties if needed
+}
+
+interface Result {
+    name: string;
+    // Add other properties if needed
+}
 
 const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch }) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -47,8 +56,8 @@ const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch })
 
 export default function Home() {
     const router = useRouter();
-    const [categories, setCategories] = useState([]);
-    const [searchResults, setSearchResults] = useState([]);
+    const [categories, setCategories] = useState<Category[]>([]); // Specify type
+    const [searchResults, setSearchResults] = useState<Result[]>([]); // Specify type
 
     useEffect(() => {
         const fetchCategories = async () => {
