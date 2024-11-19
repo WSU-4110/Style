@@ -315,8 +315,7 @@ export default function Portfolio() {
             {/* Mini-map or location content goes here */}
 
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d188705.4153660345!2d-83.09920500000001!3d42.352711!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8824ca0110cb1d75%3A0x5776864e35b9c4d2!2sDetroit%2C%20MI!5e0!3m2!1sen!2sus!4v1731903899401!5m2!1sen!2sus"
-              width="380"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2949.9842084360585!2d-83.18184352326212!3d42.32153557119643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x883b349109787615%3A0x5d1bcd26a0b4d1aa!2s4710%20Horger%20St%2C%20Dearborn%2C%20MI%2048126!5e0!3m2!1sen!2sus!4v1731987936453!5m2!1sen!2sus"                width="380"
               height="350"
               style={{ border: '0' }}
               allowFullScreen
