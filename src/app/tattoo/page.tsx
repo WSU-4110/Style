@@ -2,14 +2,12 @@
 import React from 'react';
 import '../categories.css';
 import Card from '../components/ui/card';
-//import Navbar from '../components/navigationbar';
 
 export default function TattooPage() {
   const businesses: any[] = [];
 
   return (
     <div className="container">
-      {/*<Navbar />*/}
       <h1 className="title">Tattoo Artists</h1>
       <div className="list">
         {businesses.length > 0 ? (

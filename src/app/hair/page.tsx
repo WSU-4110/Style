@@ -3,7 +3,6 @@ import React from 'react';
 import '../categories.css';
 import Card from '../components/ui/card';
 import { useRouter } from 'next/navigation';
-import Navbar from '../components/navigationbar';
 
 export default function HairStylists() {
   //const businesses: any[] = [];
@@ -25,7 +24,6 @@ export default function HairStylists() {
 
   return (
     <div className="container">
-      <Navbar />
       <h1 className="title">Hair Stylists</h1>
       <div className="list">
         {mockBusinesses.length > 0 ? (
