@@ -4,11 +4,12 @@ import { useRouter } from 'next/navigation';
 import artistImage from '../../public/artist_barber.jpg';
 import customerImage from '../../public/customer.jpg';
 import logoImage from '../../public/transparent_logo.png';
-import nailSalonLogo from '../../public/nail_logo.png'; // Replace with actual logo
-import hairLogo from '../../public/hair_logo.png'; // Replace with actual logo
-import tattooLogo from '../../public/tattoo_logo.png'; // Replace with actual logo
-import barberLogo from '../../public/barber_logo.png'; // Replace with actual logo
-import newLogo from '../../public/new_logo.png'; // Replace with actual logo
+import nailSalonLogo from '../../public/nail_logo.png';
+import hairLogo from '../../public/hair_logo.png';
+import heartLogo from '../../public/heart_logo.png';
+import tattooLogo from '../../public/tattoo_logo.png';
+import barberLogo from '../../public/barber_logo.png';
+import newLogo from '../../public/new_logo.png';
 import Navbar from '../components/navigationbar';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
@@ -99,9 +100,9 @@ export default function Home() {
                 <div className="flex flex-col items-center justify-center mb-8 text-center">
                     <div className="flex items-center justify-center">
                         <Image src={logoImage} alt="Logo" width={65} height={65} />
-                        <h1 className="text-5xl font-bold tracking-wide ml-4">Style</h1>
+                        <h1 className="text-5xl font-bold tracking-wide ml-4">Explore</h1>
                     </div>
-                    <p className="mt-2 text-lg">Where Artists and Customers Connect Effortlessly</p>
+                    <p className="mt-2 text-lg">Search Artists Here to Connect</p>
                 </div>
 
                 {/* Search Bar */}
@@ -133,7 +134,7 @@ export default function Home() {
                         onClick={handleRedirect}
                         className="bg-teal-400 text-white px-4 py-2 rounded-md"
                     >
-                        Schedule An Appointment
+                        Book
                     </button>
                 </div>
 
@@ -153,7 +154,9 @@ export default function Home() {
                                 <Image src={nailSalonLogo} alt="Nail Salon" width={40} height={40} />
                             </div>
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <a href="/nailsalon" className="text-lg hover:text-teal-400">Nail Salon</a>
+                                <button onClick={() => router.push('/nailsalon')} className="text-lg hover:text-teal-400">
+                                 Nail Salon
+                                 </button>
                             </div>
                         </li>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
@@ -186,6 +189,17 @@ export default function Home() {
                             </div>
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <a href="/under6months" className="text-lg hover:text-teal-400">Under 6 Months</a>
+                            </div>
+                        </li>
+                        {/* Favorites Section */}
+                        <li className="sidebar-item mb-4 flex flex-col items-center group">
+                            {/* Logo for Favorites */}
+                            <div className="logo-container">
+                                <Image src={heartLogo} alt="Favorites" width={40} height={40} />
+                            </div>
+                            {/* Text for Favorites, hidden by default */}
+                            <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <a href="/favorites" className="text-lg hover:text-teal-400">Favorites</a>
                             </div>
                         </li>
                     </ul>
