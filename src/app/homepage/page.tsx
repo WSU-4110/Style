@@ -10,7 +10,7 @@ import heartLogo from '../../public/heart_logo.png';
 import tattooLogo from '../../public/tattoo_logo.png';
 import barberLogo from '../../public/barber_logo.png';
 import newLogo from '../../public/new_logo.png';
-import Navbar from '../components/navigationbar';
+//import Navbar from '../components/navigationbar';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -92,7 +92,7 @@ export default function Home() {
                 <Image src={logoImage} alt="Logo" width={64} height={30} />
             </div>
             
-            <Navbar />
+            {/*<Navbar />*/}
 
             {/* Header/ Main Content Area */}
             <main className="flex-1 p-8 ml-64">
