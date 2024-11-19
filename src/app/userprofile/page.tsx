@@ -1,5 +1,3 @@
-// src/app/userprofile/page.tsx
-
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 'use client';
@@ -20,13 +18,32 @@ export default function UserProfile() {
   const profileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Full Name:', fullname);
-    console.log('City:', city);
-    console.log('Email:', email);
-    console.log('Phone Number:', phone_number);
-    console.log('Profile Picture:', prof_pic);
+    const formData = new FormData();
+    formData.append('fullname', fullname);
+    formData.append('email', email);
+    formData.append('city', city);
+    formData.append('phone_number', phone_number);
+    if (prof_pic) {
+      formData.append('profile_picture', prof_pic);
+    }
+
+    try {
+      const response = await fetch('http://localhost:8000/api/user-profile/', {
+        method: 'POST',
+        body: formData,
+      });
+      if (response.ok) {
+        alert('Profile saved successfully!');
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.detail}`);
+      }
+    } catch (error) {
+      console.error('Error saving profile:', error);
+      alert('An unexpected error occurred. Please try again.');
+    }
   };
 
   const handleLogout = () => {

@@ -1,24 +1,13 @@
 import json
-import os
 import logging
-import firebase_admin
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
-from firebase_admin import auth, credentials, firestore
 from django.conf import settings
-from decouple import config
-from pathlib import Path
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-cred_path = config('FIREBASE_SERVICE_ACCOUNT_KEY')
-cred = credentials.Certificate(os.path.join(BASE_DIR, 'keys', cred_path))
-firebase_admin.initialize_app(cred)
-
-# Initialize Firestore
-db = firestore.client()
+from .models import Appointment  # Ensure correct import path for the model
+from accounts.firebase_config import db, auth  # Use absolute import
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -26,8 +15,12 @@ logger = logging.getLogger(__name__)
 # Fetch all appointments
 @require_http_methods(["GET"])
 def get_appointments(request):
-    appointments = Appointment.objects.all().values()
-    return JsonResponse(list(appointments), safe=False)
+    try:
+        appointments = Appointment.objects.all().values()
+        return JsonResponse(list(appointments), safe=False)
+    except Exception as e:
+        logger.error(f"Unexpected error while fetching appointments: {str(e)}")
+        return JsonResponse({"error": "An unexpected error occurred"}, status=500)
 
 # Create a new appointment
 @csrf_exempt
@@ -35,7 +28,11 @@ def get_appointments(request):
 def create_appointment(request):
     try:
         # Verify the Firebase token
-        token = request.headers.get('Authorization').split('Bearer ')[-1]
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith('Bearer '):
+            return JsonResponse({"error": "Invalid or missing Authorization header"}, status=401)
+
+        token = auth_header.split('Bearer ')[-1]
         decoded_token = auth.verify_id_token(token)
         user_email = decoded_token.get('email')
 
@@ -59,12 +56,12 @@ def create_appointment(request):
             address=data['address']
         )
 
-        # email confirmation
+        # Email confirmation
         send_mail(
             subject='Appointment Confirmation',
             message=f"Hello, your appointment for {appointment.service} on {appointment.date} at {appointment.time} has been booked.",
             from_email='noreplystyle@gmail.com',
-            recipient_list=[user_email],  e
+            recipient_list=[user_email],
             fail_silently=False,
         )
 
@@ -81,10 +78,13 @@ def create_appointment(request):
 @require_http_methods(["GET"])
 def get_appointment(request, id):
     try:
-        appointment = Appointment.objects.get(id=id)
-        return JsonResponse(appointment.__dict__)
-    except ObjectDoesNotExist:
-        return JsonResponse({"error": "Appointment not found"}, status=404)
+        appointment = Appointment.objects.filter(id=id).values().first()
+        if not appointment:
+            return JsonResponse({"error": "Appointment not found"}, status=404)
+        return JsonResponse(appointment)
+    except Exception as e:
+        logger.error(f"Unexpected error: {str(e)}")
+        return JsonResponse({"error": "An unexpected error occurred"}, status=500)
 
 # Update an appointment
 @csrf_exempt
@@ -123,7 +123,7 @@ def delete_appointment(request, id):
         deleted_count, _ = Appointment.objects.filter(id=id).delete()
         if deleted_count == 0:
             return JsonResponse({"error": "Appointment not found"}, status=404)
-        return JsonResponse({"success": "Appointment deleted"}, status=204)
+        return JsonResponse({"success": "Appointment deleted"}, status=200)
     except Exception as e:
         logger.error(f"Unexpected error: {str(e)}")
         return JsonResponse({"error": str(e)}, status=500)

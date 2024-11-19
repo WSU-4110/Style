@@ -90,8 +90,9 @@ export default function Portfolio() {
       formData.append(`socialLinks[${index}][platform]`, link.platform);
       formData.append(`socialLinks[${index}][url]`, link.url);
     });
+
     try {
-      const response = await fetch('/api/profile', {
+      const response = await fetch('http://localhost:8000/api/artist-portfolio/', {
         method: 'POST',
         body: formData,
       });
@@ -99,8 +100,8 @@ export default function Portfolio() {
         alert('Portfolio saved successfully!');
         router.push('/appointments');
       } else {
-        const error = await response.json();
-        alert(`Error: ${error.message}`);
+        const errorData = await response.json();
+        alert(`Error: ${errorData.detail}`);
       }
     } catch (error) {
       console.error('Error saving portfolio:', error);
