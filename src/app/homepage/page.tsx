@@ -125,7 +125,7 @@ export default function Home() {
                         onClick={handleRedirect}
                         className="bg-teal-400 text-white px-4 py-2 rounded-md"
                     >
-                        Schedule An Appointment
+                        Book
                     </button>
                 </div>
 
@@ -145,7 +145,9 @@ export default function Home() {
                                 <Image src={nailSalonLogo} alt="Nail Salon" width={40} height={40} />
                             </div>
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <a href="/nailsalon" className="text-lg hover:text-teal-400">Nail Salon</a>
+                                <button onClick={() => router.push('/nailsalon')} className="text-lg hover:text-teal-400">
+                                 Nail Salon
+                                 </button>
                             </div>
                         </li>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
