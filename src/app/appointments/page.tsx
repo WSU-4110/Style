@@ -3,7 +3,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
-import Navbar from '../components/navigationbar';
+
 
 interface AppointmentType {
   id: number;
@@ -78,7 +78,6 @@ const Appointment = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray">
-      <Navbar />
       <header className="text-black py-7 text-left mt-19">
         <h1 className="text-4xl font-bold text-center tracking-wide mt-2">Current Appointments</h1>
         <br />

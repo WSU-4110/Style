@@ -10,7 +10,6 @@ import heartLogo from '../../public/heart_logo.png';
 import tattooLogo from '../../public/tattoo_logo.png';
 import barberLogo from '../../public/barber_logo.png';
 import newLogo from '../../public/new_logo.png';
-import Navbar from '../components/navigationbar';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -81,9 +80,9 @@ export default function Home() {
         }
     };
 
-    const handleRedirect = () => {
+    {/*const handleRedirect = () => {
         router.push('schedule');
-    };
+    };*/}
 
     return (
         <div className="min-h-screen flex flex-col bg-white-100">
@@ -91,8 +90,6 @@ export default function Home() {
             <div className="bg-black fixed top-0 left-0 inline-flex">
                 <Image src={logoImage} alt="Logo" width={64} height={30} />
             </div>
-            
-            <Navbar />
 
             {/* Header/ Main Content Area */}
             <main className="flex-1 p-8 ml-64">
@@ -130,12 +127,12 @@ export default function Home() {
 
                 {/* Redirect Button */}
                 <div className="flex justify-center mt-6">
-                    <button
+                    {/*<button
                         onClick={handleRedirect}
                         className="bg-teal-400 text-white px-4 py-2 rounded-md"
                     >
                         Book
-                    </button>
+                    </button>*/}
                 </div>
 
                 {/* Images Section */}
