@@ -155,7 +155,9 @@ export default function Home() {
                                 <Image src={hairLogo} alt="Hair Stylists" width={40} height={40} />
                             </div>
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <a href="/hair" className="text-lg hover:text-teal-400">Hair Stylists</a>
+                            <button onClick={() => router.push('/hair')} className="text-lg hover:text-teal-400">
+                                 Hair Stylists
+                                 </button>
                             </div>
                         </li>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
@@ -163,7 +165,9 @@ export default function Home() {
                                 <Image src={tattooLogo} alt="Tattoo Artist" width={40} height={40} />
                             </div>
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <a href="/tattoo" className="text-lg hover:text-teal-400">Tattoo Artist</a>
+                            <button onClick={() => router.push('/tattoo')} className="text-lg hover:text-teal-400">
+                                 Tattoo Artists
+                                 </button>
                             </div>
                         </li>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
@@ -171,7 +175,9 @@ export default function Home() {
                                 <Image src={barberLogo} alt="Barber Shops" width={40} height={40} />
                             </div>
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <a href="/barber" className="text-lg hover:text-teal-400">Barber Shops</a>
+                            <button onClick={() => router.push('/barber')} className="text-lg hover:text-teal-400">
+                                 Barber Shops
+                                 </button>
                             </div>
                         </li>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
