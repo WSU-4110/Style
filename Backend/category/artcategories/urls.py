@@ -13,9 +13,21 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.urls import path
 from .views import home  # Replace 'home' with the actual view functions you have in views.py
 
 urlpatterns = [
     path('', home, name='home'),  # Ensure the view name matches what's in views.py
 ]
+
+
+'''
+from django.urls import path
+from .views import CategoryListView, SearchView
+
+urlpatterns = [
+    path('category/categories/', CategoryListView.as_view(), name='category-list'),
+    path('search/search/', SearchView.as_view(), name='search'),
+]
+'''
