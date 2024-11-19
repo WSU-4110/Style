@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'profiles',
+    'appointments'
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -166,3 +167,13 @@ ACCOUNT_USERNAME_REQUIRED = True
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Email backend configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'noreplystyle@gmail.com'  # email address where emails sent from
+EMAIL_HOST_PASSWORD = 'nsbrese!!24'  # password
+# Default 'From' email for outgoing emails
+DEFAULT_FROM_EMAIL = 'noreply@gmail.com'
