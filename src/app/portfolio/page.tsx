@@ -3,7 +3,7 @@
 import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './portfolio.css';
-import Nav_bar from '../components/navbar_artist';
+import Navbar from '../components/navigationbar';
 import SocialMediaInput from '../components/socialmediainput'; // Default import (no curly braces)
 
 export default function Portfolio() {
@@ -134,7 +134,7 @@ export default function Portfolio() {
 
   return (
     <div className="container">
-      <Nav_bar />
+      <Navbar />
       <div className="business-name">
         <input
           type="text"

@@ -1,11 +1,12 @@
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { auth } from '../firebase';
 import React from 'react';
-import Navbar from '../components/navigationbar';
 
 export default function UserProfile() {
   const [fullname, set_fullname] = useState('');
@@ -63,9 +64,19 @@ export default function UserProfile() {
     profileInputRef.current?.click();
   };
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        set_email(user.email || ''); 
+        set_fullname(user.displayName || ''); 
+      }
+    });
+  
+    return () => unsubscribe();
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray p-6">
-      <Navbar />
       <div className="container max-w-4xl p-12 bg-white border-4 border-[#f4d9a0] shadow-lg rounded-lg text-center">
         <h1 className="text-4xl font-bold mb-5 text-black">Your Profile</h1>
         <br />
@@ -99,7 +110,6 @@ export default function UserProfile() {
             </div>
           </div>
 
-          {/* Other input fields */}
           <div className="mb-4">
             <br />
             <label className="block text-black text-left">Name*</label>

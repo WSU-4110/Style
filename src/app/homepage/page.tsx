@@ -10,7 +10,6 @@ import heartLogo from '../../public/heart_logo.png';
 import tattooLogo from '../../public/tattoo_logo.png';
 import barberLogo from '../../public/barber_logo.png';
 import newLogo from '../../public/new_logo.png';
-import Navbar from '../components/navigationbar';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -79,9 +78,9 @@ export default function Home() {
         }
     };
 
-    const handleRedirect = () => {
+    {/*const handleRedirect = () => {
         router.push('schedule');
-    };
+    };*/}
 
     return (
         <div className="min-h-screen flex flex-col bg-white-100">
@@ -89,8 +88,6 @@ export default function Home() {
             <div className="bg-black fixed top-0 left-0 inline-flex">
                 <Image src={logoImage} alt="Logo" width={64} height={30} />
             </div>
-            
-            <Navbar />
 
             {/* Header/ Main Content Area */}
             <main className="flex-1 p-8 ml-64">
@@ -128,12 +125,12 @@ export default function Home() {
 
                 {/* Redirect Button */}
                 <div className="flex justify-center mt-6">
-                    <button
+                    {/*<button
                         onClick={handleRedirect}
                         className="bg-teal-400 text-white px-4 py-2 rounded-md"
                     >
                         Book
-                    </button>
+                    </button>*/}
                 </div>
 
                 {/* Images Section */}
@@ -162,7 +159,9 @@ export default function Home() {
                                 <Image src={hairLogo} alt="Hair Stylists" width={40} height={40} />
                             </div>
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <a href="/hair" className="text-lg hover:text-teal-400">Hair Stylists</a>
+                            <button onClick={() => router.push('/hair')} className="text-lg hover:text-teal-400">
+                                 Hair Stylists
+                                 </button>
                             </div>
                         </li>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
@@ -170,7 +169,9 @@ export default function Home() {
                                 <Image src={tattooLogo} alt="Tattoo Artist" width={40} height={40} />
                             </div>
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <a href="/tattoo" className="text-lg hover:text-teal-400">Tattoo Artist</a>
+                            <button onClick={() => router.push('/tattoo')} className="text-lg hover:text-teal-400">
+                                 Tattoo Artists
+                                 </button>
                             </div>
                         </li>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
@@ -178,7 +179,9 @@ export default function Home() {
                                 <Image src={barberLogo} alt="Barber Shops" width={40} height={40} />
                             </div>
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <a href="/barber" className="text-lg hover:text-teal-400">Barber Shops</a>
+                            <button onClick={() => router.push('/barber')} className="text-lg hover:text-teal-400">
+                                 Barber Shops
+                                 </button>
                             </div>
                         </li>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">

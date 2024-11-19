@@ -53,6 +53,7 @@ export default function CustomerLogin() {
         // Authenticate using email and password
         await signInWithEmailAndPassword(auth, email, password);
         // Redirect to user profile page after successful login
+        localStorage.setItem('role', 'customer');
         router.push('/userprofile');
       } catch (error) {
         // Display error message if authentication fails

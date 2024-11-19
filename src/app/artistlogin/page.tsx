@@ -52,6 +52,7 @@ export default function Login() {
         // Authenticate using email and password
         await signInWithEmailAndPassword(auth, email, password);
         // Redirect to portfolio page after successful login
+        localStorage.setItem('role', 'artist');
         router.push('/portfolio');
       } catch (error) {
         // Display error message if authentication fails
