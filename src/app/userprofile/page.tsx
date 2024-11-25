@@ -1,13 +1,12 @@
-// src/app/userprofile/page.tsx
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { auth } from '../firebase';
 import React from 'react';
-import Navbar from '../components/navigationbar';
 
 export default function UserProfile() {
   const [fullname, set_fullname] = useState('');
@@ -20,13 +19,32 @@ export default function UserProfile() {
   const profileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Full Name:', fullname);
-    console.log('City:', city);
-    console.log('Email:', email);
-    console.log('Phone Number:', phone_number);
-    console.log('Profile Picture:', prof_pic);
+    const formData = new FormData();
+    formData.append('fullname', fullname);
+    formData.append('email', email);
+    formData.append('city', city);
+    formData.append('phone_number', phone_number);
+    if (prof_pic) {
+      formData.append('profile_picture', prof_pic);
+    }
+
+    try {
+      const response = await fetch('http://localhost:8000/api/user-profile/', {
+        method: 'POST',
+        body: formData,
+      });
+      if (response.ok) {
+        alert('Profile saved successfully!');
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.detail}`);
+      }
+    } catch (error) {
+      console.error('Error saving profile:', error);
+      alert('An unexpected error occurred. Please try again.');
+    }
   };
 
   const handleLogout = () => {
@@ -46,9 +64,19 @@ export default function UserProfile() {
     profileInputRef.current?.click();
   };
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        set_email(user.email || ''); 
+        set_fullname(user.displayName || ''); 
+      }
+    });
+  
+    return () => unsubscribe();
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray p-6">
-      <Navbar />
       <div className="container max-w-4xl p-12 bg-white border-4 border-[#f4d9a0] shadow-lg rounded-lg text-center">
         <h1 className="text-4xl font-bold mb-5 text-black">Your Profile</h1>
         <br />
@@ -82,7 +110,6 @@ export default function UserProfile() {
             </div>
           </div>
 
-          {/* Other input fields */}
           <div className="mb-4">
             <br />
             <label className="block text-black text-left">Name*</label>
