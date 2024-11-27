@@ -1,10 +1,11 @@
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 'use client';
 
 import { useRouter } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { auth } from '../firebase';
-import { storage } from '../../firebase-config'; // Import Firebase storage
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import React from 'react';
 
 export default function UserProfile() {
@@ -13,64 +14,27 @@ export default function UserProfile() {
   const [city, set_city] = useState('');
   const [phone_number, set_phone_number] = useState('');
   const [prof_pic, set_profpic] = useState<File | null>(null);
-  const [prof_pic_url, set_profpic_url] = useState<string | null>(null); // Store Firebase URL
+  const [prof_pic_preview, set_profpic_preview] = useState<string | null>(null);
 
   const profileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  // Upload to Firebase Storage
-  const uploadToFirebase = async (file: File, path: string): Promise<string> => {
-    const storageRef = ref(storage, `${path}/${file.name}`);
-    await uploadBytes(storageRef, file);
-    return getDownloadURL(storageRef);
-  };
-
-  // Handle profile picture upload
-  const handleProfilePictureUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      set_profpic(file);
-
-      // Upload to Firebase and set URL
-      const url = await uploadToFirebase(file, 'profile_pictures');
-      set_profpic_url(url);
-    }
-  };
-
-  const triggerProfileUpload = () => {
-    profileInputRef.current?.click();
-  };
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        set_email(user.email || '');
-        set_fullname(user.displayName || '');
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Data to be sent to backend
-    const payload = {
-      fullname,
-      email,
-      city,
-      phone_number,
-      profile_picture: prof_pic_url // Use the Firebase URL
-    };
+    const formData = new FormData();
+    formData.append('fullname', fullname);
+    formData.append('email', email);
+    formData.append('city', city);
+    formData.append('phone_number', phone_number);
+    if (prof_pic) {
+      formData.append('profile_picture', prof_pic);
+    }
 
     try {
       const response = await fetch('http://localhost:8000/api/user-profile/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: formData,
       });
-
       if (response.ok) {
         alert('Profile saved successfully!');
       } else {
@@ -82,6 +46,34 @@ export default function UserProfile() {
       alert('An unexpected error occurred. Please try again.');
     }
   };
+
+  const handleLogout = () => {
+    alert('Logging out...');
+    router.push('/login');
+  };
+
+  const handleProfilePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      set_profpic(file);
+      set_profpic_preview(URL.createObjectURL(file));
+    }
+  };
+
+  const triggerProfileUpload = () => {
+    profileInputRef.current?.click();
+  };
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        set_email(user.email || ''); 
+        set_fullname(user.displayName || ''); 
+      }
+    });
+  
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray p-6">
@@ -99,10 +91,10 @@ export default function UserProfile() {
               style={{ display: 'none' }}
             />
             <div className="relative w-24 h-24 cursor-pointer">
-              {prof_pic_url ? (
+              {prof_pic_preview ? (
                 <img
                   className="w-full h-full rounded-full object-cover"
-                  src={prof_pic_url}
+                  src={prof_pic_preview}
                   alt="Profile"
                 />
               ) : (
