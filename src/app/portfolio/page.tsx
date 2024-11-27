@@ -1,16 +1,21 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import './portfolio.css';
+import { useRouter } from 'next/navigation';
+import React, { useRef, useState } from 'react';
 import Navbar from '../components/navigationbar';
+import { storage } from '../../firebase-config'; // Import Firebase storage
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import SocialMediaInput from '../components/socialmediainput'; // Default import (no curly braces)
+
 
 export default function Portfolio() {
   const [businessName, setBusinessName] = useState('');
   const [bio, setBio] = useState('');
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
-  const [photos, setPhotos] = useState<string[]>([]);
+  const [profilePictureUrl, setProfilePictureUrl] = useState<string | null>(null);
+  const [photos, setPhotos] = useState<File[]>([]);
+  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [services, setServices] = useState([{ name: '', price: '', time: '' }]);
   const [showBusinessHours, setShowBusinessHours] = useState(false);
@@ -25,20 +30,33 @@ export default function Portfolio() {
   const profileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const handleProfilePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  //----------------------------- Photo Upload Section ----------------------------------------------------------
+
+  // Handle profile picture upload
+  const handleProfilePictureUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setProfilePicture(e.target.files[0]);
+      const file = e.target.files[0];
+      setProfilePicture(file);
+
+      // Upload to Firebase
+      const url = await uploadToFirebase(file, 'profile_pictures');
+      setProfilePictureUrl(url);
     }
   };
-
   const triggerProfileUpload = () => {
     profileInputRef.current?.click();
   };
 
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Handle carousel photos upload
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const newPhotos = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
-      setPhotos(newPhotos);
+      const files = Array.from(e.target.files);
+      setPhotos(files);
+
+      // Upload each photo to Firebase
+      const urls = await Promise.all(files.map((file) => uploadToFirebase(file, 'carousel_photos')));
+      setPhotoUrls(urls);
       setCurrentPhotoIndex(0);
     }
   };
@@ -51,6 +69,16 @@ export default function Portfolio() {
     setCurrentPhotoIndex((prevIndex) => (prevIndex - 1 + photos.length) % photos.length);
   };
 
+
+   // Function to upload file to Firebase Storage
+   const uploadToFirebase = async (file: File, path: string): Promise<string> => {
+    const storageRef = ref(storage, `${path}/${file.name}`);
+    await uploadBytes(storageRef, file);
+    return getDownloadURL(storageRef);
+  };
+
+
+  // Service Functions
   const handleServiceChange = (index: number, field: string, value: string) => {
     const updatedServices = [...services];
     updatedServices[index] = { ...updatedServices[index], [field]: value };
@@ -66,47 +94,50 @@ export default function Portfolio() {
     setServices(updatedServices);
   };
 
+
+  // ------------------------------------------------------ Social Links ------------------------------------------------------
   const handleSocialLinkChange = (index: number, field: string, value: string) => {
     const updatedLinks = [...socialLinks];
     updatedLinks[index] = { ...updatedLinks[index], [field]: value };
     setSocialLinks(updatedLinks);
   };
+  // ------------------------------------------------------------------------------------------------------------
 
+  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('business_name', businessName);
-    formData.append('bio', bio);
-    if (profilePicture) formData.append('profile_picture', profilePicture);
-    photos.forEach(photo => {
-      formData.append('photos', photo);
-    });
-    services.forEach((service, index) => {
-      formData.append(`services[${index}][name]`, service.name);
-      formData.append(`services[${index}][price]`, service.price);
-      formData.append(`services[${index}][time]`, service.time);
-    });
-    socialLinks.forEach((link, index) => {
-      formData.append(`socialLinks[${index}][platform]`, link.platform);
-      formData.append(`socialLinks[${index}][url]`, link.url);
-    });
+
+    const formData = {
+      business_name: businessName,
+      bio,
+      profile_picture: profilePictureUrl,
+      photos: photoUrls,
+      services,
+      social_links: socialLinks
+    };
+
     try {
-      const response = await fetch('/api/profile', {
+      const response = await fetch('http://localhost:8000/api/artist-portfolio/', {
         method: 'POST',
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
       });
+
       if (response.ok) {
         alert('Portfolio saved successfully!');
         router.push('/appointments');
       } else {
-        const error = await response.json();
-        alert(`Error: ${error.message}`);
+        const errorData = await response.json();
+        alert(`Error: ${errorData.detail || 'Failed to save portfolio'}`);
       }
     } catch (error) {
       console.error('Error saving portfolio:', error);
       alert('Failed to save portfolio. Please try again.');
     }
   };
+
+
+  // ------------------------------------------------------ Business Hour ------------------------------------------------------
 
   const toggleBusinessHours = () => {
     setShowBusinessHours(!showBusinessHours);
@@ -131,9 +162,15 @@ export default function Portfolio() {
     setShowBusinessHours(false);
   };
 
+
+
+
+  // ------------------------------------------------------ HMTL SECTION ------------------------------------------------------
   return (
     <div className="container">
       <Navbar />
+
+      {/* Business Name */}
       <div className="business-name">
         <input
           type="text"
@@ -147,10 +184,7 @@ export default function Portfolio() {
       <div className="content-wrapper">
         {/* Carousel Wrapper */}
         <div className="carousel-wrapper relative">
-          <div
-            className="profile-picture-upload group"
-            onClick={triggerProfileUpload}
-          >
+          <div className="profile-picture-upload group" onClick={triggerProfileUpload}>
             <input
               type="file"
               ref={profileInputRef}
@@ -159,10 +193,10 @@ export default function Portfolio() {
               style={{ display: 'none' }}
             />
             <div className="relative w-full h-full">
-              {profilePicture ? (
+              {profilePictureUrl  ? (
                 <img
                   className="w-full h-full rounded-full object-cover"
-                  src={URL.createObjectURL(profilePicture)}
+                  src={profilePictureUrl}
                   alt="Profile"
                 />
               ) : (
@@ -178,12 +212,13 @@ export default function Portfolio() {
             </div>
           </div>
 
+          {/* Carousel Photo Upload */}
           <div id="default-carousel" className="relative w-full" data-carousel="slide">
             <div className="relative h-[500px] w-[900px] overflow-hidden rounded-lg group">
-              {photos.length > 0 ? (
+              {photoUrls.length > 0 ? (
                 <div className="duration-700 ease-in-out">
                   <img
-                    src={photos[currentPhotoIndex]}
+                    src={photoUrls[currentPhotoIndex]}
                     className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                     alt={`Carousel ${currentPhotoIndex}`}
                   />
@@ -191,7 +226,6 @@ export default function Portfolio() {
               ) : (
                 <div className="w-full h-full bg-gray-200 rounded-md"></div>
               )}
-
               <input
                 type="file"
                 id="carousel-file-input"
@@ -200,7 +234,6 @@ export default function Portfolio() {
                 onChange={handlePhotoUpload}
                 style={{ display: 'none' }}
               />
-
               <label
                 htmlFor="carousel-file-input"
                 className="absolute inset-0 flex items-center justify-center bg-gray-200 opacity-0 group-hover:opacity-60 transition-opacity cursor-pointer"
@@ -213,6 +246,9 @@ export default function Portfolio() {
               </label>
             </div>
 
+            {/* Carousel Controls */}
+            
+            {/* Carousel Previous Photo */}
             <button
               type="button"
               onClick={handlePrevPhoto}
@@ -231,6 +267,7 @@ export default function Portfolio() {
               </span>
             </button>
 
+            {/* Carousel Next Photo */}
             <button
               type="button"
               onClick={handleNextPhoto}
@@ -250,13 +287,13 @@ export default function Portfolio() {
             </button>
           </div>
 
-          {/* About Section */}
+          {/* Information Section */}
           <div className="description-wrapper">
-            <h2>About</h2>
+            <h2>More Information</h2>
             <textarea
               value={bio}
               onChange={(e) => setBio(e.target.value)}
-              placeholder="Write a short description"
+              placeholder="List information about booking Here. For instance the address or any heads that a customer might need for parking."
             />
           </div>
 
@@ -312,10 +349,9 @@ export default function Portfolio() {
         <div className="mini-map">
           <h2>Business Location</h2>
           <div className="map-box">
-            {/* Mini-map or location content goes here */}
-
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2949.9842084360585!2d-83.18184352326212!3d42.32153557119643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x883b349109787615%3A0x5d1bcd26a0b4d1aa!2s4710%20Horger%20St%2C%20Dearborn%2C%20MI%2048126!5e0!3m2!1sen!2sus!4v1731987936453!5m2!1sen!2sus"                width="380"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2949.9842084360585!2d-83.18184352326212!3d42.32153557119643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x883b349109787615%3A0x5d1bcd26a0b4d1aa!2s4710%20Horger%20St%2C%20Dearborn%2C%20MI%2048126!5e0!3m2!1sen!2sus!4v1731987936453!5m2!1sen!2sus"
+              width="380"
               height="350"
               style={{ border: '0' }}
               allowFullScreen

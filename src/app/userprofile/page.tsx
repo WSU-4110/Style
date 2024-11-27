@@ -1,11 +1,10 @@
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 'use client';
 
 import { useRouter } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { auth } from '../firebase';
+import { storage } from '../../firebase-config'; // Import Firebase storage
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import React from 'react';
 
 export default function UserProfile() {
@@ -14,30 +13,27 @@ export default function UserProfile() {
   const [city, set_city] = useState('');
   const [phone_number, set_phone_number] = useState('');
   const [prof_pic, set_profpic] = useState<File | null>(null);
-  const [prof_pic_preview, set_profpic_preview] = useState<string | null>(null);
+  const [prof_pic_url, set_profpic_url] = useState<string | null>(null); // Store Firebase URL
 
   const profileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Full Name:', fullname);
-    console.log('City:', city);
-    console.log('Email:', email);
-    console.log('Phone Number:', phone_number);
-    console.log('Profile Picture:', prof_pic);
+  // Upload to Firebase Storage
+  const uploadToFirebase = async (file: File, path: string): Promise<string> => {
+    const storageRef = ref(storage, `${path}/${file.name}`);
+    await uploadBytes(storageRef, file);
+    return getDownloadURL(storageRef);
   };
 
-  const handleLogout = () => {
-    alert('Logging out...');
-    router.push('/login');
-  };
-
-  const handleProfilePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Handle profile picture upload
+  const handleProfilePictureUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       set_profpic(file);
-      set_profpic_preview(URL.createObjectURL(file));
+
+      // Upload to Firebase and set URL
+      const url = await uploadToFirebase(file, 'profile_pictures');
+      set_profpic_url(url);
     }
   };
 
@@ -48,13 +44,44 @@ export default function UserProfile() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        set_email(user.email || ''); 
-        set_fullname(user.displayName || ''); 
+        set_email(user.email || '');
+        set_fullname(user.displayName || '');
       }
     });
-  
+
     return () => unsubscribe();
   }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Data to be sent to backend
+    const payload = {
+      fullname,
+      email,
+      city,
+      phone_number,
+      profile_picture: prof_pic_url // Use the Firebase URL
+    };
+
+    try {
+      const response = await fetch('http://localhost:8000/api/user-profile/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        alert('Profile saved successfully!');
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.detail}`);
+      }
+    } catch (error) {
+      console.error('Error saving profile:', error);
+      alert('An unexpected error occurred. Please try again.');
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray p-6">
@@ -72,10 +99,10 @@ export default function UserProfile() {
               style={{ display: 'none' }}
             />
             <div className="relative w-24 h-24 cursor-pointer">
-              {prof_pic_preview ? (
+              {prof_pic_url ? (
                 <img
                   className="w-full h-full rounded-full object-cover"
-                  src={prof_pic_preview}
+                  src={prof_pic_url}
                   alt="Profile"
                 />
               ) : (
