@@ -18,10 +18,12 @@ import './filter.css';
 // Define the interface for Category and Result types
 interface Category {
     name: string;
+    // Add other properties if needed
 }
 
 interface Result {
     name: string;
+    // Add other properties if needed
 }
 
 const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch }) => {

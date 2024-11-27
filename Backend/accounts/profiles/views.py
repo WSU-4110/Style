@@ -3,9 +3,25 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib import messages
 from allauth.socialaccount.models import SocialAccount
-from accounts.firebase_config import db, auth  # Use absolute import
+import firebase_admin
+from firebase_admin import credentials, auth
+from decouple import config
+import os
+from pathlib import Path
 
-# User registration view
+# Build paths inside the project
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Firebase credentials: Load path from .env
+cred_path = config('FIREBASE_SERVICE_ACCOUNT_KEY')
+#Firebase app
+cred = credentials.Certificate(os.path.join(BASE_DIR, 'keys', cred_path))
+firebase_admin.initialize_app(cred)
+
+# Initialize Firestore
+db = firestore.client()
+
+#user registration viewing
 def register_view(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -21,32 +37,21 @@ def register_view(request):
             messages.error(request, "Password must be at least 8 characters.")
             return render(request, 'profiles/account_page.html')
 
-        # Check if the user already exists in Django or Firebase
-        if User.objects.filter(email=email).exists():
-            messages.error(request, "A user with this email already exists.")
-            return render(request, 'profiles/account_page.html')
-
         try:
-            # Create Firebase user
-            firebase_user = auth.create_user(
+            #create Firebase user
+            user = auth.create_user(
                 email=email,
                 password=password
             )
-            # Create a Django user for management
+            #django user for management
             django_user = User.objects.create_user(username=username, email=email, password=password)
             django_user.save()
-
-            # Save user data to Firestore
-            save_user_data_to_firestore(firebase_user.uid, username, email)
 
             login(request, django_user)
             messages.success(request, "User registered successfully")
             return redirect('portfolio')
-        except firebase_admin.auth.AuthError as e:
-            messages.error(request, f"Firebase error: {str(e)}")
-            return render(request, 'profiles/account_page.html')
         except Exception as e:
-            messages.error(request, f"Unexpected error: {str(e)}")
+            messages.error(request, str(e))
             return render(request, 'profiles/account_page.html')
 
     return render(request, 'profiles/account_page.html')
@@ -62,42 +67,38 @@ def save_user_data_to_firestore(user_uid, username, email):
     except Exception as e:
         print(f"Error saving user data to Firestore: {e}")
 
-# User login view
+#user login viewing
 def login_view(request):
     if request.method == "POST":
         email_or_username = request.POST.get('email')
         password = request.POST.get('password')
 
         try:
-            # Authenticate with Django
-            django_user = User.objects.filter(email=email_or_username).first()
-            if not django_user:
-                messages.error(request, "User with this email does not exist.")
-                return render(request, 'profiles/account_page.html')
-
+            #firebase authentication
+            firebase_user = auth.get_user_by_email(email_or_username)
+            #authenticate with Django
+            django_user = User.objects.get(email=email_or_username)
             user = authenticate(request, username=django_user.username, password=password)
 
             if user is not None:
                 login(request, user)
-                messages.success(request, "User logged in successfully")
+                messages.success(request, "user logged in succesfully")
                 return redirect('portfolio')
+
             else:
                 messages.error(request, "Invalid login credentials.")
                 return render(request, 'profiles/account_page.html')
 
-        except firebase_admin.auth.UserNotFoundError:
-            messages.error(request, "User not found in Firebase.")
-            return render(request, 'profiles/account_page.html')
         except Exception as e:
-            messages.error(request, f"Unexpected error: {str(e)}")
+            messages.error(request, str(e))
             return render(request, 'profiles/account_page.html')
 
     return render(request, 'profiles/account_page.html')
 
-# Google login view (redirect to allauth)
+#google login view (redirect to allauth)
 def google_login(request):
     return redirect('/accounts/google/login/')
 
-# Portfolio view
+#portfolio view
 def portfolio_view(request):
     return render(request, 'portfolio.html')
