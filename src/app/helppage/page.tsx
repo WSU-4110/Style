@@ -46,7 +46,7 @@ const HelpPage = () => {
                 <section className="contact-section">
                     <h2 className="text-2xl font-semibold mb-4">Contact Support</h2>
                     <p>If you need further assistance, please reach out to us:</p>
-                    <p>Email: <a href="styleislamitp@gmail.com" className="text-blue-600 underline">styleislamitp@gmail.com</a></p>
+                    <p>Email: <a href="mailto:styleislamitp@gmail.com" className="text-blue-600 underline">styleislamitp@gmail.com</a></p>
                     <p>Or fill out the <a href="/contact" className="text-blue-600 underline">contact form</a>.</p>
                 </section>
             </div>   
