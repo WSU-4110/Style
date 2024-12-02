@@ -20,6 +20,7 @@ export default function BarberShops() {
               about={business.about}
               services={business.services}
               socialLinks={business.socialLinks}
+              onBookClick={() => {}} // Empty handler, as the prop is required
             />
           ))
         ) : (
