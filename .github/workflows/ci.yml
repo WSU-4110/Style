@@ -3,10 +3,10 @@ name: CI for Term Project
 on:
   push:
     branches:
-      - Nawal
+      - Nawal_unittest
   pull_request:
     branches:
-      - Nawal
+      - Nawal_unittest
 
 jobs:
   build-and-test:
