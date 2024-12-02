@@ -27,12 +27,14 @@ const Card: React.FC<CardProps> = ({
       onBookClick(businessName);
     }
   };
+  const imageAltText = `${businessName} image`;
+
   return (
     <div className="card">
       <div className="info">
         <div className="imagePlaceholder">
           {images.length > 0 && (
-            <img src={images[0]} alt={businessName} className="image" />
+            <img src={images[0]} alt={imageAltText} className="image" />
           )}
         </div>
         <div>

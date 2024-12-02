@@ -1,25 +1,26 @@
 'use client';
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import '../categories.css';
 import Card from '../components/ui/card';
 
-export default function NailSalonPage() {
+interface NailSalonPageProps {
+  businesses?: any[];
+}
+const NailSalonPage: React.FC<NailSalonPageProps> = ({ businesses }) => {
   const router = useRouter();
-  const mockBusinesses = [ // mock business for css designing
+  const mockBusinesses = businesses ?? [
     {
       businessName: 'Nail Palace',
       address: '829 Maple St, Kansas City, KS',
       images: ['https://www.greentoestucson.com/wp-content/uploads/2021/06/Nail-Salons-Tucson.jpeg'],
       about: 'A relaxing nail salon offering the best manicures and pedicures.',
       services: ['Manicure', 'Pedicure', 'Nail Art'],
-      socialLinks: ['https://instagram.com/nailpalace']
-    }
+      socialLinks: ['https://instagram.com/nailpalace'],
+    },
   ];
-  //const businesses: any[] = [];
 
   const handleBookClick = (businessName: string) => {
-    router.push(`schedule`);
+    router.push('schedule');
   };
 
   return (
@@ -45,4 +46,5 @@ export default function NailSalonPage() {
       </div>
     </div>
   );
-}
+};
+export default NailSalonPage;
