@@ -4,7 +4,6 @@
 
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import Navbar from '../components/navigationbar';
 
 const Clients: React.FC = () => {
     const router = useRouter();
@@ -19,7 +18,6 @@ const Clients: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-gray">
-            <Navbar />
             <header className="text-black py-7 text-left mt-19">
                 <h1 className="text-3xl text-center font-bold tracking-wide text-teal-500">Daves Barbershop</h1>
                 <h2 className="text-4xl text-center tracking-wide mt-2">Upcoming Bookings</h2>

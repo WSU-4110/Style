@@ -13,9 +13,9 @@ export default function Navbar() {
   const [isAuthChecked, setIsAuthChecked] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const userRole = localStorage.getItem('role');
-      setRole(userRole || '');
+    const userRole = localStorage.getItem('role');
+    if (userRole) {
+      setRole(userRole);
     }
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser);
@@ -28,9 +28,18 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem('role');
     auth.signOut();
+    setRole('');
+    setUser(null);
     alert('Logging out');
     router.push('/');
   };
+
+  const handleLogin = (role: string) => {
+    localStorage.setItem('role', role);
+    setRole(role);
+    router.push(role === 'artist' ? '/portfolio' : 'userprofile');
+  };
+
   if (isLoading || !isAuthChecked) {
     return null; 
   }
@@ -70,6 +79,9 @@ export default function Navbar() {
 
         {user ? (
           <>
+          {/*<li>
+          <span>{`Welcome, ${user.email} (${role})`}</span>
+          </li>*/}
             <li>
               <button onClick={handleLogout}>Log Out</button>
             </li>
