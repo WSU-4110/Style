@@ -75,6 +75,29 @@ export default function UserProfile() {
     return () => unsubscribe();
   }, []);
 
+  const handleDeleteProfile = async () => {
+    const confirmation = confirm('Are you sure you want to delete your profile? This action cannot be undone.');
+  
+    if (!confirmation) return;
+  
+    try {
+      const response = await fetch('/api/userprofile', {
+        method: 'DELETE',
+      });
+  
+      if (response.ok) {
+        alert('Profile deleted successfully!');
+        router.push('homepage'); 
+      } else {
+        const error = await response.json();
+        alert(`Error: ${error.message}`);
+      }
+    } catch (error) {
+      console.error('Error deleting profile:', error);
+      alert('Failed to delete profile. Please try again.');
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray p-6">
       <div className="container max-w-4xl p-12 bg-white border-4 border-[#f4d9a0] shadow-lg rounded-lg text-center">
@@ -164,6 +187,14 @@ export default function UserProfile() {
             Save Profile
           </button>
         </form>
+        {/* Delete Profile Button */}
+        <button
+        type="button"
+        onClick={handleDeleteProfile}
+        className="mt-4 bg-red-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-red-700 transition w-full"
+      >
+        Delete Profile
+      </button>
       </div>
     </div>
   );
