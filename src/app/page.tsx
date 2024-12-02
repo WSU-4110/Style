@@ -3,8 +3,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import artistImage from '../public/artist_barber.jpg';
-import customerImage from '../public/customer.jpg';
+import artistImage from '/artist_barber.jpg';
+import customerImage from '/customer.jpg';
 import Image from 'next/image';
 
 export default function LandingPage() {
