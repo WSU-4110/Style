@@ -6,6 +6,11 @@ import Card from '../components/ui/card';
 export default function TattooPage() {
   const businesses: any[] = [];
 
+  // onBookClick handler
+  const handleBookClick = (businessName: string) => {
+    console.log(`Booking clicked for ${businessName}`);
+  };
+
   return (
     <div className="container">
       <h1 className="title">Tattoo Artists</h1>
@@ -20,6 +25,7 @@ export default function TattooPage() {
               about={business.about}
               services={business.services}
               socialLinks={business.socialLinks}
+              onBookClick={() => handleBookClick(business.businessName)} 
             />
           ))
         ) : (
