@@ -1,15 +1,6 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import artistImage from '../../public/artist_barber.jpg';
-import customerImage from '../../public/customer.jpg';
-import logoImage from '../../public/transparent_logo.png';
-import nailSalonLogo from '../../public/nail_logo.png';
-import hairLogo from '../../public/hair_logo.png';
-import heartLogo from '../../public/heart_logo.png';
-import tattooLogo from '../../public/tattoo_logo.png';
-import barberLogo from '../../public/barber_logo.png';
-import newLogo from '../../public/new_logo.png';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -80,15 +71,11 @@ export default function Home() {
         }
     };
 
-    {/*const handleRedirect = () => {
-        router.push('schedule');
-    };*/}
-
     return (
         <div className="min-h-screen flex flex-col bg-white-100">
             {/* Logo */}
             <div className="bg-black fixed top-0 left-0 inline-flex">
-                <Image src={logoImage} alt="Logo" width={64} height={30} />
+                <Image src="/transparent_logo.png" alt="Logo" width={64} height={30} />
             </div>
 
             {/* Header/ Main Content Area */}
@@ -96,7 +83,7 @@ export default function Home() {
                 {/* Header */}
                 <div className="flex flex-col items-center justify-center mb-8 text-center">
                     <div className="flex items-center justify-center">
-                        <Image src={logoImage} alt="Logo" width={65} height={65} />
+                        <Image src="/transparent_logo.png" alt="Logo" width={65} height={65} />
                         <h1 className="text-5xl font-bold tracking-wide ml-4">Explore</h1>
                     </div>
                     <p className="mt-2 text-lg">Search Artists Here to Connect</p>
@@ -125,20 +112,10 @@ export default function Home() {
                     </div>
                 )}
 
-                {/* Redirect Button */}
-                <div className="flex justify-center mt-6">
-                    {/*<button
-                        onClick={handleRedirect}
-                        className="bg-teal-400 text-white px-4 py-2 rounded-md"
-                    >
-                        Book
-                    </button>*/}
-                </div>
-
                 {/* Images Section */}
                 <div className="flex justify-center mt-6 space-x-4">
-                    <Image src={artistImage} alt="Artist" width={200} height={200} />
-                    <Image src={customerImage} alt="Customer" width={200} height={200} />
+                    <Image src="/artist_barber.jpg" alt="Artist" width={200} height={200} />
+                    <Image src="/customer.jpg" alt="Customer" width={200} height={200} />
                 </div>
             </main>
 
@@ -148,7 +125,7 @@ export default function Home() {
                     <ul>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
                             <div className="logo-container">
-                                <Image src={nailSalonLogo} alt="Nail Salon" width={40} height={40} />
+                                <Image src="/nail_logo.png" alt="Nail Salon" width={40} height={40} />
                             </div>
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <button onClick={() => router.push('/nailsalon')} className="text-lg hover:text-teal-400">
@@ -158,7 +135,7 @@ export default function Home() {
                         </li>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
                             <div className="logo-container">
-                                <Image src={hairLogo} alt="Hair Stylists" width={40} height={40} />
+                                <Image src="/hair_logo.png" alt="Hair Stylists" width={40} height={40} />
                             </div>
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <button onClick={() => router.push('/hair')} className="text-lg hover:text-teal-400">
@@ -168,7 +145,7 @@ export default function Home() {
                         </li>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
                             <div className="logo-container">
-                                <Image src={tattooLogo} alt="Tattoo Artist" width={40} height={40} />
+                                <Image src="/tattoo_logo.png" alt="Tattoo Artist" width={40} height={40} />
                             </div>
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <button onClick={() => router.push('/tattoo')} className="text-lg hover:text-teal-400">
@@ -178,7 +155,7 @@ export default function Home() {
                         </li>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
                             <div className="logo-container">
-                                <Image src={barberLogo} alt="Barber Shops" width={40} height={40} />
+                                <Image src="/barber_logo.png" alt="Barber Shops" width={40} height={40} />
                             </div>
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <button onClick={() => router.push('/barber')} className="text-lg hover:text-teal-400">
@@ -188,7 +165,7 @@ export default function Home() {
                         </li>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
                             <div className="logo-container">
-                                <Image src={newLogo} alt="Under 6 Months" width={40} height={40} />
+                                <Image src="/new_logo.png" alt="Under 6 Months" width={40} height={40} />
                             </div>
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <a href="/under6months" className="text-lg hover:text-teal-400">Under 6 Months</a>
@@ -198,7 +175,7 @@ export default function Home() {
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
                             {/* Logo for Favorites */}
                             <div className="logo-container">
-                                <Image src={heartLogo} alt="Favorites" width={40} height={40} />
+                                <Image src="/heart_logo.png" alt="Favorites" width={40} height={40} />
                             </div>
                             {/* Text for Favorites, hidden by default */}
                             <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
