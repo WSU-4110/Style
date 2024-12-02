@@ -1,10 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 'use client';
 
 import { useRouter } from 'next/navigation';
-import artistImage from '/artist_barber.jpg';
-import customerImage from '/customer.jpg';
 import Image from 'next/image';
 
 export default function LandingPage() {
@@ -36,7 +32,7 @@ export default function LandingPage() {
         >
           <div className="relative w-full h-[400px] overflow-hidden rounded-md mb-4">
             <Image
-              src={artistImage}
+              src="/artist_barber.jpg" //direct path
               alt="Artists"
               layout="fill"
               objectFit="cover"
@@ -59,7 +55,7 @@ export default function LandingPage() {
         >
           <div className="relative w-full h-[400px] overflow-hidden rounded-md mb-4">
             <Image
-              src={customerImage}
+              src="/customer.jpg" //direct path
               alt="Customers"
               layout="fill"
               objectFit="cover"
