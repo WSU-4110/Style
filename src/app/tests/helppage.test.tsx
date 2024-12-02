@@ -7,6 +7,14 @@ jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }));
 
+// mock Firebase Admin SDK to avoid accessing the Firebase key
+jest.mock('firebase-admin', () => ({
+  initializeApp: jest.fn(),
+  credential: {
+    cert: jest.fn().mockReturnValue('mocked-credential'),
+  },
+}));
+
 describe("HelpPage Component", () => {
   beforeEach(() => {
     (useRouter as jest.Mock).mockReturnValue({
