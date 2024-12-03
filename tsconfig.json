@@ -7,10 +7,11 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
+    "target": "esnext",
     "incremental": true,
     "plugins": [
       {
@@ -22,5 +23,15 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/homepage"],
+   
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/app/homepage",
+    "setupTests.ts" 
+  ],
+
   "exclude": ["node_modules"]
 }
