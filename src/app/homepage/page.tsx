@@ -203,47 +203,47 @@ const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch })
             <div className="flex flex-wrap gap-6 justify-center">
       <div className="list">
       <Homepage_Card
-      businessName="Smith & Sons Hardware"
+      businessName="Smith & Sons Tattoo Shop"
       address="739 Briar St"
       images={['mock_hardware']}
-      about="A family-owned hardware store offering tools, supplies, and expert advice."
-      services={["Tool Rentals", "Hardware Supplies"]}
+      about="A family-owned tattoo parlor for whatever design you want."
+      services={["Tattoos", "Tattoo Touch-Ups"]}
       onBookClick={(name) => alert(`Booking ${name}`)}
     />
 
     <Homepage_Card
-      businessName="Lakeside Pharmacy"
+      businessName="Lakeside Nail Salon"
       address="1903 Lake Mars"
       images={["/path/to/pharmacy.jpg"]}
-      about="Your neighborhood pharmacy with fast prescriptions and friendly service."
-      services={["Prescription Refills", "Over-the-Counter Products"]}
+      about="Your New Nail Salon, just around the corner."
+      services={["Nail Coloring", "Manicures"]}
       onBookClick={(name) => alert(`Booking ${name}`)}
     />
 
     <Homepage_Card
-      businessName="Bella's Deli"
+      businessName="Bella's Barber Shop"
       address="38019 Park Blvd"
       images={["/path/to/deli.jpg"]}
-      about="Serving fresh sandwiches, soups, and salads made daily."
-      services={["Catering", "Dine-In & Take-Out"]}
+      about="Small Town Barber Shop ready to serve."
+      services={["Hair Care"]}
       onBookClick={(name) => alert(`Booking ${name}`)}
     />
 
     <Homepage_Card
-      businessName="Oakwood Dry Cleaners"
+      businessName="Oakwood Tattoo Shop"
       address="13 Oakwood Dr"
       images={["/path/to/dry_cleaners.jpg"]}
-      about="Reliable dry cleaning services with fast turnaround times."
-      services={["Dry Cleaning", "Alterations"]}
+      about="Reliable tattoo art that looks good."
+      services={["Tattoo Art"]}
       onBookClick={(name) => alert(`Booking ${name}`)}
     />
 
     <Homepage_Card
-      businessName="Sunny Day Bakery"
+      businessName="Sunny Day Nail Salon"
       address="2391 Sunset Ln"
       images={["/path/to/bakery.jpg"]}
-      about="Home of freshly baked bread, cakes, and pastries."
-      services={["Custom Cakes", "Daily Baked Goods"]}
+      about="Home of Crating Your Perfect Nails."
+      services={["Nail Care and Coloring", "Manicures"]}
       onBookClick={(name) => alert(`Booking ${name}`)}
 />
       </div>
