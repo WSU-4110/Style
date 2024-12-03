@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import './portfolio.css';
 import Navbar from '../components/navigationbar';
 import SocialMediaInput from '../components/socialmediainput'; // Default import (no curly braces)
+{/*import MapComponent from './map';*/}
+
 
 export default function Portfolio() {
   const [businessName, setBusinessName] = useState('');
@@ -106,6 +108,30 @@ export default function Portfolio() {
     } catch (error) {
       console.error('Error saving portfolio:', error);
       alert('Failed to save portfolio. Please try again.');
+    }
+  };
+
+  
+  const handleDeletePortfolio = async () => {
+    const confirmation = confirm('Are you sure you want to delete your portfolio? This action cannot be undone.');
+
+    if (!confirmation) return;
+
+    try {
+      const response = await fetch('/api/profile', {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        alert('Portfolio deleted successfully!');
+        router.push('/'); // Redirect user to the home page or a suitable location
+      } else {
+        const error = await response.json();
+        alert(`Error: ${error.message}`);
+      }
+    } catch (error) {
+      console.error('Error deleting portfolio:', error);
+      alert('Failed to delete portfolio. Please try again.');
     }
   };
 
@@ -301,8 +327,17 @@ export default function Portfolio() {
                 Save Portfolio
               </button>
             </div>
+            
+            {/* Delete Portfolio Button */}
+            <div className="actions-container">
+              <button type="button" onClick={handleDeletePortfolio} className="button">
+                Delete Portfolio
+              </button>
+            </div>
           </div>
         </div>
+
+        
 
         {/* Mini-map Section */}
         <div className="mini-map">
@@ -317,6 +352,9 @@ export default function Portfolio() {
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
+            
+           { /* <MapComponent />*/}
+
           </div>
 
           {/* Social Media Links Section */}
