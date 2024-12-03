@@ -101,3 +101,29 @@ def google_login(request):
 # Portfolio view
 def portfolio_view(request):
     return render(request, 'portfolio.html')
+
+# Delete Profile View
+def delete_profile(request):
+    if request.method == "POST":
+        try:
+            user = request.user
+
+            firebase_user = firebase_auth.get_user_by_email(user.email)
+            firebase_auth.delete_user(firebase_user.uid)
+
+            db.collection('users').document(firebase_user.uid).delete()
+
+            user.delete()
+            
+            # Log out the user and redirect
+            logout(request)
+            messages.success(request, "Your profile has been deleted successfully.")
+            return redirect('homepage')  
+        except firebase_admin.auth.UserNotFoundError:
+            messages.error(request, "User not found in Firebase.")
+            return redirect('portfolio')
+        except Exception as e:
+            messages.error(request, f"Error deleting profile: {str(e)}")
+            return redirect('portfolio')
+
+    return render(request, 'userprofile/page.tsx')
