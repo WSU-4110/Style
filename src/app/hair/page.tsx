@@ -21,7 +21,6 @@ export default function HairStylists() {
     {
       businessName: 'Hairloft Salon',
       address: '8192 Oakman St, Alemond, MI',
-      images: ['https://www.google.com/imgres?q=tattoo%20artist&imgurl=https%3A%2F%2Fcdn.shoutoutmiami.com%2Fwp-content%2Fuploads%2F2021%2F08%2Fc-PersonalAdrianSparkman__1_1627150587391.jpg&imgrefurl=https%3A%2F%2Fshoutoutmiami.com%2Fmeet-adrian-sparkman-tattoo-artist%2F&docid=Kah8DKSnYeaR5M&tbnid=XB54EMZ14x0AZM&vet=12ahUKEwikq5jG0IyKAxWEmIkEHevpHjEQM3oECFIQAA..i&w=1000&h=1145&hcb=2&ved=2ahUKEwikq5jG0IyKAxWEmIkEHevpHjEQM3oECFIQAA'],
       images: ['https://davidpressleyschool.com/wp-content/uploads/2023/08/bigstock-hairstylist-trimming-hair-of-t-438871286-1.jpg'],
       about: 'A modern hair salon specializing in creating stunning hairstyles for every occasion. Whether you are looking for a fresh cut, a bold new color, or expert styling for a special event, Hairloft Salon offers personalized services to bring out your best look.',
       services: ['Haircuts', 'Hair Treatments', 'Hair Coloring', 'Styling'],
