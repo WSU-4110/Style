@@ -1,162 +1,190 @@
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import axios from 'axios';
 import { jest } from '@jest/globals';
-import { useRouter } from 'next/navigation';
+import axios from 'axios';
 import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; // Ensure useEffect is imported
 
 
-
-//test1
-// Directly include the search bar JSX instead of mocking it
-test('SearchBar triggers onSearch function when button is clicked', () => {
-  const mockOnSearch = jest.fn();
-
-  const { getByText, getByPlaceholderText } = render(
-    <div>
-      <input placeholder="Search..." onChange={(e) => mockOnSearch(e.target.value)} />
-      <button onClick={() => mockOnSearch('test')}>Search</button>
-    </div>
-  );
-
-  const input = getByPlaceholderText('Search...');
-  fireEvent.change(input, { target: { value: 'test' } });
-  fireEvent.click(getByText('Search'));
-
-  expect(mockOnSearch).toHaveBeenCalledWith('test');
-});
-
-//test2
-// Mock axios to simulate the categories API call
-jest.mock('axios'); // This will automatically mock axios
-
-interface Category {
-  name: string;
-}
-
-test('displays categories after data is fetched', async () => {
-  const categories: Category[] = [{ name: 'Hair' }, { name: 'Tattoo' }];
-
-  // Type the mocked axios.get function properly
-  (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValueOnce({
-    data: categories,
-  });
-
-  const { getByText } = render(
-    <div>
-      {categories.map((category: Category) => (
-        <div key={category.name}>{category.name}</div>
-      ))}
-    </div>
-  );
-
-  await waitFor(() => getByText('Hair'));
-  await waitFor(() => getByText('Tattoo'));
-
-  expect(getByText('Hair')).toBeInTheDocument();
-  expect(getByText('Tattoo')).toBeInTheDocument();
-});
-
-//test3
-// Mock axios to simulate the search API call
+// Mock axios module with proper type definition
 jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>; // Typing axios mock
 
-interface SearchResult {
-  name: string;
-}
+// Define the MockSearchBar directly in the test file
+const MockSearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch }) => {
+  const [searchTerm, setSearchTerm] = useState('');
 
-test('displays search results after search', async () => {
-  const searchResults: SearchResult[] = [{ name: 'Tattoo Artist' }];
-  
-  // Type the mocked axios.get function properly
-  (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValueOnce({
-    data: searchResults,
-  });
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
 
-  const { getByPlaceholderText, getByText } = render(
-    <div>
-      <input placeholder="Search..." />
-      <button
-        onClick={async () => {
-          const response = await axios.get('mocked-url');
-          response.data.forEach((item: SearchResult) => {
-            const resultDiv = document.createElement('div');
-            resultDiv.textContent = item.name;
-            document.body.appendChild(resultDiv);
-          });
-        }}
-      >
-        Search
-      </button>
-    </div>
+  const handleSearchSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    onSearch(searchTerm); // Call the onSearch function passed as prop
+  };
+
+  return (
+    <form onSubmit={handleSearchSubmit}>
+      <input
+        type="text"
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={handleSearchChange}
+      />
+      <button type="submit">Search</button>
+    </form>
   );
+};
+
+// Test 1: Ensure MockSearchBar renders correctly
+test('SearchBar renders correctly', () => {
+  const mockSearch = jest.fn(); // Create mock function to pass as onSearch
+  const { getByPlaceholderText, getByRole } = render(<MockSearchBar onSearch={mockSearch} />);
+
+  // Check that the input field and button are rendered
+  expect(getByPlaceholderText('Search...')).toBeInTheDocument();
+  expect(getByRole('button', { name: /Search/i })).toBeInTheDocument();
+});
+
+// Test 2: Ensure onSearch is called when the form is submitted
+test('SearchBar calls onSearch when form is submitted', () => {
+  const mockSearch = jest.fn();
+  const { getByPlaceholderText, getByRole } = render(<MockSearchBar onSearch={mockSearch} />);
 
   const input = getByPlaceholderText('Search...');
-  fireEvent.change(input, { target: { value: 'tattoo' } });
-  fireEvent.click(getByText('Search'));
+  const button = getByRole('button', { name: /Search/i });
 
-  await waitFor(() => getByText('Tattoo Artist'));
+  fireEvent.change(input, { target: { value: 'Artist' } }); // Simulate typing
+  fireEvent.click(button); // Simulate form submission
 
-  const result = getByText('Tattoo Artist');
-  expect(result).toBeInTheDocument();
+  expect(mockSearch).toHaveBeenCalledWith('Artist'); // Check if onSearch was called with the correct value
 });
 
-//test4
-// Mock next/navigation for useRouter correctly
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
-}));
+// Test 3: Ensure categories are fetched and displayed
+test('Categories are fetched and displayed', async () => {
+  mockedAxios.get.mockResolvedValue({ data: [{ name: 'Hair Stylists' }, { name: 'Tattoo Artists' }] });
 
-test('navigates to the correct route when sidebar button is clicked', () => {
-  const push = jest.fn();
-  (useRouter as jest.Mock).mockReturnValue({ push });
+  const MockHome: React.FC = () => {
+    const [categories, setCategories] = useState<{ name: string }[]>([]); // Typed state for categories
+    
+    useEffect(() => {
+      const fetchCategories = async () => {
+        try {
+          const response = await axios.get('http://127.0.0.1:8000/api/category/categories/');
+          setCategories(response.data);
+        } catch (error) {
+          console.error('Error fetching categories:', error);
+        }
+      };
+      fetchCategories();
+    }, []);
 
-  const { getByText } = render(
-    <div>
-      <button onClick={() => push('/nailsalon')}>Nail Salon</button>
-    </div>
-  );
+    return (
+      <div>
+        <h2>Categories</h2>
+        <ul>
+          {categories.map((category, index) => (
+            <li key={index}>{category.name}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
 
-  fireEvent.click(getByText('Nail Salon'));
+  const { getByText } = render(<MockHome />);
 
-  expect(push).toHaveBeenCalledWith('/nailsalon');
+  await waitFor(() => {
+    expect(getByText('Hair Stylists')).toBeInTheDocument();
+    expect(getByText('Tattoo Artists')).toBeInTheDocument();
+  });
 });
 
-//test5
-// Mock next/image to avoid actual image rendering
-jest.mock('next/image', () => ({
-  __esModule: true,
-  default: ({ alt }: { alt: string }) => <div>{alt}</div>,
-}));
+// Test 4: Ensure search results are displayed after search
+test('Search results are displayed after search', async () => {
+  mockedAxios.get.mockResolvedValueOnce({ data: [{ name: 'Tattoo Artist 1' }, { name: 'Tattoo Artist 2' }] });
 
-test('renders images correctly', () => {
+  const MockHome: React.FC = () => {
+    const [searchResults, setSearchResults] = useState<{ name: string }[]>([]); // Typed state for search results
+    
+    const handleSearch = async (term: string) => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/search/search/?q=${term}`);
+        setSearchResults(response.data);
+      } catch (error) {
+        console.error('Error fetching search results:', error);
+      }
+    };
+
+    return (
+      <div>
+        <MockSearchBar onSearch={handleSearch} />
+        <h2>Search Results</h2>
+        <ul>
+          {searchResults.map((result, index) => (
+            <li key={index}>{result.name}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
+  const { getByPlaceholderText, getByRole, getByText } = render(<MockHome />);
+
+  fireEvent.change(getByPlaceholderText('Search...'), { target: { value: 'Tattoo' } });
+  fireEvent.click(getByRole('button', { name: /Search/i }));
+
+  await waitFor(() => {
+    expect(getByText('Tattoo Artist 1')).toBeInTheDocument();
+    expect(getByText('Tattoo Artist 2')).toBeInTheDocument();
+  });
+});
+
+// Test 5: Test if the Logo renders correctly
+test('Logo image renders correctly', () => {
   const { getByAltText } = render(
     <div>
-      <Image src="mocked-image.jpg" alt="Artist" />
-      <Image src="mocked-image.jpg" alt="Customer" />
+      <Image src="logo.png" alt="Logo" width={64} height={30} />
     </div>
   );
 
-  const artistImage = getByAltText('Artist');
-  const customerImage = getByAltText('Customer');
-
-  expect(artistImage).toBeInTheDocument();
-  expect(customerImage).toBeInTheDocument();
+  // Check if the logo image is rendered
+  expect(getByAltText('Logo')).toBeInTheDocument();
 });
 
-// 6. Mock next/image to avoid actual image rendering
-jest.mock('next/image', () => ({
-  __esModule: true,
-  default: ({ alt }: { alt: string }) => <div>{alt}</div>,  // Explicitly type 'alt' as string
-}));
+// Test 6: Test the Sidebar categories render correctly (mocking router)
+test('Sidebar categories render correctly', () => {
+  const mockRouterPush = jest.fn();
+  jest.mock('next/navigation', () => ({
+    useRouter: () => ({ push: mockRouterPush }),
+  }));
 
-test('renders the logo in the header', () => {
-  const { getByAltText } = render(
-    <div>
-      <Image src="logo.jpg" alt="Logo" />
-    </div>
+  const MockSidebar = () => (
+    <nav>
+      <ul>
+        <li>
+          <button onClick={() => mockRouterPush('/nailsalon')}>Nail Salon</button>
+        </li>
+        <li>
+          <button onClick={() => mockRouterPush('/hair')}>Hair Stylists</button>
+        </li>
+        <li>
+          <button onClick={() => mockRouterPush('/tattoo')}>Tattoo Artists</button>
+        </li>
+        <li>
+          <button onClick={() => mockRouterPush('/barber')}>Barber Shops</button>
+        </li>
+      </ul>
+    </nav>
   );
 
-  const logoImage = getByAltText('Logo');
-  expect(logoImage).toBeInTheDocument();
+  const { getByText } = render(<MockSidebar />);
+
+  // Check if the sidebar items are rendered
+  expect(getByText('Nail Salon')).toBeInTheDocument();
+  expect(getByText('Hair Stylists')).toBeInTheDocument();
+  expect(getByText('Tattoo Artists')).toBeInTheDocument();
+  expect(getByText('Barber Shops')).toBeInTheDocument();
+
+  // Test the navigation click
+  fireEvent.click(getByText('Hair Stylists'));
+  expect(mockRouterPush).toHaveBeenCalledWith('/hair');
 });

@@ -1,8 +1,14 @@
+   // setup.js or jest.config.js
+   import { JSDOM } from 'jsdom';
+
+   const dom = new JSDOM();
+   global.document = dom.window.document;
+   global.window = dom.window;
+
+
 module.exports = {
   roots: ['<rootDir>/homepage'],
-  testMatch: [
-    "<rootDir>/homepage/**/*.(test|spec).[tj]s?(x)"
-  ],
+  testMatch: ['**/*.test.tsx', '**/*.test.ts'],
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   
@@ -10,7 +16,7 @@ module.exports = {
   transform: {
     '^.+\\.(ts|tsx|js|jsx)$': 'babel-jest', // Transpile TypeScript/JS
   },
-  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
   testPathIgnorePatterns: ['/node_modules/'],
 };
