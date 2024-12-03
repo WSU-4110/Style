@@ -4,7 +4,8 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import Navbar from '../components/navigationbar';
+import HelpForm from './helpform';
+import Link from 'next/link';
 
 // FAQ Item Interface
 interface FAQItem {
@@ -27,9 +28,13 @@ const faqs: FAQItem[] = [
 
 const HelpPage = () => {
     const router = useRouter();
+
+    const handleNavigate = () => {
+        router.push('/helppage/helpform');
+    };
+
     return (
         <div className="min-h-screen bg-gray">
-            <Navbar />
             <div className="max-w-screen-xl mx-auto p-12 bg-white shadow-lg rounded-lg"> 
                 <h1 className="text-4xl font-bold text-center mb-6">Help Page</h1>
 
@@ -49,7 +54,11 @@ const HelpPage = () => {
                     <h2 className="text-2xl font-semibold mb-4">Contact Support</h2>
                     <p>If you need further assistance, please reach out to us:</p>
                     <p>Email: <a href="styleislamitp@gmail.com" className="text-blue-600 underline">styleislamitp@gmail.com</a></p>
-                    <p>Or fill out the <a href="/contact" className="text-blue-600 underline">contact form</a>.</p>
+                    <p>Or fill out the{' '}
+            <button onClick={handleNavigate} className="text-blue-600 underline">
+              contact form
+            </button>.
+          </p>
                 </section>
             </div>   
         </div>

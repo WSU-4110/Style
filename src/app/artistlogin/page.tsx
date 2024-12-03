@@ -28,6 +28,8 @@ export default function Login() {
       // Sign in using Google provider
       await signInWithPopup(auth, googleProvider);
       // Redirect to portfolio page after successful login
+      const role = "artist";
+      localStorage.setItem('role', role);
       router.push('/portfolio');
     } catch (error) {
       // Display error message if Google login fails
@@ -52,6 +54,7 @@ export default function Login() {
         // Authenticate using email and password
         await signInWithEmailAndPassword(auth, email, password);
         // Redirect to portfolio page after successful login
+        localStorage.setItem('role', 'artist');
         router.push('/portfolio');
       } catch (error) {
         // Display error message if authentication fails
@@ -72,6 +75,7 @@ export default function Login() {
         await createUserWithEmailAndPassword(auth, email, password);
         alert('Sign up successful! Redirecting...');
         // Redirect to portfolio page after successful sign-up
+        localStorage.setItem('role', 'artist');
         router.push('/portfolio');
       } catch (error) {
         // Display error message if sign-up fails

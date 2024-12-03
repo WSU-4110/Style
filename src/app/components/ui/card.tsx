@@ -10,6 +10,7 @@ interface CardProps {
   about: string;
   services: string[];
   socialLinks?: string[];
+  onBookClick: (businessName: string) => void;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -19,7 +20,13 @@ const Card: React.FC<CardProps> = ({
   about,
   services,
   socialLinks,
+  onBookClick,
 }) => {
+  const handleClick = () => {
+    if (onBookClick) {
+      onBookClick(businessName);
+    }
+  };
   return (
     <div className="card">
       <div className="info">
@@ -54,7 +61,7 @@ const Card: React.FC<CardProps> = ({
           )}
         </div>
       </div>
-      <button className="button">Book</button>
+      <button className="button" onClick={handleClick}>Book</button>
     </div>
   );
 };
