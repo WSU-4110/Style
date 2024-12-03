@@ -182,7 +182,7 @@ export default function UserProfile() {
 
           <button
             type="submit"
-            className="bg-black text-white py-2 px-6 rounded-lg shadow-md hover:bg-gray-800 transition w-full mb-5"
+            className="bg-black text-white py-2 px-6 rounded-lg shadow-md hover:bg-gray-800 transition w-full mb-3"
           >
             Save Profile
 
@@ -192,7 +192,7 @@ export default function UserProfile() {
           <button
             type="button"
             onClick={handleDeleteProfile}
-            className="bg-black text-white py-2 px-6 rounded-lg shadow-md hover:bg-gray-800 transition w-full mb-10"
+            className="bg-black text-white  w-40 py-2 rounded-lg shadow-md hover:bg-gray-800 transition w-full"
       >
         Delete Profile
       </button>
