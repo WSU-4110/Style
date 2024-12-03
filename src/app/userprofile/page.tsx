@@ -191,7 +191,7 @@ export default function UserProfile() {
         <button
         type="button"
         onClick={handleDeleteProfile}
-        className="mt-4 bg-red-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-red-700 transition w-full"
+        className="bg-black text-white py-2 px-6 rounded-lg shadow-md hover:bg-gray-800 transition w-full"
       >
         Delete Profile
       </button>
