@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import './portfolio.css';
 import Nav_bar from '../components/navbar_artist';
 import SocialMediaInput from '../components/socialmediainput'; // Default import (no curly braces)
+{/*import MapComponent from './map';*/}
+
 
 export default function Portfolio() {
   const [businessName, setBusinessName] = useState('');
@@ -355,6 +357,9 @@ export default function Portfolio() {
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
+            
+           { /* <MapComponent />*/}
+
           </div>
 
           {/* Social Media Links Section */}
