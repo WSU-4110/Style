@@ -185,14 +185,14 @@ export default function UserProfile() {
             className="bg-black text-white py-2 px-6 rounded-lg shadow-md hover:bg-gray-800 transition w-full"
           >
             Save Profile
-            
+
           </button>
         </form>
         {/* Delete Profile Button */}
-        <button
-        type="button"
-        onClick={handleDeleteProfile}
-        className="bg-black text-white py-2 px-6 rounded-lg shadow-md hover:bg-gray-800 transition w-full"
+          <button
+            type="button"
+            onClick={handleDeleteProfile}
+            className="bg-black text-white py-2 px-6 rounded-lg shadow-md hover:bg-gray-800 transition w-full"
       >
         Delete Profile
       </button>
