@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import './homepage_card.css';
 
 interface CardProps {
   businessName: string;
@@ -11,6 +12,7 @@ interface CardProps {
   socialLinks?: string[];
   onBookClick: (businessName: string) => void;
 }
+
 
 const Homepage_Card: React.FC<CardProps> = ({
   businessName,
@@ -31,7 +33,12 @@ const Homepage_Card: React.FC<CardProps> = ({
       <div className="info">
         <div className="imagePlaceholder">
           {images.length > 0 && (
-            <img src={images[0]} alt={businessName} className="image" />
+            <img 
+            src={images[0]} 
+            alt={`${businessName} preview`} 
+            className="w-full h-full object-cover rounded" 
+          />
+          
           )}
         </div>
         <div>
