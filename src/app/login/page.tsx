@@ -9,6 +9,8 @@ import axios from 'axios';
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [emailForReset, setEmailForReset] = useState("");
   const router = useRouter();
   const [user, setUser] = useState({
     email: '',
@@ -24,7 +26,7 @@ export default function Login() {
   }, []);
 
   const onLogin = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent page refresh on form submit
+    e.preventDefault();
     try {
       const response = await axios.post("/api/users/login", user);
       console.log("Login success", response.data);
@@ -67,6 +69,23 @@ export default function Login() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUser((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleForgotPassword = async () => {
+    if (emailForReset) {
+      try {
+        // Simulate sending the reset email (you'd call an API here)
+        const response = await axios.post('/api/users/reset-password', { email: emailForReset });
+        console.log("Reset password email sent", response.data);
+        alert('Password reset link sent to your email.');
+        setIsModalOpen(false); // Close the modal
+      } catch (error) {
+        console.error('Error sending reset email:', error);
+        alert('Error sending reset email. Please try again.');
+      }
+    } else {
+      alert('Please enter your email.');
+    }
   };
 
   return (
@@ -125,7 +144,44 @@ export default function Login() {
             {isLogin ? 'Create Account' : 'Login'}
           </a>
         </p>
+        <button
+          className="mt-4 text-blue-500 hover:underline"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Forgot Password?
+        </button>
       </div>
+
+      {/* Modal for Password Reset */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-2xl mb-4">Reset Password</h2>
+            <label htmlFor="reset-email" className="block text-sm text-gray-600">Enter your email</label>
+            <input
+              type="email"
+              id="reset-email"
+              value={emailForReset}
+              onChange={(e) => setEmailForReset(e.target.value)}
+              className="w-full p-3 mt-2 border rounded-md"
+            />
+            <div className="mt-4">
+              <button
+                className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                onClick={handleForgotPassword}
+              >
+                Send Reset Link
+              </button>
+              <button
+                className="ml-4 text-red-500"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

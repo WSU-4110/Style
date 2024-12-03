@@ -7,97 +7,89 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase';
 
 // Main CustomerLogin component
 export default function CustomerLogin() {
-  // State to toggle between login and sign-up forms
   const [isLogin, setIsLogin] = useState(true);
-  // Initialize useRouter for client-side navigation
+  const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);  // State to control the modal visibility
   const router = useRouter();
 
-  // Function to toggle between login and sign-up forms
   const toggleForms = () => {
-    // Switch form view based on current state
     setIsLogin(!isLogin);
   };
 
-  // Handle login with Google
   const handleGoogleLogin = async () => {
     try {
-      // Sign in using Google provider
       await signInWithPopup(auth, googleProvider);
-      // Redirect to user profile page after successful login
       router.push('/userprofile');
     } catch (error) {
-      // Display error message if Google login fails
       const errorMessage = (error as Error).message;
       alert(`Google login failed: ${errorMessage}`);
     }
   };
 
-  // Handle form submission for login and sign-up
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    // Prevent default form submission behavior
     e.preventDefault();
-
-    // Retrieve email and password from form inputs
     const form = e.currentTarget;
     const email = (form.elements.namedItem('email') as HTMLInputElement).value;
     const password = (form.elements.namedItem('password') as HTMLInputElement).value;
 
     if (isLogin) {
-      // Login mode
       try {
-        // Authenticate using email and password
         await signInWithEmailAndPassword(auth, email, password);
-        // Redirect to user profile page after successful login
         localStorage.setItem('role', 'customer');
         router.push('/userprofile');
       } catch (error) {
-        // Display error message if authentication fails
         const errorMessage = (error as Error).message;
         alert(`Authentication failed: ${errorMessage}`);
       }
     } else {
-      // Sign-up mode
       const confirmPassword = (form.elements.namedItem('confirm_password') as HTMLInputElement).value;
-      // Check if passwords match
       if (password !== confirmPassword) {
         alert('Passwords do not match. Please try again.');
-        return; // Exit function if passwords don't match
+        return;
       }
 
       try {
-        // Create a new user account
         await createUserWithEmailAndPassword(auth, email, password);
         alert('Sign up successful! Redirecting...');
-        // Redirect to user profile page after successful sign-up
         router.push('/userprofile');
       } catch (error) {
-        // Display error message if sign-up fails
         const errorMessage = (error as Error).message;
         alert(`Sign up failed: ${errorMessage}`);
       }
     }
   };
 
+  // Handle password reset
+  const handlePasswordReset = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const email = (form.elements.namedItem('reset-email') as HTMLInputElement).value;
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      alert('Password reset email sent successfully!');
+      setIsResetPasswordModalOpen(false);  // Close the modal
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      alert(`Password reset failed: ${errorMessage}`);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray">
       <div className="container mt-10 p-8 flex flex-col items-center justify-center bg-black shadow-lg rounded-lg">
-        {/* Display the appropriate title based on current form state */}
         <h1 className="text-4xl text-white font-bold mb-6">
           {isLogin ? 'Login To Style' : 'Sign Up with Style'}
         </h1>
 
         {isLogin ? (
-          // Login form
           <form className="w-full max-w-md" onSubmit={handleSubmit}>
-            {/* Email input field for login */}
-            <label htmlFor="login-email" className="block text-sm text-[#f4d9a0]">
-              Email
-            </label>
+            <label htmlFor="login-email" className="block text-sm text-[#f4d9a0]">Email</label>
             <input
               type="text"
               id="login-email"
@@ -107,10 +99,7 @@ export default function CustomerLogin() {
               className="w-full p-3 mt-2 border rounded-md"
             />
 
-            {/* Password input field for login */}
-            <label htmlFor="login-password" className="block text-sm text-[#f4d9a0] mt-4">
-              Password
-            </label>
+            <label htmlFor="login-password" className="block text-sm text-[#f4d9a0] mt-4">Password</label>
             <input
               type="password"
               id="login-password"
@@ -120,7 +109,6 @@ export default function CustomerLogin() {
               className="w-full p-3 mt-2 border rounded-md"
             />
 
-            {/* Submit button for login */}
             <button
               type="submit"
               className="w-full bg-[#f4d9a0] text-black py-2 px-4 rounded-lg mt-6 hover:bg-gray-600"
@@ -128,7 +116,6 @@ export default function CustomerLogin() {
               Login
             </button>
 
-            {/* Google login button */}
             <button
               onClick={handleGoogleLogin}
               type="button"
@@ -141,14 +128,18 @@ export default function CustomerLogin() {
               />
               Login with Google
             </button>
+
+            {/* Forgot Password Link */}
+            <p
+              onClick={() => setIsResetPasswordModalOpen(true)}
+              className="mt-4 text-[#f4d9a0] cursor-pointer hover:underline"
+            >
+              Forgot Password?
+            </p>
           </form>
         ) : (
-          // Sign-up form
           <form className="w-full max-w-md" onSubmit={handleSubmit}>
-            {/* Email input field for sign-up */}
-            <label htmlFor="createacc-email" className="block text-sm text-[#f4d9a0]">
-              Email
-            </label>
+            <label htmlFor="createacc-email" className="block text-sm text-[#f4d9a0]">Email</label>
             <input
               type="email"
               id="createacc-email"
@@ -158,10 +149,7 @@ export default function CustomerLogin() {
               className="w-full p-3 mt-2 border rounded-md"
             />
 
-            {/* Username input field for sign-up */}
-            <label htmlFor="createacc-username" className="block text-sm text-[#f4d9a0] mt-4">
-              Username
-            </label>
+            <label htmlFor="createacc-username" className="block text-sm text-[#f4d9a0] mt-4">Username</label>
             <input
               type="text"
               id="createacc-username"
@@ -171,10 +159,7 @@ export default function CustomerLogin() {
               className="w-full p-3 mt-2 border rounded-md"
             />
 
-            {/* Password input field for sign-up */}
-            <label htmlFor="createacc-password" className="block text-sm text-[#f4d9a0] mt-4">
-              Password
-            </label>
+            <label htmlFor="createacc-password" className="block text-sm text-[#f4d9a0] mt-4">Password</label>
             <input
               type="password"
               id="createacc-password"
@@ -184,10 +169,7 @@ export default function CustomerLogin() {
               className="w-full p-3 mt-2 border rounded-md"
             />
 
-            {/* Confirm password input field for sign-up */}
-            <label htmlFor="createacc-confirm-password" className="block text-sm text-[#f4d9a0] mt-4">
-              Confirm Password
-            </label>
+            <label htmlFor="createacc-confirm-password" className="block text-sm text-[#f4d9a0] mt-4">Confirm Password</label>
             <input
               type="password"
               id="createacc-confirm-password"
@@ -197,7 +179,6 @@ export default function CustomerLogin() {
               className="w-full p-3 mt-2 border rounded-md"
             />
 
-            {/* Submit button for sign-up */}
             <button
               type="submit"
               className="w-full bg-[#f4d9a0] text-black py-2 px-4 drop-shadow-lg rounded-lg mt-6 hover:bg-gray-600"
@@ -207,7 +188,6 @@ export default function CustomerLogin() {
           </form>
         )}
 
-        {/* Link to toggle between login and sign-up forms */}
         <p className="mt-4 text-white">
           {isLogin ? 'Need a Style account?' : 'Already have an account?'}{' '}
           <a
@@ -219,6 +199,38 @@ export default function CustomerLogin() {
           </a>
         </p>
       </div>
+
+      {/* Modal for password reset */}
+      {isResetPasswordModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg max-w-sm w-full">
+            <h2 className="text-lg font-bold mb-4">Reset Password</h2>
+            <form onSubmit={handlePasswordReset}>
+              <label htmlFor="reset-email" className="block text-sm text-[#333]">Email</label>
+              <input
+                type="email"
+                id="reset-email"
+                name="reset-email"
+                required
+                placeholder="Enter your email"
+                className="w-full p-3 mt-2 border rounded-md"
+              />
+              <button
+                type="submit"
+                className="w-full bg-[#f4d9a0] text-black py-2 px-4 rounded-lg mt-4"
+              >
+                Reset Password
+              </button>
+            </form>
+            <button
+              onClick={() => setIsResetPasswordModalOpen(false)}
+              className="mt-4 text-[#f4d9a0] hover:underline"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
