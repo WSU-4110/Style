@@ -178,6 +178,7 @@ const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch })
     };
   
     return (
+
       <div className="relative w-full">
         <div className=" w-full h-[40vh] bg-cover bg-center"
              style={{
@@ -200,6 +201,7 @@ const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch })
             <h2 className="text-2xl font-bold mb-8">New Businesses</h2>
             <p className="text-lg">Explore upcoming businesses</p>
           </div>
+
         </div>
   
         <Sidebar />
