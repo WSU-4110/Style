@@ -15,133 +15,65 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './filter.css';
 
-// Define the interface for Category and Result types
-interface Category {
-    name: string;
+interface Favorite {
+  id: number;
+  name: string;
+  imageUrl: string;
 }
 
-interface Result {
-    name: string;
-}
+export default function Favorites() {
+  const router = useRouter();
+  const [favorites, setFavorites] = useState<Favorite[]>([]);
 
-const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch }) => {
-    const [searchTerm, setSearchTerm] = useState('');
-
-    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      try {
+        // Assume we fetch the user's favorites from the API
+        const response = await axios.get('http://127.0.0.1:8000/api/favorites/');
+        setFavorites(response.data);
+      } catch (error) {
+        console.error('Error fetching favorites:', error);
+      }
     };
 
-    const handleSearchSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-        onSearch(searchTerm);
-    };
+    fetchFavorites();
+  }, []);
 
-    return (
-        <form onSubmit={handleSearchSubmit} className="flex justify-center my-4">
-            <input
-                type="text"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={handleSearchChange}
-                className="p-2 border border-gray-300 rounded-l-md"
-            />
-            <button type="submit" className="bg-teal-400 text-white p-2 rounded-r-md">
-                Search
-            </button>
-        </form>
-    );
-};
+  return (
+    <div className="min-h-screen flex flex-col bg-white-100">
+      {/* Logo */}
+      <div className="bg-black fixed top-0 left-0 inline-flex">
+        <Image src={logoImage} alt="Logo" width={64} height={30} />
+      </div>
 
-export default function Home() {
-    const router = useRouter();
-    const [categories, setCategories] = useState<Category[]>([]); // Specify type
-    const [searchResults, setSearchResults] = useState<Result[]>([]); // Specify type
+      {/* Header/ Main Content Area */}
+      <main className="flex-1 p-8 ml-64">
+        {/* Header */}
+        <div className="flex flex-col items-center justify-center mb-8 text-center">
+          <div className="flex items-center justify-center">
+            <Image src={logoImage} alt="Logo" width={65} height={65} />
+            <h1 className="text-5xl font-bold tracking-wide ml-4">Your Favorites</h1>
+          </div>
+          <p className="mt-2 text-lg">Here are your favorite artists and services.</p>
+        </div>
 
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const response = await axios.get('http://127.0.0.1:8000/api/category/categories/');
-                setCategories(response.data);
-            } catch (error) {
-                console.error('Error fetching categories:', error);
-            }
-        };
-        fetchCategories();
-    }, []);
+        {/* Favorites List */}
+        {favorites.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {favorites.map((favorite) => (
+              <div key={favorite.id} className="p-4 border rounded-lg shadow-md">
+                <Image src={favorite.imageUrl} alt={favorite.name} width={200} height={200} className="rounded-md" />
+                <h3 className="mt-2 text-lg font-semibold">{favorite.name}</h3>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-8 text-center text-xl">You don't have any favorites yet.</p>
+        )}
+      </main>
 
-    const handleSearch = async (term: string) => {
-        try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/search/search/?q=${term}`);
-            setSearchResults(response.data);
-        } catch (error) {
-            console.error('Error fetching search results:', error);
-        }
-    };
-
-    {/*const handleRedirect = () => {
-        router.push('schedule');
-    };*/}
-
-    return (
-        <div className="min-h-screen flex flex-col bg-white-100">
-            {/* Logo */}
-            <div className="bg-black fixed top-0 left-0 inline-flex">
-                <Image src={logoImage} alt="Logo" width={64} height={30} />
-            </div>
-
-            {/* Header/ Main Content Area */}
-            <main className="flex-1 p-8 ml-64">
-                {/* Header */}
-                <div className="flex flex-col items-center justify-center mb-8 text-center">
-                    <div className="flex items-center justify-center">
-                        <Image src={logoImage} alt="Logo" width={65} height={65} />
-                        <h1 className="text-5xl font-bold tracking-wide ml-4">Explore</h1>
-                    </div>
-                    <p className="mt-2 text-lg">Search Artists Here to Connect</p>
-                </div>
-
-                {/* Search Bar */}
-                <SearchBar onSearch={handleSearch} />
-
-                {/* Categories Section */}
-                <h2 className="text-xl font-bold mt-8">Categories</h2>
-                <ul className="list-disc ml-6">
-                    {categories.map((category, index) => (
-                        <li key={index}>{category.name}</li>
-                    ))}
-                </ul>
-
-                {/* Search Results Section */}
-                {searchResults.length > 0 && (
-                    <div>
-                        <h2 className="text-xl font-bold mt-8">Search Results</h2>
-                        <ul className="list-disc ml-6">
-                            {searchResults.map((result, index) => (
-                                <li key={index}>{result.name}</li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
-
-                {/* Redirect Button */}
-                <div className="flex justify-center mt-6">
-                    {/*<button
-                        onClick={handleRedirect}
-                        className="bg-teal-400 text-white px-4 py-2 rounded-md"
-                    >
-                        Book
-                    </button>*/}
-                </div>
-
-                {/* Images Section */}
-                <div className="flex justify-center mt-6 space-x-4">
-                    <Image src={artistImage} alt="Artist" width={200} height={200} />
-                    <Image src={customerImage} alt="Customer" width={200} height={200} />
-                </div>
-            </main>
-
-            {/* Sidebar */}
-            <aside className="sidebar w-64 bg-gray-100 p-4 fixed left-0 top-[60px] z-10 transition-all duration-300 ease-in-out hover:w-64">
+      {/* Sidebar */}
+      <aside className="sidebar w-64 bg-gray-100 p-4 fixed left-0 top-[60px] z-10 transition-all duration-300 ease-in-out hover:w-64">
                 <nav>
                     <ul>
                         <li className="sidebar-item mb-4 flex flex-col items-center group">
@@ -210,6 +142,6 @@ export default function Home() {
                     </ul>
                 </nav>
             </aside>
-        </div>
-    );
+    </div>
+  );
 }
