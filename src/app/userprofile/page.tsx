@@ -182,7 +182,7 @@ export default function UserProfile() {
 
           <button
             type="submit"
-            className="bg-black text-white py-2 px-6 rounded-lg shadow-md hover:bg-gray-800 transition w-full"
+            className="bg-black text-white py-2 px-6 rounded-lg shadow-md hover:bg-gray-800 transition w-full mb-3"
           >
             Save Profile
 
