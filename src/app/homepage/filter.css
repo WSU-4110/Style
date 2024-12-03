@@ -76,3 +76,48 @@
 .sidebar.expanded ~ .main-content {
     margin-left: 200px; 
 }
+
+.home-background {
+    background-image: url('../../public/homepage_bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    display: flex;
+    flex-direction: column;
+  }
+
+  @keyframes typing {
+    0% {
+      clip-path: inset(0 100% 0 0); 
+    }
+    100% {
+      clip-path: inset(0 0 0 0); 
+    }
+  }
+  
+  @keyframes blink {
+    0%, 50% {
+      border-color: transparent;
+    }
+    50%, 100% {
+      border-color: black;
+    }
+  }
+  
+  .typing-effect {
+    display: inline-block;
+    font-family: monospace;  
+    white-space: nowrap;     
+    overflow: hidden;        
+    position: relative;
+    animation: typing 1.5s steps(10) 1s forwards;
+  }
+  
+  .typing-effect::after {
+    content: '|';               
+    position: absolute;
+    right: -15px;           
+    top: 0;
+    animation: blink 0.75s step-end infinite; 
+  }

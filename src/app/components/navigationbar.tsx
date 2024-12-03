@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth } from '../firebase';
+import Image from 'next/image';
+import transparentLogo from '../../public/transparent_logo.png';
 import './navigationbar.css';
 
 export default function Navbar() {
@@ -46,6 +48,9 @@ export default function Navbar() {
 
   return (
     <nav className="navigation">
+      <div className="logo-container">
+        <Image src={transparentLogo} alt="Logo" width={50} height={50} />
+      </div>
       <ul>
         <li>
           <button onClick={() => router.push('/homepage')}>Home</button>
@@ -83,7 +88,7 @@ export default function Navbar() {
           <span>{`Welcome, ${user.email} (${role})`}</span>
           </li>*/}
             <li>
-              <button onClick={handleLogout}>Log Out</button>
+              <button className="logout-button" onClick={handleLogout}>Log Out</button>
             </li>
           </>
         ) : (

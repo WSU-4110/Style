@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation';
 import artistImage from '../../public/artist_barber.jpg';
 import customerImage from '../../public/customer.jpg';
-import logoImage from '../../public/transparent_logo.png';
 import nailSalonLogo from '../../public/nail_logo.png';
 import hairLogo from '../../public/hair_logo.png';
 import heartLogo from '../../public/heart_logo.png';
@@ -11,6 +10,7 @@ import tattooLogo from '../../public/tattoo_logo.png';
 import barberLogo from '../../public/barber_logo.png';
 import newLogo from '../../public/new_logo.png';
 import Image from 'next/image';
+import background from '../../public/homepage_bg.png';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './filter.css';
@@ -37,18 +37,21 @@ const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch })
     };
 
     return (
-        <form onSubmit={handleSearchSubmit} className="flex justify-center my-4">
-            <input
-                type="text"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={handleSearchChange}
-                className="p-2 border border-gray-300 rounded-l-md"
-            />
-            <button type="submit" className="bg-teal-400 text-white p-2 rounded-r-md">
-                Search
-            </button>
-        </form>
+      <form onSubmit={handleSearchSubmit} className="flex justify-center my-4">
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="p-2 text-black rounded-l-md shadow-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200 ease-in-out"
+        />
+        <button
+          type="submit"
+          className="bg-teal-500 text-white p-2 rounded-r-md hover:bg-teal-600 transition duration-200 ease-in-out"
+        >
+          Search
+        </button>
+      </form>
     );
 };
 
@@ -175,31 +178,32 @@ const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch })
     };
   
     return (
-      <div className="min-h-screen flex flex-col bg-white-100">
-        <Sidebar />
-  
-        <div className="bg-black fixed top-0 left-0 inline-flex">
-          <Image src={logoImage} alt="Logo" width={64} height={30} />
+      <div className="relative w-full">
+        <div className=" w-full h-[40vh] bg-cover bg-center"
+             style={{
+               backgroundImage: `url(${background.src})`,
+               backgroundSize: 'cover',
+               backgroundPosition: 'center',
+               backgroundRepeat: 'no-repeat',
+             }}>
+          {/* Overlay */}
+          <div className=" inset-0 flex flex-col justify-center items-center text-white bg-black/50">
+            <h1 className="text-5xl mt-28 font-bold tracking-wide">Explore</h1>
+            <p className="mt-2 text-lg typing-effect">Search Artists Here to Connect</p>
+            <SearchBar onSearch={handleSearch} />
+          </div>
+        </div>
+    
+        
+        <div className= "relative w-full bg-white p-8 shadow-lg -mt-2">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-2xl font-bold mb-8">New Businesses</h2>
+            <p className="text-lg">Explore upcoming businesses</p>
+          </div>
         </div>
   
+        <Sidebar />
         <main className="flex-1 p-8 ml-64">
-          <div className="flex flex-col items-center justify-center mb-8 text-center">
-            <div className="flex items-center justify-center">
-              <Image src={logoImage} alt="Logo" width={65} height={65} />
-              <h1 className="text-5xl font-bold tracking-wide ml-4">Explore</h1>
-            </div>
-            <p className="mt-2 text-lg">Search Artists Here to Connect</p>
-          </div>
-  
-          <SearchBar onSearch={handleSearch} />
-  
-          <h2 className="text-xl font-bold mt-8">Categories</h2>
-          <ul className="list-disc ml-6">
-            {categories.map((category, index) => (
-              <li key={index}>{category.name}</li>
-            ))}
-          </ul>
-  
           {searchResults.length > 0 && (
             <div>
               <h2 className="text-xl font-bold mt-8">Search Results</h2>
@@ -210,12 +214,8 @@ const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch })
               </ul>
             </div>
           )}
-  
-          <div className="flex justify-center mt-6 space-x-4">
-            <Image src={artistImage} alt="Artist" width={200} height={200} />
-            <Image src={customerImage} alt="Customer" width={200} height={200} />
-          </div>
         </main>
       </div>
     );
+    
   }

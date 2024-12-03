@@ -5,6 +5,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import HelpForm from './helpform';
+import Link from 'next/link';
 
 // FAQ Item Interface
 interface FAQItem {
@@ -29,7 +30,7 @@ const HelpPage = () => {
     const router = useRouter();
 
     const handleNavigate = () => {
-        router.push('/helpform');
+        router.push('/helppage/helpform');
     };
 
     return (
@@ -54,10 +55,10 @@ const HelpPage = () => {
                     <p>If you need further assistance, please reach out to us:</p>
                     <p>Email: <a href="styleislamitp@gmail.com" className="text-blue-600 underline">styleislamitp@gmail.com</a></p>
                     <p>Or fill out the{' '}
-                    <button onClick={handleNavigate} className="text-blue-600 underline">
-                    contact form
-                    </button>.
-                    </p>
+            <button onClick={handleNavigate} className="text-blue-600 underline">
+              contact form
+            </button>.
+          </p>
                 </section>
             </div>   
         </div>
