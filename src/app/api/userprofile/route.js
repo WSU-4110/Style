@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import { setDoc, doc } from 'firebase/firestore';
-import { db, storage } from '../../../firebase-admin';
+import { db, storage } from '../../../../firebase-admin';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import multer from 'multer';
 import * as admin from 'firebase-admin';
 
-// Multer setup
+// Multer setup for in-memory file storage
 const multerStorage = multer.memoryStorage();
 const upload = multer({ storage: multerStorage });
 
@@ -20,18 +20,18 @@ const multerPromise = (req) =>
 
 export async function POST(request) {
   try {
-    console.log('Incoming request to /api/profile');
+    console.log('Incoming request to /api/userprofile');
 
-    // Parse Multer files and fields
+    // Parse Multer files and fields from the request
     const req = await multerPromise(request);
     const { files, body } = req;
 
     console.log('Uploaded files:', files);
     console.log('Form data:', body);
 
-    const { businessName, bio } = body;
+    const { fullname, email, city, phone_number } = body;
 
-    // Extract and verify the token from the request headers
+    // Extract and verify the Authorization token
     const authHeader = request.headers.get("Authorization");
     if (!authHeader) {
       console.error('Authorization header is missing');
@@ -50,35 +50,42 @@ export async function POST(request) {
       );
     }
 
-    // Verify the Firebase token
+    // Verify the Firebase token to ensure authentication
     const decodedToken = await admin.auth().verifyIdToken(token);
     const userId = decodedToken.uid;
     console.log('Decoded Firebase token for user ID:', userId);
 
-    // Prepare the business profile object
-    const businessProfile = { businessName, bio };
+    // Prepare the user profile object
+    const userProfile = { fullname, email, city, phone_number };
 
-    // Save the business profile to Firestore
-    await setDoc(doc(db, 'businesses', userId), businessProfile);
-    console.log('Business profile saved to Firestore:', businessProfile);
+    // Save the user profile data to Firestore
+    await setDoc(doc(db, 'users', userId), userProfile);
+    console.log('User profile saved to Firestore:', userProfile);
 
-    // Handle file uploads (profile picture and photos)
-    const uploadedFileUrls = [];
-    for (const file of files) {
-      const storageRef = ref(storage, `uploads/${userId}/${file.originalname}`);
-      await uploadBytes(storageRef, file.buffer);
-      const downloadURL = await getDownloadURL(storageRef);
-      uploadedFileUrls.push(downloadURL);
-      console.log(`Uploaded file to Firebase Storage: ${storageRef.fullPath}`);
+    // Handle profile picture upload
+    let profilePictureURL = null;
+    if (files && files.length > 0) {
+      const file = files[0];
+      const storageRef = ref(storage, `profile_pictures/${userId}/${file.originalname}`);
+      await uploadBytes(storageRef, file.buffer); // Upload file to Firebase Storage
+      profilePictureURL = await getDownloadURL(storageRef); // Retrieve file URL
+      console.log(`Profile picture uploaded to Firebase Storage: ${storageRef.fullPath}`);
+
+      // Save profile picture URL to Firestore
+      await setDoc(doc(db, 'users', userId), { profilePictureURL }, { merge: true });
     }
 
     // Respond with a success message
     return NextResponse.json(
-      { message: 'Business profile and files uploaded successfully!', uploadedFileUrls },
+      {
+        message: 'User profile saved successfully!',
+        profilePictureURL,
+      },
       { status: 200 }
     );
   } catch (error) {
-    console.error('Error updating business profile:', {
+    // Log and respond with an error message
+    console.error('Error updating user profile:', {
       message: error.message,
       stack: error.stack,
       name: error.name,
@@ -86,7 +93,7 @@ export async function POST(request) {
 
     return NextResponse.json(
       {
-        message: 'An error occurred while updating the profile.',
+        message: 'An error occurred while updating the user profile.',
         error: error.message,
       },
       { status: 500 }
