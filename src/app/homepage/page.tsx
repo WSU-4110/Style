@@ -12,6 +12,8 @@ import newLogo from '../../public/new_logo.png';
 import Image from 'next/image';
 import background from '../../public/homepage_bg.png';
 import React, { useState, useEffect } from 'react';
+import mock_hardware from '../../public/mock_hardware.jpeg'
+import Homepage_Card from '../components/ui/homepage_card';
 import axios from 'axios';
 import './filter.css';
 
@@ -178,7 +180,6 @@ const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch })
     };
   
     return (
-
       <div className="relative w-full">
         <div className=" w-full h-[40vh] bg-cover bg-center"
              style={{
@@ -188,20 +189,66 @@ const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch })
                backgroundRepeat: 'no-repeat',
              }}>
           {/* Overlay */}
-          <div className=" inset-0 flex flex-col justify-center items-center text-white bg-black/50">
+          <div className="inset-0 flex flex-col justify-center items-center text-white bg-black/20 py-30">
             <h1 className="text-5xl mt-28 font-bold tracking-wide">Explore</h1>
-            <p className="mt-2 text-lg typing-effect">Search Artists Here to Connect</p>
+            <p className="mt-2 text-lg typing-effect">Search Artists Here to Connect...</p>
             <SearchBar onSearch={handleSearch} />
           </div>
         </div>
     
-        
         <div className= "relative w-full bg-white p-8 shadow-lg -mt-2">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-2xl font-bold mb-8">New Businesses</h2>
-            <p className="text-lg">Explore upcoming businesses</p>
-          </div>
+          <div className="max-w-screen-xl mx-auto text-center px-4">
+            <h2 className="text-2xl font-bold mb-2 text-left">New Businesses</h2>
+            <p className="text-lg text-left mb-8">Explore upcoming businesses</p>
+            <div className="flex flex-wrap gap-6 justify-center">
+      <div className="list">
+      <Homepage_Card
+      businessName="Smith & Sons Hardware"
+      address="739 Briar St"
+      images={['mock_hardware']}
+      about="A family-owned hardware store offering tools, supplies, and expert advice."
+      services={["Tool Rentals", "Hardware Supplies"]}
+      onBookClick={(name) => alert(`Booking ${name}`)}
+    />
 
+    <Homepage_Card
+      businessName="Lakeside Pharmacy"
+      address="1903 Lake Mars"
+      images={["/path/to/pharmacy.jpg"]}
+      about="Your neighborhood pharmacy with fast prescriptions and friendly service."
+      services={["Prescription Refills", "Over-the-Counter Products"]}
+      onBookClick={(name) => alert(`Booking ${name}`)}
+    />
+
+    <Homepage_Card
+      businessName="Bella's Deli"
+      address="38019 Park Blvd"
+      images={["/path/to/deli.jpg"]}
+      about="Serving fresh sandwiches, soups, and salads made daily."
+      services={["Catering", "Dine-In & Take-Out"]}
+      onBookClick={(name) => alert(`Booking ${name}`)}
+    />
+
+    <Homepage_Card
+      businessName="Oakwood Dry Cleaners"
+      address="13 Oakwood Dr"
+      images={["/path/to/dry_cleaners.jpg"]}
+      about="Reliable dry cleaning services with fast turnaround times."
+      services={["Dry Cleaning", "Alterations"]}
+      onBookClick={(name) => alert(`Booking ${name}`)}
+    />
+
+    <Homepage_Card
+      businessName="Sunny Day Bakery"
+      address="2391 Sunset Ln"
+      images={["/path/to/bakery.jpg"]}
+      about="Home of freshly baked bread, cakes, and pastries."
+      services={["Custom Cakes", "Daily Baked Goods"]}
+      onBookClick={(name) => alert(`Booking ${name}`)}
+/>
+      </div>
+         </div>
+          </div>
         </div>
   
         <Sidebar />
