@@ -1,8 +1,8 @@
 // Import necessary functions from Firebase SDKs
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-// import { getAnalytics } from "firebase/analytics";
-import { getStorage } from "firebase/storage"; // Import Firebase Storage
+// import { getAnalytics } from "firebase/analytics"; // not necessary to the final implementation
+import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -16,8 +16,7 @@ const firebaseConfig = {
   // measurementId: "G-J687QSJY9C"
 };
 
-
-// Initialize Firebase only if no app has been initialized
+// Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
 const storage = getStorage(app);

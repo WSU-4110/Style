@@ -1,21 +1,16 @@
 'use client';
 
-import './portfolio.css';
-import { useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import './portfolio.css';
 import Navbar from '../components/navigationbar';
-import { storage } from '../../firebase-config'; // Import Firebase storage
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import SocialMediaInput from '../components/socialmediainput'; // Default import (no curly braces)
-
 
 export default function Portfolio() {
   const [businessName, setBusinessName] = useState('');
   const [bio, setBio] = useState('');
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
-  const [profilePictureUrl, setProfilePictureUrl] = useState<string | null>(null);
   const [photos, setPhotos] = useState<File[]>([]);
-  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [services, setServices] = useState([{ name: '', price: '', time: '' }]);
   const [showBusinessHours, setShowBusinessHours] = useState(false);
@@ -30,33 +25,20 @@ export default function Portfolio() {
   const profileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-
-  //----------------------------- Photo Upload Section ----------------------------------------------------------
-
-  // Handle profile picture upload
-  const handleProfilePictureUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleProfilePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const file = e.target.files[0];
-      setProfilePicture(file);
-
-      // Upload to Firebase
-      const url = await uploadToFirebase(file, 'profile_pictures');
-      setProfilePictureUrl(url);
+      setProfilePicture(e.target.files[0]);
     }
   };
+
   const triggerProfileUpload = () => {
     profileInputRef.current?.click();
   };
 
-  // Handle carousel photos upload
-  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const files = Array.from(e.target.files);
-      setPhotos(files);
-
-      // Upload each photo to Firebase
-      const urls = await Promise.all(files.map((file) => uploadToFirebase(file, 'carousel_photos')));
-      setPhotoUrls(urls);
+      const newPhotos = Array.from(e.target.files);
+      setPhotos(newPhotos);
       setCurrentPhotoIndex(0);
     }
   };
@@ -69,16 +51,6 @@ export default function Portfolio() {
     setCurrentPhotoIndex((prevIndex) => (prevIndex - 1 + photos.length) % photos.length);
   };
 
-
-   // Function to upload file to Firebase Storage
-   const uploadToFirebase = async (file: File, path: string): Promise<string> => {
-    const storageRef = ref(storage, `${path}/${file.name}`);
-    await uploadBytes(storageRef, file);
-    return getDownloadURL(storageRef);
-  };
-
-
-  // Service Functions
   const handleServiceChange = (index: number, field: string, value: string) => {
     const updatedServices = [...services];
     updatedServices[index] = { ...updatedServices[index], [field]: value };
@@ -94,35 +66,36 @@ export default function Portfolio() {
     setServices(updatedServices);
   };
 
-
-  // ------------------------------------------------------ Social Links ------------------------------------------------------
   const handleSocialLinkChange = (index: number, field: string, value: string) => {
     const updatedLinks = [...socialLinks];
     updatedLinks[index] = { ...updatedLinks[index], [field]: value };
     setSocialLinks(updatedLinks);
   };
-  // ------------------------------------------------------------------------------------------------------------
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const formData = {
-      business_name: businessName,
-      bio,
-      profile_picture: profilePictureUrl,
-      photos: photoUrls,
-      services,
-      social_links: socialLinks
-    };
+    const formData = new FormData();
+    formData.append('business_name', businessName);
+    formData.append('bio', bio);
+    if (profilePicture) formData.append('profile_picture', profilePicture);
+    photos.forEach((photo, index) => {
+      formData.append(`photos[${index}]`, photo);
+    });
+    services.forEach((service, index) => {
+      formData.append(`services[${index}][name]`, service.name);
+      formData.append(`services[${index}][price]`, service.price);
+      formData.append(`services[${index}][time]`, service.time);
+    });
+    socialLinks.forEach((link, index) => {
+      formData.append(`socialLinks[${index}][platform]`, link.platform);
+      formData.append(`socialLinks[${index}][url]`, link.url);
+    });
 
     try {
       const response = await fetch('http://localhost:8000/api/artist-portfolio/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: formData,
       });
-
       if (response.ok) {
         alert('Portfolio saved successfully!');
         router.push('/appointments');
@@ -135,9 +108,6 @@ export default function Portfolio() {
       alert('Failed to save portfolio. Please try again.');
     }
   };
-
-
-  // ------------------------------------------------------ Business Hour ------------------------------------------------------
 
   const toggleBusinessHours = () => {
     setShowBusinessHours(!showBusinessHours);
@@ -162,15 +132,9 @@ export default function Portfolio() {
     setShowBusinessHours(false);
   };
 
-
-
-
-  // ------------------------------------------------------ HMTL SECTION ------------------------------------------------------
   return (
     <div className="container">
       <Navbar />
-
-      {/* Business Name */}
       <div className="business-name">
         <input
           type="text"
@@ -193,10 +157,10 @@ export default function Portfolio() {
               style={{ display: 'none' }}
             />
             <div className="relative w-full h-full">
-              {profilePictureUrl  ? (
+              {profilePicture ? (
                 <img
                   className="w-full h-full rounded-full object-cover"
-                  src={profilePictureUrl}
+                  src={URL.createObjectURL(profilePicture)}
                   alt="Profile"
                 />
               ) : (
@@ -212,13 +176,12 @@ export default function Portfolio() {
             </div>
           </div>
 
-          {/* Carousel Photo Upload */}
           <div id="default-carousel" className="relative w-full" data-carousel="slide">
             <div className="relative h-[500px] w-[900px] overflow-hidden rounded-lg group">
-              {photoUrls.length > 0 ? (
+              {photos.length > 0 ? (
                 <div className="duration-700 ease-in-out">
                   <img
-                    src={photoUrls[currentPhotoIndex]}
+                    src={URL.createObjectURL(photos[currentPhotoIndex])}
                     className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                     alt={`Carousel ${currentPhotoIndex}`}
                   />
@@ -246,9 +209,6 @@ export default function Portfolio() {
               </label>
             </div>
 
-            {/* Carousel Controls */}
-            
-            {/* Carousel Previous Photo */}
             <button
               type="button"
               onClick={handlePrevPhoto}
@@ -267,7 +227,6 @@ export default function Portfolio() {
               </span>
             </button>
 
-            {/* Carousel Next Photo */}
             <button
               type="button"
               onClick={handleNextPhoto}
@@ -287,13 +246,13 @@ export default function Portfolio() {
             </button>
           </div>
 
-          {/* Information Section */}
+          {/* About Section */}
           <div className="description-wrapper">
-            <h2>More Information</h2>
+            <h2>About</h2>
             <textarea
               value={bio}
               onChange={(e) => setBio(e.target.value)}
-              placeholder="List information about booking Here. For instance the address or any heads that a customer might need for parking."
+              placeholder="Write a short description"
             />
           </div>
 

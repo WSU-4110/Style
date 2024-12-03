@@ -61,7 +61,7 @@ export default function UserProfile() {
       email,
       city,
       phone_number,
-      profile_picture: prof_pic_url // Use the Firebase URL
+      profile_picture: prof_pic_url
     };
 
     try {

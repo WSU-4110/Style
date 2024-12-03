@@ -13,7 +13,7 @@ import newLogo from '../../public/new_logo.png';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './filter.css';
+import '../homepage/filter.css';
 
 interface Favorite {
   id: number;
