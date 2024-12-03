@@ -55,3 +55,7 @@ venv/
 __pycache__/
 
 keys/*.json
+
+# Ignore the keys directory
+src/app/api/keys/
+src/app/keys/style-438016-firebase-adminsdk-f35zz-99e2282da9.json

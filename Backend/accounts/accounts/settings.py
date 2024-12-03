@@ -10,11 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from pathlib import Path
 import os
 import firebase_admin
-from firebase_admin import credentials
+from pathlib import Path
 from decouple import config
+from firebase_admin import credentials
 
 # Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,32 +33,41 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'profiles',
     'django.contrib.sites',
+    'accounts',
+    'profiles',
+    'appointments',
+    'saving',
+    'rest_framework',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'corsheaders',
+    'allauth.socialaccount.providers.google',    
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",    
+]
 ROOT_URLCONF = 'accounts.urls'
 
 TEMPLATES = [
@@ -134,7 +143,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Firebase credentials: Load path from .env
 cred_path = config('FIREBASE_SERVICE_ACCOUNT_KEY')
-firebase_cred = credentials.Certificate(os.path.join(BASE_DIR, 'keys', cred_path))
+firebase_cred = credentials.Certificate(os.path.join(BASE_DIR, 'src', 'app', 'keys', cred_path))
 firebase_admin.initialize_app(firebase_cred)
 
 # Google OAuth settings
@@ -166,3 +175,13 @@ ACCOUNT_USERNAME_REQUIRED = True
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Email backend configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'noreplystyle@gmail.com'  # email address where emails sent from
+EMAIL_HOST_PASSWORD = 'nsbrese!!24'  # password
+# Default 'From' email for outgoing emails
+DEFAULT_FROM_EMAIL = 'noreply@gmail.com'

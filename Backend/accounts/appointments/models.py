@@ -7,6 +7,7 @@ class Appointment(models.Model):
     date = models.DateField()
     time = models.TimeField()
     address = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255)
 
     def __str__(self):
         return f"{self.business_name} - {self.service}"

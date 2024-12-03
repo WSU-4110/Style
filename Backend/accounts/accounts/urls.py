@@ -19,16 +19,15 @@ from django.urls import path, include
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import save_customer_info, save_business_info
+from .views import save_business_info, save_customer_info
 
-
-urlpatterns = [
-    path('save-customer/', save_customer_info, name='save-customer'),
-    path('save-business/', save_business_info, name='save-business'),
-]
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('profiles/',include('profiles.urls')),
+    path('profiles/', include('profiles.urls')),
+    path('appointments/', include('appointments.urls')),
+    path('saving/', include('saving.urls')),
+    path('save-customer/', save_customer_info, name='save-customer'),
+    path('save-business/', save_business_info, name='save-business'),
     path('', RedirectView.as_view(url='/profiles', permanent=False)),
 ]
