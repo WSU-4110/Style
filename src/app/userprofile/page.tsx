@@ -101,11 +101,8 @@ export default function UserProfile() {
   
         <div className="space-y-8">
           <form onSubmit={handleSubmit} className="space-y-8">
-            {/* Profile Section - Side by Side */}
             <div className="flex items-start space-x-16">
-              {/* Profile Picture and Buttons */}
               <div className="flex flex-col items-center space-y-8 w-1/3 border-r-2 border-[#f4d9a0] pr-12 mt-8">
-                {/* Profile Picture */}
                 <div className="profile-picture-upload group">
                   <input
                     type="file"
@@ -134,7 +131,6 @@ export default function UserProfile() {
                   </div>
                 </div>
   
-                {/* Buttons Side by Side */}
                 <div className="flex space-x-4 mt-6">
                   <button
                     type="submit"
@@ -153,7 +149,6 @@ export default function UserProfile() {
                 </div>
               </div>
   
-              {/* Profile Details Form */}
               <div className="flex-1 space-y-6">
                 <div className="form-input-group">
                   <label className="block text-black text-left font-semibold">Name*</label>
@@ -201,7 +196,6 @@ export default function UserProfile() {
                   />
                 </div>
   
-                {/* Bio Section */}
                 <div className="form-input-group">
                   <label className="block text-black text-left font-semibold">Bio</label>
                   <textarea
