@@ -11,6 +11,7 @@ import {
 } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase';
 
+
 // Main Login component
 export default function Login() {
   // State to toggle between login and sign-up forms
@@ -93,6 +94,8 @@ export default function Login() {
   };
 
   return (
+    <>
+    {React.createElement('div', { noNavbar: true }, null)}
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray">
       <div className="container mt-10 p-8 flex flex-col items-center justify-center bg-white shadow-lg rounded-lg">
         <h1 className="text-4xl font-bold mb-6">
@@ -172,5 +175,6 @@ export default function Login() {
         </div>
       )}
     </div>
+    </>
   );
 }
