@@ -27,10 +27,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const isNavbarDisabled =
-    React.Children.toArray(children).some(
-      (child: any) => child.props && child.props.noNavbar
-    );
 
   
   return (
@@ -38,7 +34,7 @@ export default function RootLayout({
       <body
         className={`${sinera.variable} ${sinera.variable} antialiased bg-gradient-to-br from-yellow-50 via-pink-50 to-orange-100 text-gray-900`} // Gradient background for a summery vibe
       >
-        {!isNavbarDisabled && <Navbar />}
+        <Navbar />
         {/* Content */}
         <main className="min-h-screen p-6 md:p-12 lg:p-16">
           {children}

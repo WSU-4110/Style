@@ -1,8 +1,6 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import artistImage from '../../public/artist_barber.jpg';
-import customerImage from '../../public/customer.jpg';
 import nailSalonLogo from '../../public/nail_logo.png';
 import hairLogo from '../../public/hair_logo.png';
 import heartLogo from '../../public/heart_logo.png';
@@ -12,7 +10,6 @@ import newLogo from '../../public/new_logo.png';
 import Image from 'next/image';
 import background from '../../public/homepage_bg.png';
 import React, { useState, useEffect } from 'react';
-import mock_hardware from '../../public/mock_hardware.jpeg'
 import Homepage_Card from '../components/ui/homepage_card';
 import axios from 'axios';
 import './filter.css';
@@ -130,7 +127,7 @@ const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch })
                   <Image src={newLogo} alt="Under 6 Months" width={40} height={40} />
                 </div>
                 <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <button onClick={() => router.push("/newthings")} className="text-lg hover:text-teal-400">
+                  <button onClick={() => router.push("/under6months")} className="text-lg hover:text-teal-400">
                     Under 6 Months
                   </button>
                 </div>
@@ -203,47 +200,40 @@ const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch })
             <div className="flex flex-wrap gap-6 justify-center">
       <div className="list">
       <Homepage_Card
-      businessName="Smith & Sons Tattoo Shop"
-      address="739 Briar St"
-      images={['mock_hardware']}
-      about="A family-owned tattoo parlor for whatever design you want."
-      services={["Tattoos", "Tattoo Touch-Ups"]}
+      businessName="Nail Palace"
+      address="829 Maple St, Kansas City, KS"
+      images={['https://www.greentoestucson.com/wp-content/uploads/2021/06/Nail-Salons-Tucson.jpeg']}
+      about="A relaxing nail salon."
+      services={["Manicure", "Pedicure", "Nail Art"]}
       onBookClick={(name) => alert(`Booking ${name}`)}
     />
 
     <Homepage_Card
-      businessName="Lakeside Nail Salon"
-      address="1903 Lake Mars"
-      images={["/path/to/pharmacy.jpg"]}
-      about="Your New Nail Salon, just around the corner."
-      services={["Nail Coloring", "Manicures"]}
+      businessName="Hairloft Salon"
+      address="8192 Oakman St, Alemond, MI"
+      images={["https://davidpressleyschool.com/wp-content/uploads/2023/08/bigstock-hairstylist-trimming-hair-of-t-438871286-1.jpg"]}
+      about="A modern hair salon."
+      services={["Haircuts", "Hair Treatments", "Hair Coloring", "Styling"]}
       onBookClick={(name) => alert(`Booking ${name}`)}
     />
 
     <Homepage_Card
-      businessName="Bella's Barber Shop"
+      businessName="Iconic Tattoo"
       address="38019 Park Blvd"
-      images={["/path/to/deli.jpg"]}
-      about="Small Town Barber Shop ready to serve."
-      services={["Hair Care"]}
+      images={["https://media.timeout.com/images/105165480/750/562/image.jpg"]}
+      about="Tattoo artistry starts here."
+      services={["Tattoo", "Piercings"]}
       onBookClick={(name) => alert(`Booking ${name}`)}
     />
 
-    <Homepage_Card
-      businessName="Oakwood Tattoo Shop"
-      address="13 Oakwood Dr"
-      images={["/path/to/dry_cleaners.jpg"]}
-      about="Reliable tattoo art that looks good."
-      services={["Tattoo Art"]}
-      onBookClick={(name) => alert(`Booking ${name}`)}
-    />
+
 
     <Homepage_Card
-      businessName="Sunny Day Nail Salon"
+      businessName="Daves Barber Shop"
       address="2391 Sunset Ln"
-      images={["/path/to/bakery.jpg"]}
-      about="Home of Crating Your Perfect Nails."
-      services={["Nail Care and Coloring", "Manicures"]}
+      images={["https://detroitbarbers.com/cdn/shop/t/4/assets/db-barbershop-page-corktown-gallery-a.jpg?v=2985141150787217361509093960"]}
+      about="Straight shaves, straight styles."
+      services={["Haircuts", "Fade", "Colorings"]}
       onBookClick={(name) => alert(`Booking ${name}`)}
 />
       </div>
