@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 'use client';
-import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
-
+import { FaCalendarAlt, FaMapMarkerAlt, FaDollarSign } from 'react-icons/fa';  
 
 interface AppointmentType {
   id: number;
@@ -15,6 +14,7 @@ interface AppointmentType {
   address: string;
 }
 
+// Sample appointments data
 const sampleAppointments: AppointmentType[] = [
   {
     id: 1,
@@ -43,6 +43,24 @@ const sampleAppointments: AppointmentType[] = [
     time: "10:00 AM EST",
     address: "7890 Oak Ave, Grand Rapids, MI"
   },
+  {
+    id: 4,
+    businessName: "Yoga Studio",
+    service: "Yoga Class",
+    amountDue: "$25.00",
+    date: "2024-11-03",
+    time: "9:00 AM EST",
+    address: "1010 Sunrise Blvd, Detroit, MI"
+  },
+  {
+    id: 5,
+    businessName: "Coffee Shop",
+    service: "Coffee & Croissant",
+    amountDue: "$8.50",
+    date: "2024-11-05",
+    time: "8:30 AM EST",
+    address: "2222 Caffeine St, Kalamazoo, MI"
+  },
 ];
 
 const Appointment = () => {
@@ -51,55 +69,62 @@ const Appointment = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        const response = await fetch('/api/appointments/');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setAppointments(data);
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError('An unexpected error occurred');
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAppointments();
+    setAppointments(sampleAppointments);
+    setLoading(false);
   }, []);
 
   if (loading) return <p>Loading appointments...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray">
-      <header className="text-black py-7 text-left mt-19">
-        <h1 className="text-4xl font-bold text-center tracking-wide mt-2">Current Appointments</h1>
-        <br />
-      </header>
-      <main className="flex-grow flex flex-col items-center justify-center">
-        <div className="w-full max-w-4xl mx-auto space-y-4">
-          {appointments.length > 0 ? (
-            appointments.map((appointment: AppointmentType) => (
-              <div key={appointment.id} className="bg-white p-10 border border-yellow-500 rounded-lg shadow">
-                <h2 className="text-2xl font-bold mb-2">{appointment.businessName}</h2>
-                <p className="text-gray-500">Service: {appointment.service}</p>
-                <p className="text-gray-500">Amount Due: {appointment.amountDue}</p>
-                <p className="text-gray-500">Date: {appointment.date}</p>
-                <p className="text-gray-500">Time: {appointment.time}</p>
-                <p className="text-gray-500">Address: {appointment.address}</p>
+    <div className="min-h-screen py-12 px-6">
+      <div className="max-w-5xl mx-auto bg-white p-10 rounded-md shadow-md border border-black">
+        <h1 className="text-2xl font-semibold text-gray-800 mb-6">
+          Your Upcoming Appointments
+        </h1>
+
+        {appointments.length > 0 ? (
+          <div className="space-y-4">
+            {appointments.map((appointment) => (
+              <div key={appointment.id} className="flex items-start justify-between bg-gray-50 p-6 rounded-md shadow-sm">
+                <div className="flex flex-col space-y-2 w-2/3">
+                  <h2 className="text-lg font-medium text-gray-700">{appointment.businessName}</h2>
+                  <p className="text-sm text-gray-600">{appointment.service}</p>
+                  <div className="flex items-center text-gray-600 text-sm">
+                    <FaCalendarAlt className="mr-2 text-xl text-gray-500" />
+                    <span>{appointment.date}, {appointment.time}</span>
+                  </div>
+                  <div className="flex items-center text-gray-600 text-sm">
+                    <FaDollarSign className="mr-2 text-xl text-gray-500" />
+                    <span>{appointment.amountDue}</span>
+                  </div>
+                  <div className="flex items-center text-gray-600 text-sm">
+                    <FaMapMarkerAlt className="mr-2 text-xl text-gray-500" />
+                    <span>{appointment.address}</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col space-y-2 text-center w-1/6 justify-between mb-14">
+                  <button
+                    onClick={() => alert('Appointment canceled!')}
+                    className="bg-red-500 text-white py-2.5 px-6 rounded-md hover:bg-red-600 transition-all text-xs"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => alert('Navigating to more details...')}
+                    className="bg-teal-500 text-white py-2.5 px-6 rounded-md hover:bg-teal-600 transition-all text-xs"
+                  >
+                    View Details
+                  </button>
+                </div>
               </div>
-            ))
-          ) : (
-            <p className="text-center text-red">No appointments scheduled.</p>
-          )}
-        </div>
-      </main>
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-red-500">No appointments scheduled.</p>
+        )}
+      </div>
     </div>
   );
 };
