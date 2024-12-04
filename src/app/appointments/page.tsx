@@ -2,7 +2,7 @@
 
 'use client';
 import React, { useState, useEffect } from 'react';
-import { FaCalendarAlt, FaMapMarkerAlt, FaDollarSign } from 'react-icons/fa';  
+import { FaCalendarAlt, FaMapMarkerAlt, FaDollarSign } from 'react-icons/fa';
 
 interface AppointmentType {
   id: number;
@@ -76,6 +76,28 @@ const Appointment = () => {
   if (loading) return <p>Loading appointments...</p>;
   if (error) return <p>Error: {error}</p>;
 
+  const cancelAppointment = (id: number) => {
+    const isConfirmed = window.confirm("Are you sure you want to cancel this appointment?");
+    if (isConfirmed) {
+      setAppointments(appointments.filter((appointment) => appointment.id !== id));
+    }
+  };
+
+  const viewDetails = (id: number) => {
+    const appointment = appointments.find((appointment) => appointment.id === id);
+    if (appointment) {
+      alert(`
+        Appointment Details:
+        Business: ${appointment.businessName}
+        Service: ${appointment.service}
+        Amount Due: ${appointment.amountDue}
+        Date: ${appointment.date}
+        Time: ${appointment.time}
+        Address: ${appointment.address}
+      `);
+    }
+  };
+
   return (
     <div className="min-h-screen py-12 px-6">
       <div className="max-w-5xl mx-auto bg-white p-10 rounded-md shadow-md border border-black">
@@ -106,13 +128,13 @@ const Appointment = () => {
 
                 <div className="flex flex-col space-y-2 text-center w-1/6 justify-between mb-14">
                   <button
-                    onClick={() => alert('Appointment canceled!')}
+                    onClick={() => cancelAppointment(appointment.id)}
                     className="bg-red-500 text-white py-2.5 px-6 rounded-md hover:bg-red-600 transition-all text-xs"
                   >
                     Cancel
                   </button>
                   <button
-                    onClick={() => alert('Navigating to more details...')}
+                    onClick={() => viewDetails(appointment.id)}
                     className="bg-teal-500 text-white py-2.5 px-6 rounded-md hover:bg-teal-600 transition-all text-xs"
                   >
                     View Details
