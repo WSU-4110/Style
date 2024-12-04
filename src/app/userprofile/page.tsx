@@ -16,6 +16,7 @@ export default function UserProfile() {
   const [prof_pic, set_profpic] = useState<File | null>(null);
   const [prof_pic_preview, set_profpic_preview] = useState<string | null>(null);
   const [bio, set_bio] = useState('');
+  const [showSaveMessage, setShowSaveMessage] = useState(false);
 
   const profileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -37,7 +38,8 @@ export default function UserProfile() {
         body: formData,
       });
       if (response.ok) {
-        alert('Profile saved successfully!');
+        setShowSaveMessage(true);
+        setTimeout(() => setShowSaveMessage(false), 3000);
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.detail}`);
@@ -51,8 +53,8 @@ export default function UserProfile() {
   const handleProfilePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      set_profpic(file); 
-      set_profpic_preview(URL.createObjectURL(file)); 
+      set_profpic(file);
+      set_profpic_preview(URL.createObjectURL(file));
     }
   };
 
@@ -63,27 +65,27 @@ export default function UserProfile() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        set_email(user.email || ''); 
-        set_fullname(user.displayName || ''); 
+        set_email(user.email || '');
+        set_fullname(user.displayName || '');
       }
     });
-  
+
     return () => unsubscribe();
   }, []);
 
   const handleDeleteProfile = async () => {
     const confirmation = confirm('Are you sure you want to delete your profile? This action cannot be undone.');
-  
+
     if (!confirmation) return;
-  
+
     try {
       const response = await fetch('/api/userprofile', {
         method: 'DELETE',
       });
-  
+
       if (response.ok) {
         alert('Profile deleted successfully!');
-        router.push('homepage'); 
+        router.push('homepage');
       } else {
         const error = await response.json();
         alert(`Error: ${error.message}`);
@@ -95,15 +97,30 @@ export default function UserProfile() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-00 p-12">
-      <div className="container max-w-4xl p-10 bg-white border-4 border-[#f4d9a0] shadow-xl rounded-lg">
-        <h1 className="text-2xl font-bold mb-6 text-black text-center">Welcome, {email}!</h1>
-  
-        <div className="space-y-8">
-          <form onSubmit={handleSubmit} className="space-y-8">
-            <div className="flex items-start space-x-16">
-              <div className="flex flex-col items-center space-y-8 w-1/3 border-r-2 border-[#f4d9a0] pr-12 mt-8">
-                <div className="profile-picture-upload group">
+    <div className="min-h-screen flex items-center justify-center bg-gray p-16">
+      <div className="container max-w-5xl p-14 bg-white border border-gray-300 shadow-xl rounded-lg relative ">
+        <h1 className="text-3xl font-bold mb-10 text-gray-800 text-center">
+          Welcome, {email}!
+        </h1>
+
+        <form onSubmit={handleSubmit} className="space-y-8">
+          <div className="flex space-x-10">
+            {/* Profile Picture Section */}
+            <div className="w-1/3">
+              <div className="flex flex-col items-center space-y-8">
+                <div
+                  className="relative mr-10 w-48 h-48 cursor-pointer"
+                  onClick={triggerProfileUpload}
+                >
+                  {prof_pic_preview ? (
+                    <img
+                      src={prof_pic_preview}
+                      alt="Profile"
+                      className="w-full h-full rounded-full object-cover border-4 border-gray-300 shadow-lg"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gray-200 rounded-full"></div>
+                  )}
                   <input
                     type="file"
                     ref={profileInputRef}
@@ -111,120 +128,129 @@ export default function UserProfile() {
                     onChange={handleProfilePictureUpload}
                     style={{ display: 'none' }}
                   />
-                  <div className="relative w-48 h-48 cursor-pointer mb-8">
-                    {prof_pic_preview ? (
-                      <img
-                        className="w-full h-full rounded-full object-cover border-4 border-[#f4d9a0] shadow-lg"
-                        src={prof_pic_preview}
-                        alt="Profile"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gray-200 rounded-full"></div>
-                    )}
-                    <div className="absolute inset-0 flex items-center justify-center rounded-full bg-gray-200 opacity-0 group-hover:opacity-60 transition-opacity">
-                      <img
-                        className="w-10"
-                        src="https://www.svgrepo.com/show/33565/upload.svg"
-                        alt="Upload Icon"
-                      />
-                    </div>
-                  </div>
                 </div>
-  
-                <div className="flex space-x-4 mt-6">
-                  <button
-                    type="submit"
-                    className="bg-black text-white py-2 px-6 rounded-lg shadow-lg hover:bg-gray-800 transition-all w-full max-w-xs"
-                  >
-                    Save Profile
-                  </button>
-  
-                  <button
-                    type="button"
-                    onClick={handleDeleteProfile}
-                    className="bg-red-600 text-white py-2 px-6 rounded-lg shadow-lg hover:bg-red-700 transition-all w-full max-w-xs"
-                  >
-                    Delete Profile
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  className=" bg-green-600 text-white py-2 px-2 w-30rounded-lg shadow mr-10 hover:bg-green-700"
+                >
+                  Save Profile
+                </button>
               </div>
-  
-              <div className="flex-1 space-y-6">
-                <div className="form-input-group">
-                  <label className="block text-black text-left font-semibold">Name*</label>
+            </div>
+
+            {/* Profile Details Section */}
+            <div className="flex-1 space-y-20">
+              <div className="grid grid-cols-2 gap-20">
+                <div>
+                  <label className="block font-semibold text-gray-700">
+                    Name*
+                  </label>
                   <input
                     type="text"
                     value={fullname}
                     onChange={(e) => set_fullname(e.target.value)}
                     placeholder="Enter your name"
-                    className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f4d9a0] transition"
+                    className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                     required
                   />
                 </div>
-  
-                <div className="form-input-group">
-                  <label className="block text-black text-left font-semibold">City*</label>
+
+                <div>
+                  <label className="block font-semibold text-gray-700">
+                    City*
+                  </label>
                   <input
                     type="text"
                     value={city}
                     onChange={(e) => set_city(e.target.value)}
                     placeholder="Enter your city"
-                    className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f4d9a0] transition"
+                    className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                   />
                 </div>
-  
-                <div className="form-input-group">
-                  <label className="block text-black text-left font-semibold">Email*</label>
+              </div>
+
+              <div className="grid grid-cols-2 gap-20">
+                <div>
+                  <label className="block font-semibold text-gray-700">
+                    Email*
+                  </label>
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => set_email(e.target.value)}
                     placeholder="Enter your email"
-                    className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f4d9a0] transition"
+                    className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                     required
                   />
                 </div>
-  
-                <div className="form-input-group">
-                  <label className="block text-black text-left font-semibold">Phone Number (optional)</label>
+
+                <div>
+                  <label className="block font-semibold text-gray-700">
+                    Phone Number
+                  </label>
                   <input
                     type="tel"
                     value={phone_number}
                     onChange={(e) => set_phone_number(e.target.value)}
                     placeholder="Enter your phone number"
-                    className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f4d9a0] transition"
-                  />
-                </div>
-  
-                <div className="form-input-group">
-                  <label className="block text-black text-left font-semibold">Bio</label>
-                  <textarea
-                    value={bio}
-                    onChange={(e) => set_bio(e.target.value)}
-                    placeholder="Tell us a little about yourself"
-                    className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f4d9a0] transition"
+                    className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                   />
                 </div>
               </div>
-            </div>
-          </form>
-  
-          {/* Profile Summary */}
-          <div className="mt-12 p-6 border-t-4 border-[#f4d9a0]">
-            <h2 className="text-2xl font-semibold mb-4 text-black">Profile Summary</h2>
-            <div className="text-black space-y-2">
-              <p><strong>Name:</strong> {fullname ? fullname : "Not Provided"}</p>
-              <p><strong>City:</strong> {city ? city : "Not Provided"}</p>
-              <p><strong>Email:</strong> {email ? email : "Not Provided"}</p>
-              <p><strong>Phone Number:</strong> {phone_number ? phone_number : "Not Provided"}</p>
-              <p><strong>Bio:</strong> {bio ? bio : "Not Provided"}</p>
+
+              <div>
+                <label className="block font-semibold text-gray-700">Bio</label>
+                <textarea
+                  value={bio}
+                  onChange={(e) => set_bio(e.target.value)}
+                  placeholder="Tell us a little about yourself"
+                  className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                  rows={4}
+                />
+              </div>
             </div>
           </div>
+        </form>
+
+        {/* Profile Summary */}
+        <div className="absolute bottom-5 left-6 p-4 bg-gray-100 border rounded-lg shadow-lg w-1/3">
+          <h2 className="text-lg font-semibold mb-3 text-gray-800">
+            Profile Summary
+          </h2>
+          <div className="text-gray-700 space-y-1">
+            <p>
+              <strong>Name:</strong> {fullname || 'Not Provided'}
+            </p>
+            <p>
+              <strong>City:</strong> {city || 'Not Provided'}
+            </p>
+            <p>
+              <strong>Email:</strong> {email || 'Not Provided'}
+            </p>
+            <p>
+              <strong>Phone:</strong> {phone_number || 'Not Provided'}
+            </p>
+            <p>
+              <strong>Bio:</strong> {bio || 'Not Provided'}
+            </p>
+          </div>
         </div>
+
+        {/* Delete Profile Button */}
+        <button
+          onClick={handleDeleteProfile}
+          className="absolute bottom-6 right-6 bg-red-500 text-white py-1 px-4 rounded-lg text-sm hover:bg-red-600 shadow"
+        >
+          Delete
+        </button>
+
+        {/* Save Success Message */}
+        {showSaveMessage && (
+          <div className="absolute top-4 right-4 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg">
+            Profile saved successfully!
+          </div>
+        )}
       </div>
     </div>
   );
-  
-  
-  
-}  
+}
