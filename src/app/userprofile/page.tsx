@@ -76,73 +76,72 @@ export default function UserProfile() {
   const handleDeleteProfile = async () => {
     const confirmation = confirm('Are you sure you want to delete your profile? This action cannot be undone.');
 
-    if (!confirmation) return;
+    //if (!confirmation) return;
 
-    try {
-      const response = await fetch('/api/userprofile', {
-        method: 'DELETE',
-      });
+    //try {
+    //  const response = await fetch('/api/userprofile', {
+    //    method: 'DELETE',
+    //  });
 
-      if (response.ok) {
-        alert('Profile deleted successfully!');
-        router.push('homepage');
-      } else {
-        const error = await response.json();
-        alert(`Error: ${error.message}`);
-      }
-    } catch (error) {
-      console.error('Error deleting profile:', error);
-      alert('Failed to delete profile. Please try again.');
-    }
+    //  if (response.ok) {
+    //    alert('Profile deleted successfully!');
+    //    router.push('homepage');
+    //  } else {
+    //    const error = await response.json();
+    //    alert(`Error: ${error.message}`);
+    //  }
+    //} catch (error) {
+    //  console.error('Error deleting profile:', error);
+    //  alert('Failed to delete profile. Please try again.');
+    //}
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray p-16">
-      <div className="container max-w-5xl p-14 bg-white border border-gray-300 shadow-xl rounded-lg relative ">
-        <h1 className="text-3xl font-bold mb-10 text-gray-800 text-center">
-          Welcome, {email}!
+    <div className="min-h-screen flex items-center justify-center bg-gray p-12">
+      <div className="max-w-5xl w-full bg-white border-2 border-black rounded-lg shadow-xl p-10">
+        <h1 className="text-3xl font-bold text-gray-800 text-center mb-8">
+          Welcome, {email || 'User'}!
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          <div className="flex space-x-10">
-            {/* Profile Picture Section */}
-            <div className="w-1/3">
-              <div className="flex flex-col items-center space-y-8">
-                <div
-                  className="relative mr-10 w-48 h-48 cursor-pointer"
-                  onClick={triggerProfileUpload}
-                >
-                  {prof_pic_preview ? (
-                    <img
-                      src={prof_pic_preview}
-                      alt="Profile"
-                      className="w-full h-full rounded-full object-cover border-4 border-gray-300 shadow-lg"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gray-200 rounded-full"></div>
-                  )}
-                  <input
-                    type="file"
-                    ref={profileInputRef}
-                    accept="image/*"
-                    onChange={handleProfilePictureUpload}
-                    style={{ display: 'none' }}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="flex flex-col items-center">
+              <div
+                className="relative w-48 h-48 rounded-full border-4 border-black cursor-pointer shadow-md"
+                onClick={triggerProfileUpload}
+              >
+                {prof_pic_preview ? (
+                  <img
+                    src={prof_pic_preview}
+                    alt="Profile"
+                    className="w-full h-full object-cover rounded-full"
                   />
-                </div>
-                <button
-                  type="button"
-                  className=" bg-green-600 text-white py-2 px-2 w-30rounded-lg shadow mr-10 hover:bg-green-700"
-                >
-                  Save Profile
-                </button>
+                ) : (
+                  <div className="w-full h-full bg-gray-200 rounded-full flex items-center justify-center text-gray-500">
+                    Click to Upload
+                  </div>
+                )}
+                <input
+                  type="file"
+                  ref={profileInputRef}
+                  accept="image/*"
+                  onChange={handleProfilePictureUpload}
+                  style={{ display: 'none' }}
+                />
               </div>
+              <button
+                type="submit"
+                className="mt-6 bg-teal-600 text-white px-4 py-2 rounded-lg shadow hover:bg-teal-700"
+              >
+                Save Profile
+              </button>
             </div>
 
             {/* Profile Details Section */}
-            <div className="flex-1 space-y-20">
-              <div className="grid grid-cols-2 gap-20">
+            <div className="lg:col-span-2 space-y-4">
+              <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label className="block font-semibold text-gray-700">
+                  <label className="block text-gray-700 font-medium mb-2">
                     Name*
                   </label>
                   <input
@@ -150,13 +149,12 @@ export default function UserProfile() {
                     value={fullname}
                     onChange={(e) => set_fullname(e.target.value)}
                     placeholder="Enter your name"
-                    className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                    className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                     required
                   />
                 </div>
-
                 <div>
-                  <label className="block font-semibold text-gray-700">
+                  <label className="block text-gray-700 font-medium mb-2">
                     City*
                   </label>
                   <input
@@ -164,14 +162,15 @@ export default function UserProfile() {
                     value={city}
                     onChange={(e) => set_city(e.target.value)}
                     placeholder="Enter your city"
-                    className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                    className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    required
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-20">
+              <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label className="block font-semibold text-gray-700">
+                  <label className="block text-gray-700 font-medium mb-2">
                     Email*
                   </label>
                   <input
@@ -179,13 +178,12 @@ export default function UserProfile() {
                     value={email}
                     onChange={(e) => set_email(e.target.value)}
                     placeholder="Enter your email"
-                    className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                    className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                     required
                   />
                 </div>
-
                 <div>
-                  <label className="block font-semibold text-gray-700">
+                  <label className="block text-gray-700 font-medium mb-2">
                     Phone Number
                   </label>
                   <input
@@ -193,18 +191,18 @@ export default function UserProfile() {
                     value={phone_number}
                     onChange={(e) => set_phone_number(e.target.value)}
                     placeholder="Enter your phone number"
-                    className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                    className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-semibold text-gray-700">Bio</label>
+                <label className="block text-gray-700 font-medium mb-2">Bio</label>
                 <textarea
                   value={bio}
                   onChange={(e) => set_bio(e.target.value)}
-                  placeholder="Tell us a little about yourself"
-                  className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                  placeholder="Tell us about yourself"
+                  className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                   rows={4}
                 />
               </div>
@@ -212,41 +210,24 @@ export default function UserProfile() {
           </div>
         </form>
 
-        {/* Profile Summary */}
-        <div className="absolute bottom-5 left-6 p-4 bg-gray-100 border rounded-lg shadow-lg w-1/3">
-          <h2 className="text-lg font-semibold mb-3 text-gray-800">
-            Profile Summary
-          </h2>
-          <div className="text-gray-700 space-y-1">
-            <p>
-              <strong>Name:</strong> {fullname || 'Not Provided'}
-            </p>
-            <p>
-              <strong>City:</strong> {city || 'Not Provided'}
-            </p>
-            <p>
-              <strong>Email:</strong> {email || 'Not Provided'}
-            </p>
-            <p>
-              <strong>Phone:</strong> {phone_number || 'Not Provided'}
-            </p>
-            <p>
-              <strong>Bio:</strong> {bio || 'Not Provided'}
-            </p>
-          </div>
+        <div className="mt-10 bg-gray-50 border border-black rounded-lg p-6 shadow">
+          <h2 className="text-lg font-semibold mb-4">Profile Summary</h2>
+          <p><strong>Name:</strong> {fullname || 'Not Provided'}</p>
+          <p><strong>City:</strong> {city || 'Not Provided'}</p>
+          <p><strong>Email:</strong> {email || 'Not Provided'}</p>
+          <p><strong>Phone:</strong> {phone_number || 'Not Provided'}</p>
+          <p><strong>Bio:</strong> {bio || 'Not Provided'}</p>
         </div>
 
-        {/* Delete Profile Button */}
         <button
           onClick={handleDeleteProfile}
-          className="absolute bottom-6 right-6 bg-red-500 text-white py-1 px-4 rounded-lg text-sm hover:bg-red-600 shadow"
+          className="mt-8 bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600"
         >
-          Delete
+          Delete Profile
         </button>
 
-        {/* Save Success Message */}
         {showSaveMessage && (
-          <div className="absolute top-4 right-4 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg">
+          <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow">
             Profile saved successfully!
           </div>
         )}
