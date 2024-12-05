@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${sinera.variable} ${sinera.variable} antialiased bg-gradient-to-br from-yellow-50 via-pink-50 to-orange-100 text-gray-900`} // Gradient background for a summery vibe
+        className={`${sinera.variable} ${sinera.variable} antialiased bg-[#f7f6ee] text-gray-900`} // Gradient background for a summery vibe
       >
         <Navbar />
         {/* Content */}
