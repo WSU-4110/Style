@@ -80,7 +80,7 @@ const Sidebar = () => {
                 <Image src={newLogo} alt="Under 6 Months" width={40} height={40} />
               </div>
               <div className="text-container mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <button onClick={() => router.push("/under6months")} className="text-lg hover:text-teal-400">
+                <button onClick={() => router.push("/newthings")} className="text-lg hover:text-teal-400">
                   Under 6 Months
                 </button>
               </div>
