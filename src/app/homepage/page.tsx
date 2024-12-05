@@ -195,8 +195,8 @@ const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch })
     
         <div className= "relative w-full bg-white p-8 shadow-lg -mt-2">
           <div className="max-w-screen-xl mx-auto text-center px-4">
-            <h2 className="text-2xl font-bold mb-2 text-left">New Businesses</h2>
-            <p className="text-lg text-left mb-8">Explore upcoming businesses</p>
+            <h2 className="text-2xl font-bold mb-2 text-left">Recommended</h2>
+            <p className="text-lg text-left mb-8">Explore businesses we've tailored for your interests.</p>
             <div className="flex flex-wrap gap-6 justify-center">
       <div className="list">
       <Homepage_Card

@@ -13,7 +13,7 @@ export default function NewThingsPage() {
     {
       businessName: 'Nail Palace',
       address: '829 Maple St, Kansas City, KS',
-      images: ['https://example.com/smarthome-image.jpg'],
+      images: ['https://www.greentoestucson.com/wp-content/uploads/2021/06/Nail-Salons-Tucson.jpeg'],
       about: 'A relaxing nail salon offering the best manicures and pedicures.',
       services: ['Manicure', 'Pedicure', 'Nail Art'],
       socialLinks: ['https://instagram.com/nailpalace'],
@@ -37,7 +37,7 @@ export default function NewThingsPage() {
       <div className="flex">
         <Sidebar />
         <main className="ml-64 w-full p-8">
-          <h1 className="title">New Things</h1>
+          <h1 className="title">New Businesses</h1>
           <div className="list">
             {mockBusinesses.length > 0 ? (
               mockBusinesses.map((business, index) => (

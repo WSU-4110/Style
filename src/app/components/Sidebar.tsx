@@ -1,7 +1,6 @@
 'use client';
-// Sidebar.tsx
 import React, { useState } from 'react';
-import Image from 'next/image';  // Assuming you're using Next.js
+import Image from 'next/image'; 
 import { useRouter } from 'next/navigation';
 import nailSalonLogo from '../../public/nail_logo.png';
 import hairLogo from '../../public/hair_logo.png';
@@ -9,7 +8,7 @@ import heartLogo from '../../public/heart_logo.png';
 import tattooLogo from '../../public/tattoo_logo.png';
 import barberLogo from '../../public/barber_logo.png';
 import newLogo from '../../public/new_logo.png';
-//import './filter.css';
+import '../homepage/filter.css';
 
 const Sidebar = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);

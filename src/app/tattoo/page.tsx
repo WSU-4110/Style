@@ -3,7 +3,6 @@ import React from 'react';
 import '../categories.css';
 import Card from '../components/ui/card';
 import { useRouter } from 'next/navigation';
-import '../homepage/filter.css';
 import Sidebar from '../components/Sidebar';
 
 export default function TattooPage() {
@@ -17,6 +16,14 @@ export default function TattooPage() {
       about: 'A premier tattoo studio known for its custom designs and expert artists.',
       services: ['Custom Tattoos', 'Piercings', 'Tattoo Touch-ups'],
       socialLinks: ['https://instagram.com/inkmasterstudio'],
+    },
+    {
+      businessName: 'Iconic Tattoo',
+      address: '38019 Park Blvd, Oakman, MI',
+      images: ['https://media.timeout.com/images/105165480/750/562/image.jpg'],
+      about: 'Tattoo artistry starts here.',
+      services: ['Tattoo', 'Piercings'],
+      socialLinks: ['https://instagram.com/iconictattoo'],
     }
   ];
 
