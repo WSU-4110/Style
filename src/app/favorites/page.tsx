@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import Image from 'next/image';
-import '../homepage/filter.css';
 import Sidebar from '../components/Sidebar';
 
 interface Favorite {

@@ -3,7 +3,6 @@ import React from 'react';
 import '../categories.css';
 import Card from '../components/ui/card';
 import { useRouter } from 'next/navigation';
-import '../homepage/filter.css';
 import Sidebar from '../components/Sidebar';
 
 export default function NewThingsPage() {

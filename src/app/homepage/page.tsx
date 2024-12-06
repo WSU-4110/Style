@@ -5,8 +5,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Homepage_Card from '../components/ui/homepage_card';
 import Sidebar from '../components/Sidebar';
-import './filter.css';
-//import './typingEffect.css'; // For typing effect
+import './homepage.css';
 import background from '../../public/homepage_bg.png';
 
 interface Category {
