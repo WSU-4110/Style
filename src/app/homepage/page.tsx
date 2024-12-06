@@ -106,14 +106,15 @@ export default function Home() {
 
           {/* Cards Section */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <Homepage_Card
+          <Homepage_Card
               businessName="Nail Palace"
               address="829 Maple St, Kansas City, KS"
               images={['https://www.greentoestucson.com/wp-content/uploads/2021/06/Nail-Salons-Tucson.jpeg']}
               about="A relaxing nail salon."
               services={['Manicure', 'Pedicure', 'Nail Art']}
-              onBookClick={(name) => alert(`Booking ${name}`)}
-            />
+              route="/nail" // Route for card navigation
+              onBookClick={(name) => router.push('/schedule')} // Update to router navigation
+              />
 
             <Homepage_Card
               businessName="Hairloft Salon"
@@ -121,7 +122,8 @@ export default function Home() {
               images={['https://davidpressleyschool.com/wp-content/uploads/2023/08/bigstock-hairstylist-trimming-hair-of-t-438871286-1.jpg']}
               about="A modern hair salon."
               services={['Haircuts', 'Hair Treatments', 'Hair Coloring', 'Styling']}
-              onBookClick={(name) => alert(`Booking ${name}`)}
+              route="/hair"
+              onBookClick={(name) => router.push('/schedule')}
             />
 
             <Homepage_Card
@@ -130,7 +132,8 @@ export default function Home() {
               images={['https://media.timeout.com/images/105165480/750/562/image.jpg']}
               about="Tattoo artistry starts here."
               services={['Tattoo', 'Piercings']}
-              onBookClick={(name) => alert(`Booking ${name}`)}
+              route="/tattoo"
+              onBookClick={(name) => router.push('/schedule')}
             />
 
             <Homepage_Card
@@ -139,7 +142,8 @@ export default function Home() {
               images={['https://detroitbarbers.com/cdn/shop/t/4/assets/db-barbershop-page-corktown-gallery-a.jpg?v=2985141150787217361509093960']}
               about="Straight shaves, straight styles."
               services={['Haircuts', 'Fade', 'Colorings']}
-              onBookClick={(name) => alert(`Booking ${name}`)}
+              route="/barber"
+              onBookClick={(name) => router.push('/schedule')}
             />
           </div>
         </div>
