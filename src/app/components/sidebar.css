@@ -1,4 +1,3 @@
-/* Sidebar Styles */
 .sidebar {
   position: fixed;
   top: 60px;
@@ -20,19 +19,18 @@
   width: 200px;
 }
 
-/* Sidebar text color - Ensure it stays white even when expanded or hovered */
 .sidebar .text-container {
-  color: white; /* Set text color to white */
-  opacity: 0; /* Hide text initially */
+  color: white;
+  opacity: 0;
   transition: opacity 0.3s ease, color 0.3s ease;
 }
 
 .sidebar.expanded .text-container {
-  opacity: 1; /* Show text when expanded */
+  opacity: 1;
 }
 
 .sidebar:hover .text-container {
-  opacity: 1; /* Show text on hover */
+  opacity: 1;
 }
 
 .sidebar .toggle-btn {
@@ -57,7 +55,6 @@
   width: 150px;
 }
 
-/* Sidebar navigation styles */
 .sidebar nav ul {
   list-style: none;
   padding: 0;
@@ -69,20 +66,19 @@
 }
 
 .sidebar nav ul li a {
-  color: white !important; /* Ensures link text is always white */
+  color: white !important;
   text-decoration: none;
   font-size: 1.125rem;
   transition: color 0.3s ease;
-  white-space: nowrap; 
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .sidebar nav ul li a:hover {
-  color: #38b2ac; /* Color when hovered */
+  color: #38b2ac;
 }
 
-/* Main content styles */
 .main-content {
   margin-left: 70px;
   padding: 20px;
@@ -98,45 +94,41 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  
   display: flex;
   flex-direction: column;
 }
 
-/* Typing effect */
 @keyframes typing {
   0% {
-      clip-path: inset(0 100% 0 0); 
+    clip-path: inset(0 100% 0 0);
   }
   100% {
-      clip-path: inset(0 0 0 0); 
+    clip-path: inset(0 0 0 0);
   }
 }
 
 @keyframes blink {
   0%, 50% {
-      border-color: transparent;
+    border-color: transparent;
   }
   50%, 100% {
-      border-color: black;
+    border-color: black;
   }
 }
 
 .typing-effect {
   display: inline-block;
-  font-family: monospace;  
-  white-space: nowrap;     
-  overflow: hidden;        
+  font-family: monospace;
+  white-space: nowrap;
+  overflow: hidden;
   position: relative;
   animation: typing 1.5s steps(10) 1s forwards;
 }
 
 .typing-effect::after {
-  content: '|';               
+  content: '|';
   position: absolute;
-  right: -15px;           
+  right: -15px;
   top: 0;
-  animation: blink 0.75s step-end infinite; 
+  animation: blink 0.75s step-end infinite;
 }
-
-
