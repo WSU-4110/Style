@@ -4,7 +4,8 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import '../categories.css';
 import Card from '../components/ui/card';
-import Sidebar from '../components/Sidebar'; 
+import Sidebar from '../components/Sidebar';
+import AutoRefreshPage from '../refresh_page'; 
 
 export default function NailSalonPage() {
   const router = useRouter();
@@ -27,6 +28,7 @@ export default function NailSalonPage() {
   return (
     <div className="container">
       <div className="flex">
+        <AutoRefreshPage />
         <Sidebar />
         <main className="ml-64 w-full p-8">
           <h1 className="title">Nail Salons</h1>

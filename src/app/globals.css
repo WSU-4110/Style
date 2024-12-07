@@ -5,6 +5,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --navbar-height: 55px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,14 +17,18 @@
 
 main {
   width: 100%;
-  overflow-x: auto; /* Allow main content to scroll horizontally */
+  overflow-x: auto;
+  padding-top: var(--navbar-height);
 }
 
 body {
   color: var(--foreground);
-  background: var(--background);
-  overflow-x: auto; /* Prevent horizontal overflow */
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: auto; 
+  background: none;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
@@ -49,12 +54,12 @@ body {
   color: #718096;
 }
 
-/* Footer */
+
 footer {
   width: 100%;
-  position: relative; /* Stick to the bottom */
-  bottom: 0; /* Align at the bottom of the viewport */
-  left: 0; /* Align to the left */
+  position: relative;
+  bottom: 0; 
+  left: 0; 
 }
 @layer utilities {
   .text-balance {

@@ -1,18 +1,26 @@
 /* General Styles */
-body {
+  body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
+    height: 100%; /* Ensure the body and html stretch to the full height of the viewport */
   }
-  
+
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Make sure the main container stretches to the viewport height */
+  }
+
   .calendar-container {
+    flex: 1; /* Allow this to expand and take up available space */
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
   }
-  
+
   h1, h2 {
     color: #333;
   }
@@ -24,7 +32,7 @@ body {
     gap: 10px;
     max-width: 400px;
   }
-  
+
   .calendar-date {
     padding: 12px;
     background-color: #f0f0f0;
@@ -34,19 +42,19 @@ body {
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
   }
-  
+
   .calendar-date.selected {
     background-color: #20b2aa;
     color: #fff;
   }
-  
+
   /* Period Button Styles */
   .period-buttons {
     display: flex;
     gap: 10px;
     justify-content: center;
   }
-  
+
   .period-button {
     padding: 10px 15px;
     background-color: #f0f0f0;
@@ -55,12 +63,12 @@ body {
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
   }
-  
+
   .period-button.selected {
     background-color: #20b2aa;
     color: #fff;
   }
-  
+
   /* Time Slider Styles */
   .time-slider {
     display: flex;
@@ -69,11 +77,11 @@ body {
     position: relative;
     margin-top: 20px;
   }
-  
+
   .no-scrollbar {
     overflow: hidden;
   }
-  
+
   .time-options {
     display: flex;
     gap: 10px;
@@ -81,7 +89,7 @@ body {
     max-width: 300px; /* Adjust the visible width */
     overflow: hidden; /* Hide scrollbar */
   }
-  
+
   .time-option {
     min-width: 80px;
     padding: 10px;
@@ -90,12 +98,12 @@ body {
     border-radius: 5px;
     cursor: pointer;
   }
-  
+
   .time-option.selected {
     background-color: #20b2aa;
     color: #fff;
   }
-  
+
   /* Slider Button Styles */
   .slider-button {
     background-color: #20b2aa;
@@ -107,16 +115,16 @@ body {
     margin: 0 20px; /* More space around arrows */
     font-size: 20px;
   }
-  
+
   .slider-button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   }
-  
+
   .confirm-section {
     margin-top: 20px;
   }
-  
+
   .confirm-button {
     padding: 10px 20px;
     background-color: #20b2aa;
@@ -126,3 +134,10 @@ body {
     cursor: pointer;
   }
   
+  footer {
+    margin-top: auto;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+  }
