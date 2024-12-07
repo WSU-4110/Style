@@ -4,18 +4,32 @@
 /* ==================================== Main Layout and Container ==================================== */
 
 /* Defines the main container with a max width, centered alignment, and padding */
+.body {
+  overflow-x: hidden;
+  position: relative;
+}
+
 .container {
-  max-width: 0 auto;
-  margin: 0 auto;
-  padding: 2rem;
+  display: flex;
+  margin-top: 2rem;
+  max-width: 1200px;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding: 0 2rem;
+  min-height: 100vh;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Wrapper for main content, setting up a flex layout for side-by-side items */
 .content-wrapper {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
   gap: 10rem;
+  flex-grow: 1;
+  
+  margin-top: 2rem;
 }
 
 /* =================================== Business Name Input ======================================== */
@@ -46,12 +60,12 @@
   background-color: #f9f9f9;
   padding: 1rem;
   border-radius: 1px;
-  margin-left: 0rem; /* Add space between carousel and map */
+  margin-right: 2rem;
 }
 
 .map-box {
-  width: 350px;
-  height: 350px;
+  width: 100%;
+  height: 100%;
   background-color: #e0e0e0; /* Placeholder color */
   border-radius: 10px;
 }
@@ -110,7 +124,7 @@
 /* ====================================== Hour Selection ===========================================*/
 
 .select-hours-container {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   text-align: left; /* Align the button to the left */
 }
 
@@ -121,6 +135,7 @@
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  z-index: 9998;
 }
 
 .select-hours-button:hover {
@@ -132,6 +147,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  z-index: 9997;
 }
 
 .modal-overlay {
@@ -145,6 +161,8 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
 }
 
 .modal-content {
@@ -247,6 +265,7 @@
   flex-shrink: 0; /* Prevent shrinking */
   width: 900px;
   height: 500px;
+  margin-left: 3rem;
 }
 
 /* Carousel container - scrollable with a border and rounded corners */
@@ -255,6 +274,7 @@
   overflow-x: scroll;
   border-radius: 8px;
   border: 1px solid #ccc;
+  
 }
 
 /* Individual carousel images with specific size and rounded corners */
@@ -263,6 +283,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: 8px;
+  margin-left: 2rem;
 }
 
 /* ===================================== Profile Picture Upload ========================================== */
@@ -279,6 +300,7 @@
   box-shadow: 2px 4px 10px gray;
   cursor: pointer;
   z-index: 10; /* Ensures it stays in front */
+  
 }
 
 .profile-picture-upload .relative {
@@ -311,13 +333,12 @@
 /* Adjusted styles for better left alignment and spacing */
 .description-wrapper {
   width: 100%;
-  height: 100%;
+  height: auto;
   background-color: #f9f9f9;
   padding: 1rem;
   border-radius: 10px;
-  margin-left: 0;
   margin-top: 1rem;
-  float: left;
+  
 }
 
 
@@ -341,8 +362,10 @@
 /* Container for service items - adjusted margins for better spacing */
 .services-wrapper {
   padding: 1rem;
+  margin-right: 2rem;
   background-color: #f9f9f9; /* Optional background for clarity */
   border-radius: 10px;
+  
 }
 
 /* Styles each service item with gap between elements and bottom margin */
@@ -453,4 +476,15 @@
 /* Changes background color on hover for the main button */
 .button:hover {
   background-color: #424242;
+}
+
+.footer {
+  position: static !important;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: auto;
+  bottom: 0;
+  width: 100%;
 }

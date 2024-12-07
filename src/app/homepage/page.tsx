@@ -7,6 +7,7 @@ import Homepage_Card from '../components/ui/homepage_card';
 import Sidebar from '../components/Sidebar';
 import './homepage.css';
 import background from '../../public/homepage_bg.png';
+import AutoRefreshPage from '../refresh_page';
 
 interface Category {
   name: string;
@@ -76,12 +77,14 @@ export default function Home() {
   return (
     <div className="relative w-full">
       {/* Full-Width Background Section with Shadow */}
+      <AutoRefreshPage />
       <div
-        className="relative w-full h-[50vh] bg-cover bg-center flex flex-col justify-center items-center text-white"
+        className="relative w-full h-[70vh] bg-cover bg-center flex flex-col justify-center items-center text-white"
         style={{
           backgroundImage: `url(${background.src})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundSize: 'cover', 
+          backgroundPosition: 'top',  
+          backgroundRepeat: 'no-repeat',  
         }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
@@ -111,7 +114,7 @@ export default function Home() {
               images={['https://www.greentoestucson.com/wp-content/uploads/2021/06/Nail-Salons-Tucson.jpeg']}
               about="A relaxing nail salon."
               services={['Manicure', 'Pedicure', 'Nail Art']}
-              route="/nail" // Route for card navigation
+              route="/nailsalon" // Route for card navigation
               onBookClick={(name) => router.push('/schedule')} // Update to router navigation
               />
 

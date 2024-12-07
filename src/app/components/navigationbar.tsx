@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { auth } from '../firebase';
 import Image from 'next/image';
 import transparentLogo from '../../public/transparent_logo.png';
+import navbarlogo from '../../public/navbar_logo.png';
+import testlogo from '../../public/testinglogo.png';
 import './navigationbar.css';
 
 export default function Navbar() {
@@ -49,7 +51,7 @@ export default function Navbar() {
   return (
     <nav className="navigation">
       <div className="logo-container">
-        <Image src={transparentLogo} alt="Logo" width={50} height={50} />
+        <Image src={testlogo} alt="Logo" width={50} height={50} />
       </div>
       <ul>
         <li>

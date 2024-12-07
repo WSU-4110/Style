@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import '../categories.css';
 import Card from '../components/ui/card';
 import { useRouter } from 'next/navigation';
 import Sidebar from '../components/Sidebar';
@@ -12,7 +11,7 @@ export default function TattooPage() {
     {
       businessName: 'Ink Masters Tattoo Studio',
       address: '19007 Leaf Road, Orlando, FL',
-      images: ['https://example.com/tattoo-image.jpg'],
+      images: ['https://s8tattoo.com/cdn/shop/articles/Untitled_1200x.png?v=1629124929'],
       about: 'A premier tattoo studio known for its custom designs and expert artists.',
       services: ['Custom Tattoos', 'Piercings', 'Tattoo Touch-ups'],
       socialLinks: ['https://instagram.com/inkmasterstudio'],

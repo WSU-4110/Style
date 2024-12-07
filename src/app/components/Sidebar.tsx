@@ -2,12 +2,12 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import nailSalonLogo from '../../public/nail_logo.png';
-import hairLogo from '../../public/hair_logo.png';
-import heartLogo from '../../public/heart_logo.png';
-import tattooLogo from '../../public/tattoo_logo.png';
-import barberLogo from '../../public/barber_logo.png';
-import newLogo from '../../public/new_logo.png';
+import nailSalonLogo from '../../public/new_nailsalon.png';
+import hairLogo from '../../public/new_hair_salon.png';
+import heartLogo from '../../public/new_heartlogo.png';
+import tattooLogo from '../../public/new_tattoo.png';
+import barberLogo from '../../public/new_barber.png';
+import newLogo from '../../public/new_6monthslogo.png';
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -36,7 +36,7 @@ const Sidebar = () => {
         <nav className="flex flex-col justify-evenly h-full p-3">
           <ul className="space-y-8">
             <li className="flex flex-col items-center gap-2 group">
-              <Image src={nailSalonLogo} alt="Nail Salon" className="w-10 h-10" />
+              <Image src={nailSalonLogo} alt="Nail Salon" className="w-8 h-8" />
               <button
                 className="text-white text-sm group-hover:text-teal-400"
                 onClick={() => router.push("/nailsalon")}
@@ -45,7 +45,7 @@ const Sidebar = () => {
               </button>
             </li>
             <li className="flex flex-col items-center gap-2 group">
-              <Image src={hairLogo} alt="Hair Stylists" className="w-10 h-10" />
+              <Image src={hairLogo} alt="Hair Stylists" className="w-8 h-8" />
               <button
                 className="text-white text-sm group-hover:text-teal-400"
                 onClick={() => router.push("/hair")}
@@ -54,7 +54,7 @@ const Sidebar = () => {
               </button>
             </li>
             <li className="flex flex-col items-center gap-2 group">
-              <Image src={tattooLogo} alt="Tattoo Artist" className="w-10 h-10" />
+              <Image src={tattooLogo} alt="Tattoo Artist" className="w-8 h-8" />
               <button
                 className="text-white text-sm group-hover:text-teal-400"
                 onClick={() => router.push("/tattoo")}
@@ -63,7 +63,7 @@ const Sidebar = () => {
               </button>
             </li>
             <li className="flex flex-col items-center gap-2 group">
-              <Image src={barberLogo} alt="Barber Shops" className="w-10 h-10" />
+              <Image src={barberLogo} alt="Barber Shops" className="w-7 h-8" />
               <button
                 className="text-white text-sm group-hover:text-teal-400"
                 onClick={() => router.push("/barber")}
@@ -72,7 +72,7 @@ const Sidebar = () => {
               </button>
             </li>
             <li className="flex flex-col items-center gap-2 group">
-              <Image src={newLogo} alt="Under 6 Months" className="w-10 h-10" />
+              <Image src={newLogo} alt="Under 6 Months" className="w-8 h-8" />
               <button
                 className="text-white text-sm group-hover:text-teal-400"
                 onClick={() => router.push("/newthings")}
@@ -81,7 +81,7 @@ const Sidebar = () => {
               </button>
             </li>
             <li className="flex flex-col items-center gap-2 group">
-              <Image src={heartLogo} alt="Favorites" className="w-10 h-10" />
+              <Image src={heartLogo} alt="Favorites" className="w-10 h-9" />
               <button
                 className="text-white text-sm group-hover:text-teal-400"
                 onClick={() => router.push("/favorites")}
