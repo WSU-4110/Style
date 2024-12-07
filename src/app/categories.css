@@ -45,6 +45,12 @@
     margin-top: 10px;
     background-color: #ddd;
     border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center; /* Center the image horizontally */
+    align-items: center;
+    border-radius: 8px;
+    object-fit: cover;
 }
 
 .businessName {

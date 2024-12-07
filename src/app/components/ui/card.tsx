@@ -1,6 +1,6 @@
 // card
 'use client';
-
+import '../../categories.css';
 import React from 'react';
 
 interface CardProps {

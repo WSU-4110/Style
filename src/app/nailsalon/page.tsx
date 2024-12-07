@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import '../categories.css';
 import Card from '../components/ui/card';
 import Sidebar from '../components/Sidebar';
 import AutoRefreshPage from '../refresh_page'; 

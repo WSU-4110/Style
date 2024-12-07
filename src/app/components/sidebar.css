@@ -69,6 +69,7 @@
   color: white !important;
   text-decoration: none;
   font-size: 1.125rem;
+  font-style: sans-serif;
   transition: color 0.3s ease;
   white-space: nowrap;
   overflow: hidden;
@@ -90,7 +91,6 @@
 }
 
 
-
 @keyframes typing {
   0% {
     clip-path: inset(0 100% 0 0);
@@ -98,30 +98,4 @@
   100% {
     clip-path: inset(0 0 0 0);
   }
-}
-
-@keyframes blink {
-  0%, 50% {
-    border-color: transparent;
-  }
-  50%, 100% {
-    border-color: black;
-  }
-}
-
-.typing-effect {
-  display: inline-block;
-  font-family: monospace;
-  white-space: nowrap;
-  overflow: hidden;
-  position: relative;
-  animation: typing 1.5s steps(10) 1s forwards;
-}
-
-.typing-effect::after {
-  content: '|';
-  position: absolute;
-  right: -15px;
-  top: 0;
-  animation: blink 0.75s step-end infinite;
 }

@@ -114,7 +114,7 @@ export default function Home() {
               images={['https://www.greentoestucson.com/wp-content/uploads/2021/06/Nail-Salons-Tucson.jpeg']}
               about="A relaxing nail salon."
               services={['Manicure', 'Pedicure', 'Nail Art']}
-              route="/nail" // Route for card navigation
+              route="/nailsalon" // Route for card navigation
               onBookClick={(name) => router.push('/schedule')} // Update to router navigation
               />
 
