@@ -89,14 +89,7 @@
   margin-left: 200px;
 }
 
-.home-background {
-  background-image: url('../../public/homepage_bg.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  flex-direction: column;
-}
+
 
 @keyframes typing {
   0% {
