@@ -12,7 +12,7 @@ export default function NailSalonPage() {
   const mockBusinesses = [
     {
       businessName: 'Nail Palace',
-      address: '829 Maple St, Kansas City, KS',
+      address: '829 Maple St, Oak Park, MI',
       images: ['https://www.greentoestucson.com/wp-content/uploads/2021/06/Nail-Salons-Tucson.jpeg'],
       about: 'A relaxing nail salon offering the best manicures and pedicures.',
       services: ['Manicure', 'Pedicure', 'Nail Art'],

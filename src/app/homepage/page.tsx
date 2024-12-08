@@ -110,7 +110,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           <Homepage_Card
               businessName="Nail Palace"
-              address="829 Maple St, Kansas City, KS"
+              address="829 Maple St, Oak Park, MI"
               images={['https://www.greentoestucson.com/wp-content/uploads/2021/06/Nail-Salons-Tucson.jpeg']}
               about="A relaxing nail salon offering the best manicures and pedicures."
               services={['Manicure', 'Pedicure', 'Nail Art']}
