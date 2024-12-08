@@ -74,31 +74,34 @@ export default function UserProfile() {
   }, []);
 
   const handleDeleteProfile = async () => {
-    const confirmation = confirm('Are you sure you want to delete your profile? This action cannot be undone.');
+    const confirmation = confirm(
+      'Are you sure you want to delete your profile? This action cannot be undone.'
+    );
 
-    //if (!confirmation) return;
+    if (!confirmation) return;
 
-    //try {
-    //  const response = await fetch('/api/userprofile', {
-    //    method: 'DELETE',
-    //  });
+    // Uncomment the following block to enable delete functionality
+    // try {
+    //   const response = await fetch('/api/userprofile', {
+    //     method: 'DELETE',
+    //   });
 
-    //  if (response.ok) {
-    //    alert('Profile deleted successfully!');
-    //    router.push('homepage');
-    //  } else {
-    //    const error = await response.json();
-    //    alert(`Error: ${error.message}`);
-    //  }
-    //} catch (error) {
-    //  console.error('Error deleting profile:', error);
-    //  alert('Failed to delete profile. Please try again.');
-    //}
+    //   if (response.ok) {
+    //     alert('Profile deleted successfully!');
+    //     router.push('homepage');
+    //   } else {
+    //     const error = await response.json();
+    //     alert(`Error: ${error.message}`);
+    //   }
+    // } catch (error) {
+    //   console.error('Error deleting profile:', error);
+    //   alert('Failed to delete profile. Please try again.');
+    // }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray p-12">
-      <div className="max-w-5xl w-full bg-white border-2 border-black rounded-lg shadow-xl p-10">
+      <div className="max-w-8xl w-full bg-white border border-gray-200 rounded-md shadow-lg p-10 mt-[-20px]">
         <h1 className="text-3xl font-bold text-gray-800 text-center mb-8">
           Welcome, {email || 'User'}!
         </h1>
@@ -107,7 +110,7 @@ export default function UserProfile() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="flex flex-col items-center">
               <div
-                className="relative w-48 h-48 rounded-full border-4 border-black cursor-pointer shadow-md"
+                className="relative w-48 h-48 rounded-full border-2 border-gray-900 cursor-pointer shadow-md"
                 onClick={triggerProfileUpload}
               >
                 {prof_pic_preview ? (
@@ -131,13 +134,12 @@ export default function UserProfile() {
               </div>
               <button
                 type="submit"
-                className="mt-6 bg-teal-600 text-white px-4 py-2 rounded-lg shadow hover:bg-teal-700"
+                className="mt-6 bg-[#d8ba7a] text-white px-4 py-2 rounded-lg shadow hover:bg-[#b49144]"
               >
                 Save Profile
               </button>
             </div>
 
-            {/* Profile Details Section */}
             <div className="lg:col-span-2 space-y-4">
               <div className="grid grid-cols-2 gap-6">
                 <div>
@@ -149,7 +151,7 @@ export default function UserProfile() {
                     value={fullname}
                     onChange={(e) => set_fullname(e.target.value)}
                     placeholder="Enter your name"
-                    className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-4 py-2 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d8ba7a]"
                     required
                   />
                 </div>
@@ -162,7 +164,7 @@ export default function UserProfile() {
                     value={city}
                     onChange={(e) => set_city(e.target.value)}
                     placeholder="Enter your city"
-                    className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-4 py-2 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d8ba7a]"
                     required
                   />
                 </div>
@@ -178,7 +180,7 @@ export default function UserProfile() {
                     value={email}
                     onChange={(e) => set_email(e.target.value)}
                     placeholder="Enter your email"
-                    className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-4 py-2 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d8ba7a]"
                     required
                   />
                 </div>
@@ -191,7 +193,7 @@ export default function UserProfile() {
                     value={phone_number}
                     onChange={(e) => set_phone_number(e.target.value)}
                     placeholder="Enter your phone number"
-                    className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-4 py-2 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d8ba7a]"
                   />
                 </div>
               </div>
@@ -202,7 +204,7 @@ export default function UserProfile() {
                   value={bio}
                   onChange={(e) => set_bio(e.target.value)}
                   placeholder="Tell us about yourself"
-                  className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full px-4 py-2 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d8ba7a]"
                   rows={4}
                 />
               </div>
@@ -210,7 +212,7 @@ export default function UserProfile() {
           </div>
         </form>
 
-        <div className="mt-10 bg-gray-50 border border-black rounded-lg p-6 shadow">
+        <div className="mt-10 bg-gray-50 border border-gray-900 rounded-lg p-6 shadow">
           <h2 className="text-lg font-semibold mb-4">Profile Summary</h2>
           <p><strong>Name:</strong> {fullname || 'Not Provided'}</p>
           <p><strong>City:</strong> {city || 'Not Provided'}</p>
@@ -218,16 +220,16 @@ export default function UserProfile() {
           <p><strong>Phone:</strong> {phone_number || 'Not Provided'}</p>
           <p><strong>Bio:</strong> {bio || 'Not Provided'}</p>
         </div>
-
+      <div className="flex justify-end mt-8">
         <button
           onClick={handleDeleteProfile}
-          className="mt-8 bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600"
+          className="mt-8 bg-black text-white px-4 py-2 rounded-lg shadow hover:bg-red-600"
         >
           Delete Profile
         </button>
-
+      </div>
         {showSaveMessage && (
-          <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow">
+          <div className="fixed top-4 right-4 bg-green-500 text-[#d8ba7a] px-4 py-2 rounded-lg shadow">
             Profile saved successfully!
           </div>
         )}

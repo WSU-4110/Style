@@ -2,7 +2,7 @@
 
 'use client';
 import React, { useState, useEffect } from 'react';
-import { FaCalendarAlt, FaMapMarkerAlt, FaDollarSign, FaHistory } from 'react-icons/fa';
+import AppointmentCard from '../components/ui/appointment_card';
 
 interface AppointmentType {
   id: number;
@@ -15,62 +15,51 @@ interface AppointmentType {
   cancelledOn?: string;
 }
 
-// Sample appointments data
 const sampleAppointments: AppointmentType[] = [
   {
-    id: 2,
-    businessName: "The Nail Bar",
+    id: 1,
+    businessName: "Nail Palace",
     service: "Manicure",
     amountDue: "$50.00",
-    date: "2024-10-26",
+    date: "12/26/2024",
     time: "2:00 PM EST",
-    address: "4567 Tree Rd, Ann Arbor, MI"
+    address: "829 Maple St, Oak Park, MI",
+  },
+  {
+    id: 2,
+    businessName: "Hairloft Salon",
+    service: "Hair Treatment",
+    amountDue: "$60.00",
+    date: "12/19/2024",
+    time: "10:00 AM EST",
+    address: "7890 Oak Ave, Grand Rapids, MI",
   },
   {
     id: 3,
-    businessName: "Beauty Salon",
-    service: "Facial",
-    amountDue: "$60.00",
-    date: "2024-11-01",
-    time: "10:00 AM EST",
-    address: "7890 Oak Ave, Grand Rapids, MI"
-  },
-  {
-    id: 4,
-    businessName: "Yoga Studio",
-    service: "Yoga Class",
+    businessName: "Iconic Tattoo",
+    service: "Piercing",
     amountDue: "$25.00",
-    date: "2024-11-03",
+    date: "12/28/2024",
     time: "9:00 AM EST",
-    address: "1010 Sunrise Blvd, Detroit, MI"
-  },
-  {
-    id: 5,
-    businessName: "Coffee Shop",
-    service: "Coffee & Croissant",
-    amountDue: "$8.50",
-    date: "2024-11-05",
-    time: "8:30 AM EST",
-    address: "2222 Caffeine St, Kalamazoo, MI"
+    address: "38019 Park Blvd, Oakman, MI",
   },
 ];
 
 const initialHistory: AppointmentType[] = [
   {
     id: 1,
-    businessName: "Barbers R Us",
+    businessName: "Dave's Barbershop",
     service: "Haircut",
     amountDue: "$45.00",
-    date: "2024-10-24",
+    date: "11/24/2024",
     time: "4:00 PM EST",
-    address: "1234 Maple St, Lansing, MI"
-  }
+    address: "2391 Sunset Ln, Grove, MI",
+  },
 ];
 
 const Appointment = () => {
   const [appointments, setAppointments] = useState<AppointmentType[]>([]);
   const [history, setHistory] = useState<AppointmentType[]>(initialHistory);
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -87,8 +76,9 @@ const Appointment = () => {
           ...history,
           {
             ...cancelledAppointment,
-            cancelledOn: new Date().toISOString().split("T")[0]
-          }
+            id: cancelledAppointment.id * 1000 + Date.now(),
+            cancelledOn: new Date().toLocaleDateString("en-US"), // MM/DD/YYYY
+          },
         ]);
         setAppointments(appointments.filter((appointment) => appointment.id !== id));
       }
@@ -111,94 +101,52 @@ const Appointment = () => {
   };
 
   if (loading) return <p>Loading appointments...</p>;
-  if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="min-h-screen py-12 px-6">
-      <div className="max-w-6xl mx-auto bg-white p-10 rounded-md shadow-md border border-gray-900">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-6">Your Appointments</h1>
+    <div className="min-h-screen py-6 px-8 bg-gray">
+      <div className="max-w-full mx-auto bg-white p-8 rounded-md shadow-md border border-gray-200">
+        <h1 className="text-3xl font-extrabold text-black mb-8 text-center">
+          Appointments Overview
+        </h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div>
-            <h2 className="text-xl font-medium text-teal-600 mb-4">Upcoming Appointments</h2>
+            <h2 className="text-lg font-semibold text-[#d8ba7a] border-b border-gray-900 pb-2 mb-6">
+              Upcoming Appointments
+            </h2>
             {appointments.length > 0 ? (
               <div className="space-y-4">
                 {appointments.map((appointment) => (
-                  <div
+                  <AppointmentCard
                     key={appointment.id}
-                    className="relative flex items-start justify-between bg-gray-50 p-6 rounded-md shadow-sm border-2 border-black"
-                  >
-                    <div className="flex flex-col space-y-2 w-2/3">
-                      <h3 className="text-lg font-medium text-gray-900">{appointment.businessName}</h3>
-                      <p className="text-sm text-gray-700">{appointment.service}</p>
-                      <div className="flex items-center text-gray-700 text-sm">
-                        <FaCalendarAlt className="mr-2 text-xl text-gray-500" />
-                        <span>{appointment.date}, {appointment.time}</span>
-                      </div>
-                      <div className="flex items-center text-gray-700 text-sm">
-                        <FaDollarSign className="mr-2 text-xl text-gray-500" />
-                        <span>{appointment.amountDue}</span>
-                      </div>
-                      <div className="flex items-center text-gray-700 text-sm">
-                        <FaMapMarkerAlt className="mr-2 text-xl text-gray-500" />
-                        <span>{appointment.address}</span>
-                      </div>
-                    </div>
-
-                    <div className="absolute bottom-4 right-4 flex space-x-2">
-                      <button
-                        onClick={() => cancelAppointment(appointment.id)}
-                        className="bg-red-500 text-white py-1 px-4 rounded-md hover:bg-red-600 transition-all text-xs"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        onClick={() => viewDetails(appointment.id)}
-                        className="bg-teal-500 text-white py-1 px-4 rounded-md hover:bg-teal-600 transition-all text-xs"
-                      >
-                        Details
-                      </button>
-                    </div>
-                  </div>
+                    {...appointment}
+                    onCancel={cancelAppointment}
+                    onViewDetails={viewDetails}
+                  />
                 ))}
               </div>
             ) : (
-              <p className="text-center text-red-500">No appointments scheduled.</p>
+              <p className="text-center text-gray-500">No upcoming appointments.</p>
             )}
           </div>
-
+          
           <div>
-            <h2 className="text-xl font-medium text-teal-600 mb-4">Appointment History</h2>
+            <h2 className="text-lg font-semibold text-[#d8ba7a] border-b border-gray-900 pb-2 mb-6">
+              Appointment History
+            </h2>
             {history.length > 0 ? (
               <div className="space-y-4">
                 {history.map((appointment) => (
-                  <div
+                  <AppointmentCard
                     key={appointment.id}
-                    className="flex items-start bg-gray-50 p-6 rounded-md shadow-sm border-2 border-black"
-                  >
-                    <FaHistory className="mr-4 text-gray-500 text-3xl" />
-                    <div className="flex flex-col space-y-1 w-full">
-                      <h3 className="text-md font-medium text-gray-700">{appointment.businessName}</h3>
-                      <p className="text-sm text-gray-600">{appointment.service}</p>
-                      {appointment.cancelledOn ? (
-                        <span className="text-xs text-red-500 font-semibold">
-                          Cancelled on {appointment.cancelledOn}
-                        </span>
-                      ) : (
-                        <span className="text-xs text-gray-600">Completed on {appointment.date}</span>
-                      )}
-                      <button
-                        onClick={() => viewDetails(appointment.id)}
-                        className="bg-teal-500 text-white py-1 px-4 rounded-md hover:bg-teal-600 transition-all text-xs self-end mt-2"
-                      >
-                        Details
-                      </button>
-                    </div>
-                  </div>
+                    {...appointment}
+                    isHistory
+                    onViewDetails={viewDetails}
+                  />
                 ))}
               </div>
             ) : (
-              <p className="text-center text-gray-500">No history available.</p>
+              <p className="text-center text-gray-500">No past appointments available.</p>
             )}
           </div>
         </div>
