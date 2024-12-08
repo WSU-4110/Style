@@ -1,5 +1,3 @@
-'use client';
-import { useRouter } from 'next/navigation';
 import React from 'react';
 
 interface ClientCardProps {
@@ -33,7 +31,7 @@ const ClientCard: React.FC<ClientCardProps> = ({
                 <p
                     className={`mt-2 text-sm font-medium ${
                         status === 'Accepted'
-                            ? 'text-green-600'
+                            ? 'text-teal-600'
                             : status === 'Declined'
                             ? 'text-red-600'
                             : 'text-yellow-500'
@@ -47,7 +45,7 @@ const ClientCard: React.FC<ClientCardProps> = ({
             </div>
             <div className="absolute bottom-4 right-4 space-x-2">
                 <button
-                    className="px-3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600 transition text-sm"
+                    className="px-3 py-1 bg-teal-500 text-white rounded-md hover:bg-green-600 transition text-sm"
                     onClick={() => onAction(id, 'Accepted')}
                 >
                     Accept
