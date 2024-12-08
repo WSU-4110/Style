@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import HelpForm from './helpform';
 import Link from 'next/link';
 
@@ -27,17 +28,17 @@ const faqs: FAQItem[] = [
 ];
 
 const HelpPage = () => {
+    const [showForm, setShowForm] = useState(false);
     const router = useRouter();
 
     const handleNavigate = () => {
-        router.push('/helppage/helpform');
+        setShowForm(true);
     };
 
     return (
         <div className="min-h-screen bg-gray">
             <div className="max-w-screen-xl mx-auto p-12 bg-white shadow-lg rounded-lg"> 
                 <h1 className="text-4xl font-bold text-center mb-6">Help Page</h1>
-
                 <section className="faq-section mb-12">
                     <h2 className="text-2xl font-semibold mb-4">Frequently Asked Questions</h2>
                     <ul className="list-disc pl-5">
@@ -59,6 +60,8 @@ const HelpPage = () => {
               contact form
             </button>.
           </p>
+
+          {showForm && <HelpForm />}
                 </section>
             </div>   
         </div>
