@@ -35,7 +35,7 @@ const Sidebar = () => {
       >
         <nav className="flex flex-col justify-evenly h-full p-3">
           <ul className="space-y-8">
-            <li className="flex flex-col items-center gap-2 group">
+            <li className="flex flex-col items-center gap-2 group font-sans">
               <Image src={nailSalonLogo} alt="Nail Salon" className="w-8 h-8" />
               <button
                 className="text-white text-sm group-hover:text-teal-400"
@@ -44,7 +44,7 @@ const Sidebar = () => {
                 Nail Salon
               </button>
             </li>
-            <li className="flex flex-col items-center gap-2 group">
+            <li className="flex flex-col items-center gap-2 group font-sans">
               <Image src={hairLogo} alt="Hair Stylists" className="w-8 h-8" />
               <button
                 className="text-white text-sm group-hover:text-teal-400"
@@ -53,7 +53,7 @@ const Sidebar = () => {
                 Hair Stylists
               </button>
             </li>
-            <li className="flex flex-col items-center gap-2 group">
+            <li className="flex flex-col items-center gap-2 group font-sans">
               <Image src={tattooLogo} alt="Tattoo Artist" className="w-8 h-8" />
               <button
                 className="text-white text-sm group-hover:text-teal-400"
@@ -62,7 +62,7 @@ const Sidebar = () => {
                 Tattoo Artists
               </button>
             </li>
-            <li className="flex flex-col items-center gap-2 group">
+            <li className="flex flex-col items-center gap-2 group font-sans">
               <Image src={barberLogo} alt="Barber Shops" className="w-7 h-8" />
               <button
                 className="text-white text-sm group-hover:text-teal-400"
@@ -71,7 +71,7 @@ const Sidebar = () => {
                 Barber Shops
               </button>
             </li>
-            <li className="flex flex-col items-center gap-2 group">
+            <li className="flex flex-col items-center gap-2 group font-sans">
               <Image src={newLogo} alt="Under 6 Months" className="w-8 h-8" />
               <button
                 className="text-white text-sm group-hover:text-teal-400"
@@ -80,7 +80,7 @@ const Sidebar = () => {
                 Under 6 Months
               </button>
             </li>
-            <li className="flex flex-col items-center gap-2 group">
+            <li className="flex flex-col items-center gap-2 group font-sans">
               <Image src={heartLogo} alt="Favorites" className="w-10 h-9" />
               <button
                 className="text-white text-sm group-hover:text-teal-400"

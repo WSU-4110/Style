@@ -40,7 +40,7 @@ const SearchBar: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch })
       />
       <button
         type="submit"
-        className="bg-teal-500 text-white p-3 rounded-r-md hover:bg-teal-600 transition"
+        className="bg-[#7fd1db] text-white p-3 rounded-r-md hover:bg-teal-600 transition"
       >
         Search
       </button>
@@ -97,12 +97,12 @@ export default function Home() {
 
       {/* Category Section */}
       <div
-        className="relative w-full bg-white py-8 border border-black rounded-lg shadow-lg"
+        className="relative w-full bg-gray-100 py-8 border border-black rounded-lg shadow-lg"
         style={{ marginTop: '-50px' }} // Moves the container up to hide the border
       >
         <div className="max-w-screen-xl mx-auto px-4">
           <h2 className="text-3xl font-bold mb-6 text-gray-800">Recommended</h2>
-          <p className="text-lg text-gray-600 mb-8">
+          <p className="text-lg text-gray-700 mb-8">
             Explore businesses we've tailored for your interests.
           </p>
 
@@ -112,7 +112,7 @@ export default function Home() {
               businessName="Nail Palace"
               address="829 Maple St, Kansas City, KS"
               images={['https://www.greentoestucson.com/wp-content/uploads/2021/06/Nail-Salons-Tucson.jpeg']}
-              about="A relaxing nail salon."
+              about="A relaxing nail salon offering the best manicures and pedicures."
               services={['Manicure', 'Pedicure', 'Nail Art']}
               route="/nailsalon" // Route for card navigation
               onBookClick={(name) => router.push('/schedule')} // Update to router navigation
@@ -122,7 +122,7 @@ export default function Home() {
               businessName="Hairloft Salon"
               address="8192 Oakman St, Alemond, MI"
               images={['https://davidpressleyschool.com/wp-content/uploads/2023/08/bigstock-hairstylist-trimming-hair-of-t-438871286-1.jpg']}
-              about="A modern hair salon."
+              about="A modern hair salon specializing in creating stunning hairstyles for every occasion. Whether you are looking for a fresh cut, a bold new color, or expert styling for a special event, Hairloft Salon offers personalized services to bring out your best look."
               services={['Haircuts', 'Hair Treatments', 'Hair Coloring', 'Styling']}
               route="/hair"
               onBookClick={(name) => router.push('/schedule')}
@@ -130,7 +130,7 @@ export default function Home() {
 
             <Homepage_Card
               businessName="Iconic Tattoo"
-              address="38019 Park Blvd"
+              address="38019 Park Blvd, Oakman, MI"
               images={['https://media.timeout.com/images/105165480/750/562/image.jpg']}
               about="Tattoo artistry starts here."
               services={['Tattoo', 'Piercings']}
@@ -140,9 +140,9 @@ export default function Home() {
 
             <Homepage_Card
               businessName="Dave's Barber Shop"
-              address="2391 Sunset Ln"
+              address="2391 Sunset Ln, Grove, MI"
               images={['https://detroitbarbers.com/cdn/shop/t/4/assets/db-barbershop-page-corktown-gallery-a.jpg?v=2985141150787217361509093960']}
-              about="Straight shaves, straight styles."
+              about="A barbershop with a classic touch, offering precision haircuts, beard trims, and grooming services tailored to you. Relax in a welcoming space where style meets tradition."
               services={['Haircuts', 'Fade', 'Colorings']}
               route="/barber"
               onBookClick={(name) => router.push('/schedule')}

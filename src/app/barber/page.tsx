@@ -13,7 +13,7 @@ export default function BarberShops() {
       businessName: "Dave's Barbershop",
       address: '2391 Sunset Ln, Grove, MI',
       images: [
-        'https://barbercraftsd.com/wp-content/uploads/2022/09/pexels-photo-7697401-1-scaled.jpg',
+        'https://detroitbarbers.com/cdn/shop/t/4/assets/db-barbershop-page-corktown-gallery-a.jpg?v=2985141150787217361509093960',
       ],
       about:
         'A barbershop with a classic touch, offering precision haircuts, beard trims, and grooming services tailored to you. Relax in a welcoming space where style meets tradition.',
