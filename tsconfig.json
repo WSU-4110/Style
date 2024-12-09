@@ -19,6 +19,6 @@
       "@components": ["src/components"]
     }
   },
-  "include": ["src/**/*", "jest.setup.ts", "public/**/*", ".next/types/**/*.ts"], 
+  "include": ["src/**/*", "jest.setup.js", "public/**/*", ".next/types/**/*.js"], 
   "exclude": ["node_modules"]                             
 }

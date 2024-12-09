@@ -1,6 +1,6 @@
 module.exports = {
     testEnvironment: 'jsdom',
-    setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+    setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
     clearMocks: true,
   
     moduleNameMapper: {
@@ -24,9 +24,9 @@ module.exports = {
         lines: 80,
       },
     },
-  
+
     transform: {
-      '^.+\\.tsx?$': 'ts-jest',
+      '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest', // Use Babel to transform ESModules
     },
   };
   
