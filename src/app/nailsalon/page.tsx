@@ -3,7 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import Card from '../components/ui/card';
-import { NailSalonPageProps } from '../nailsalon/types'; 
+import { NailSalonPageProps } from './types';
 
 const NailSalonPage: React.FC<NailSalonPageProps> = ({ businesses }) => {
   const router = useRouter();
