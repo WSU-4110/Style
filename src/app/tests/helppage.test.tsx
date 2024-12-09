@@ -9,124 +9,124 @@ import axios from "axios";
 
 // ----------------------------------------------------------------- Nawal Worked On Help Page unit test ------------------------------------------------------------------
 
-// // using mock Next.js router to avoid errors in tests
-// jest.mock("next/navigation", () => ({
-//   useRouter: jest.fn(),
-// }));
+// using mock Next.js router to avoid errors in tests
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(),
+}));
 
-// describe("HelpPage Component", () => {
-//   beforeEach(() => {
-//     (useRouter as jest.Mock).mockReturnValue({
-//       push: jest.fn(), 
-//     });
-//   });
+describe("HelpPage Component", () => {
+  beforeEach(() => {
+    (useRouter as jest.Mock).mockReturnValue({
+      push: jest.fn(), 
+    });
+  });
 
-//   it("renders the page correctly", () => {
-//     render(<HelpPage />);
-//     expect(screen.getByText("Help Page")).toBeInTheDocument();
-//   });
+  it("renders the page correctly", () => {
+    render(<HelpPage />);
+    expect(screen.getByText("Help Page")).toBeInTheDocument();
+  });
 
-//   it("displays FAQ items correctly", () => {
-//     render(<HelpPage />);
-//     expect(screen.getByText("Help Page")).toBeInTheDocument();
-//     expect(screen.getByText("How do I change my profile?")).toBeInTheDocument();
-//     expect(
-//       screen.getByText(
-//         "To change your Profile Information, click on the Profile button at the top of the homepage."
-//       )
-//     ).toBeInTheDocument();
-//   });
+  it("displays FAQ items correctly", () => {
+    render(<HelpPage />);
+    expect(screen.getByText("Help Page")).toBeInTheDocument();
+    expect(screen.getByText("How do I change my profile?")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "To change your Profile Information, click on the Profile button at the top of the homepage."
+      )
+    ).toBeInTheDocument();
+  });
 
-//   it("displays contact support section correctly", () => {
-//     render(<HelpPage />);
-//     expect(screen.getByText("Contact Support")).toBeInTheDocument();
-//     expect(
-//       screen.getByText("If you need further assistance, please reach out to us:")
-//     ).toBeInTheDocument();
-//   });
+  it("displays contact support section correctly", () => {
+    render(<HelpPage />);
+    expect(screen.getByText("Contact Support")).toBeInTheDocument();
+    expect(
+      screen.getByText("If you need further assistance, please reach out to us:")
+    ).toBeInTheDocument();
+  });
 
-//   it("displays the contact form link correctly", () => {
-//     render(<HelpPage />);
-//     const emailLink = screen.getByText("styleislamitp@gmail.com");
-//     expect(emailLink).toBeInTheDocument();
-//     expect(emailLink).toHaveAttribute("href", "mailto:styleislamitp@gmail.com"); 
+  it("displays the contact form link correctly", () => {
+    render(<HelpPage />);
+    const emailLink = screen.getByText("styleislamitp@gmail.com");
+    expect(emailLink).toBeInTheDocument();
+    expect(emailLink).toHaveAttribute("href", "mailto:styleislamitp@gmail.com"); 
 
-//     const contactFormLink = screen.getByText("contact form");
-//     expect(contactFormLink).toBeInTheDocument();
-//     expect(contactFormLink).toHaveAttribute("href", "/contact");
-//   });
+    const contactFormLink = screen.getByText("contact form");
+    expect(contactFormLink).toBeInTheDocument();
+    expect(contactFormLink).toHaveAttribute("href", "/contact");
+  });
 
-//   it("displays FAQ answer correctly", () => {
-//     render(<HelpPage />);
-//     expect(
-//       screen.getByText(
-//         "You can contact support by emailing us at styleislamitp@gmail.com or by using the contact form below."
-//       )
-//     ).toBeInTheDocument();
-//   });
+  it("displays FAQ answer correctly", () => {
+    render(<HelpPage />);
+    expect(
+      screen.getByText(
+        "You can contact support by emailing us at styleislamitp@gmail.com or by using the contact form below."
+      )
+    ).toBeInTheDocument();
+  });
 
-//   it("displays correct support message", () => {
-//     render(<HelpPage />);
-//     expect(
-//       screen.getByText(/If you need further assistance, please reach out to us/i)
-//     ).toBeInTheDocument();
-//   });
-// });
+  it("displays correct support message", () => {
+    render(<HelpPage />);
+    expect(
+      screen.getByText(/If you need further assistance, please reach out to us/i)
+    ).toBeInTheDocument();
+  });
+});
 
 
 
 // ----------------------------------------------------------------- Ragad Worked On Nail Salon unit test ------------------------------------------------------------------
 
-// jest.mock('next/navigation', () => ({
-//   useRouter: jest.fn(),
-// }));
-// describe('NailSalonPage', () => {
-//   let mockPush: jest.Mock;
-//   beforeEach(() => {
-//     mockPush = jest.fn();
-//     (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
-//   });
-//   it('renders the title correctly', () => {
-//     render(<NailSalonPage />);
-//     expect(screen.getByText('Nail Salons')).toBeInTheDocument();
-//   });
-//   it('displays a business card with the correct details', () => {
-//     render(<NailSalonPage />);
-//     expect(screen.getByText('Nail Palace')).toBeInTheDocument();
-//     expect(screen.getByText('829 Maple St, Kansas City, KS')).toBeInTheDocument();
-//     expect(screen.getByAltText('Nail Palace image')).toBeInTheDocument();
-//     expect(screen.getByText('A relaxing nail salon offering the best manicures and pedicures.')).toBeInTheDocument();
-//     expect(screen.getByText('Manicure')).toBeInTheDocument();
-//     expect(screen.getByText('Pedicure')).toBeInTheDocument();
-//     expect(screen.getByText('Nail Art')).toBeInTheDocument();
-//     expect(screen.getByText('https://instagram.com/nailpalace')).toHaveAttribute('href', 'https://instagram.com/nailpalace');
-//   });
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
+describe('NailSalonPage', () => {
+  let mockPush: jest.Mock;
+  beforeEach(() => {
+    mockPush = jest.fn();
+    (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
+  });
+  it('renders the title correctly', () => {
+    render(<NailSalonPage />);
+    expect(screen.getByText('Nail Salons')).toBeInTheDocument();
+  });
+  it('displays a business card with the correct details', () => {
+    render(<NailSalonPage />);
+    expect(screen.getByText('Nail Palace')).toBeInTheDocument();
+    expect(screen.getByText('829 Maple St, Kansas City, KS')).toBeInTheDocument();
+    expect(screen.getByAltText('Nail Palace image')).toBeInTheDocument();
+    expect(screen.getByText('A relaxing nail salon offering the best manicures and pedicures.')).toBeInTheDocument();
+    expect(screen.getByText('Manicure')).toBeInTheDocument();
+    expect(screen.getByText('Pedicure')).toBeInTheDocument();
+    expect(screen.getByText('Nail Art')).toBeInTheDocument();
+    expect(screen.getByText('https://instagram.com/nailpalace')).toHaveAttribute('href', 'https://instagram.com/nailpalace');
+  });
   
-//   it('renders a fallback message if no businesses are available', () => {
-//     render(<NailSalonPage businesses={[]} />); 
-//     expect(screen.getByText('No businesses available. Please check back later!')).toBeInTheDocument();
-//   });
+  it('renders a fallback message if no businesses are available', () => {
+    render(<NailSalonPage businesses={[]} />); 
+    expect(screen.getByText('No businesses available. Please check back later!')).toBeInTheDocument();
+  });
   
   
-//   it('calls router.push when "Book" is clicked', () => {
-//     render(<NailSalonPage />);
-//     const bookButton = screen.getByText('Book');
-//     fireEvent.click(bookButton);
-//     expect(mockPush).toHaveBeenCalledWith('schedule');
-//   });
+  it('calls router.push when "Book" is clicked', () => {
+    render(<NailSalonPage />);
+    const bookButton = screen.getByText('Book');
+    fireEvent.click(bookButton);
+    expect(mockPush).toHaveBeenCalledWith('schedule');
+  });
   
-//   it('displays the correct number of businesses', () => {
-//     render(<NailSalonPage />);
-//     const businessCards = screen.getAllByText('Nail Palace');
-//     expect(businessCards).toHaveLength(1);
-//   });
-//   it('displays the social link correctly', () => {
-//     render(<NailSalonPage />);
-//     const socialLink = screen.getByText('https://instagram.com/nailpalace');
-//     expect(socialLink).toBeInTheDocument();
-//     expect(socialLink).toHaveAttribute('href', 'https://instagram.com/nailpalace');
-//   });
-// });
+  it('displays the correct number of businesses', () => {
+    render(<NailSalonPage />);
+    const businessCards = screen.getAllByText('Nail Palace');
+    expect(businessCards).toHaveLength(1);
+  });
+  it('displays the social link correctly', () => {
+    render(<NailSalonPage />);
+    const socialLink = screen.getByText('https://instagram.com/nailpalace');
+    expect(socialLink).toBeInTheDocument();
+    expect(socialLink).toHaveAttribute('href', 'https://instagram.com/nailpalace');
+  });
+});
 
 
 // ----------------------------------------------------------------- Endri Worked On Login Component ------------------------------------------------------------------
