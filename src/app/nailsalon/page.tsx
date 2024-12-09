@@ -1,11 +1,10 @@
+// src/app/nailsalon/page.tsx
 'use client';
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import Card from '../components/ui/card';
+import { NailSalonPageProps } from '../nailsalon/types'; // Adjust the path as necessary
 
-interface NailSalonPageProps {
-  businesses?: any[];
-}
 const NailSalonPage: React.FC<NailSalonPageProps> = ({ businesses }) => {
   const router = useRouter();
   const mockBusinesses = businesses ?? [
@@ -47,4 +46,5 @@ const NailSalonPage: React.FC<NailSalonPageProps> = ({ businesses }) => {
     </div>
   );
 };
+
 export default NailSalonPage;
