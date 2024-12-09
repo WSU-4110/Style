@@ -1,5 +1,4 @@
-// src/types.ts
+// src/nailsalon/types.ts
 export interface NailSalonPageProps {
-    businesses?: any[];
-  }
-  
+  businesses?: any[];
+}
