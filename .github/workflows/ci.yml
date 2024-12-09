@@ -9,7 +9,7 @@ on:
       - Nawal_unittest
 
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,5 +24,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build and test
-        run: npm run build-and-test
+      - name: Run tests
+        run: npm test
