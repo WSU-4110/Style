@@ -69,7 +69,7 @@ const Clients: React.FC = () => {
                 </div>
 
                 <div className="flex-1">
-                    <div className="space-y-4">
+                    <div className="space-y-4 mb-4">
                         {sortedBookings.map(booking => (
                             <ClientCard
                                 key={booking.id}
@@ -84,7 +84,7 @@ const Clients: React.FC = () => {
                     )}
                 </div>
 
-                <div className="w-1/4 bg-white p-6 border border-gray-300 rounded-md shadow-sm">
+                <div className="w-1/4 bg-white p-6 border border-gray-600 rounded-md shadow-sm mb-4">
                     <h3 className="text-2xl font-bold mb-4 text-black">Client Activity</h3>
                     <div className="text-gray-600 text-sm">
                         <p>Total Bookings: <span className="font-bold">{bookings.length}</span></p>

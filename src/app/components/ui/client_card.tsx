@@ -22,7 +22,7 @@ const ClientCard: React.FC<ClientCardProps> = ({
     onAction 
 }) => {
     return (
-        <div className="bg-white p-4 border border-gray-300 rounded-md shadow-sm flex justify-between items-center relative">
+        <div className="bg-white p-4 border border-gray-600 rounded-md shadow-sm flex justify-between items-center relative font-sans">
             <div>
                 <h3 className="text-lg font-bold">{clientName}</h3>
                 <p className="text-sm text-gray-600">Service: {service}</p>
@@ -40,18 +40,18 @@ const ClientCard: React.FC<ClientCardProps> = ({
                     Status: {status}
                 </p>
                 {actionDate && (
-                    <p className="text-sm text-gray-500">Action Date: {actionDate}</p>
+                    <p className="text-sm text-gray-700">Action Date: {actionDate}</p>
                 )}
             </div>
             <div className="absolute bottom-4 right-4 space-x-2">
                 <button
-                    className="px-3 py-1 bg-teal-500 text-white rounded-md hover:bg-green-600 transition text-sm"
+                    className="px-3 py-1 bg-[#7fd1db] text-white rounded-md hover:bg-teal-600 transition text-sm"
                     onClick={() => onAction(id, 'Accepted')}
                 >
                     Accept
                 </button>
                 <button
-                    className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition text-sm"
+                    className="px-3 py-1 bg-black text-white rounded-md hover:bg-gray-800 transition text-sm"
                     onClick={() => onAction(id, 'Declined')}
                 >
                     Decline

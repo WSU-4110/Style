@@ -11,7 +11,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ search, setSearch }) => {
             <input
                 type="text"
                 placeholder="Search..."
-                className="w-full p-3 rounded-md border border-gray-300 shadow-sm"
+                className="w-full p-3 rounded-md border border-gray-600 shadow-sm"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
             />
