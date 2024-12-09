@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-google-maps/api": "^2.20.3",
+    "@types/nodemailer": "^6.4.17",
     "axios": "^1.7.8",
     "dotenv": "^16.4.5",
     "firebase": "^11.0.2",

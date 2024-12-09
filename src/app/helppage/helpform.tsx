@@ -1,5 +1,4 @@
-'use client';
-
+// HelpForm.tsx
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -27,74 +26,83 @@ const HelpForm: React.FC = () => {
     });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('Form submitted:', formValues);
-    setSubmitted(true);
-    router.push('/help');
+    try {
+      const res = await fetch('/api/help-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formValues),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+        setTimeout(() => {
+          router.push('/helppage');
+        }, 2000);
+      } else {
+        console.error('Failed to send message');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-12">
-      <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Help Form</h1>
+    <div className="max-w-md mx-auto border border-gray-600 bg-white p-6 rounded-lg shadow-md mt-12">
+      <h1 className="text-2xl font-semibold text-gray-900 text-center mb-4 font-sans">Help Form</h1>
       {!submitted ? (
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="name" className="block text-lg font-medium text-gray-700 mb-2">
-              Name
-            </label>
+            <label htmlFor="name" className="block text-lg font-medium text-gray-800">Name</label>
             <input
               type="text"
               id="name"
               name="name"
               value={formValues.name}
               onChange={handleChange}
+              className="w-full p-2 mt-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#85b5b7]"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-lg font-medium text-gray-700 mb-2">
-              Email
-            </label>
+            <label htmlFor="email" className="block text-lg font-medium text-gray-800">Email</label>
             <input
               type="email"
               id="email"
               name="email"
               value={formValues.email}
               onChange={handleChange}
+              className="w-full p-2.5 mt-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#85b5b7]"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
 
           <div>
-            <label htmlFor="message" className="block text-lg font-medium text-gray-700 mb-2">
-              Message
-            </label>
+            <label htmlFor="message" className="block text-lg font-medium text-gray-800">Message</label>
             <textarea
               id="message"
               name="message"
               value={formValues.message}
               onChange={handleChange}
+              className="w-full p-2.5 mt-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#85b5b7]"
+              rows={3}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-              rows={5}
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="w-full py-2 mt-4 text-white bg-[#7fd1db] rounded-md hover:bg-[#63b0b3] transition-colors"
           >
             Submit
           </button>
         </form>
       ) : (
-        <div className="text-center">
-          <p className="text-xl text-teal-600 font-medium">Thanks for reaching out! We will get back to you soon.</p>
-        </div>
+        <p className="text-center text-lg text-gray-700">Thank you for reaching out to Style! We will get back to you soon.</p>
       )}
     </div>
   );
