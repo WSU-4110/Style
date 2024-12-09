@@ -7,7 +7,7 @@ interface FilterProps {
     setSortOption: React.Dispatch<React.SetStateAction<'name' | 'date'>>;
     isFilterOpen: boolean;
     setIsFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    resetFilters: () => void; 
+    resetFilters: () => void;
 }
 
 const Filter: React.FC<FilterProps> = ({
@@ -20,12 +20,12 @@ const Filter: React.FC<FilterProps> = ({
     resetFilters
 }) => {
     return (
-        <div className="bg-white p-4 border border-gray-300 rounded-md shadow-sm relative">
+        <div className="bg-white p-4 border border-gray-600 rounded-md shadow-sm relative">
             <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-medium text-black">Filters</h3>
                 <button
                     onClick={() => setIsFilterOpen((prev) => !prev)}
-                    className="text-teal-500 text-sm hover:text-teal-700 focus:outline-none"
+                    className="text-[#7fd1db] text-sm hover:text-[#47aab7] focus:outline-none"
                 >
                     {isFilterOpen ? 'Close' : 'Open'}
                 </button>
@@ -43,7 +43,7 @@ const Filter: React.FC<FilterProps> = ({
                                     value="All"
                                     checked={statusFilter === 'All'}
                                     onChange={() => setStatusFilter('All')}
-                                    className="mr-2"
+                                    className="mr-2 appearance-none w-4 h-4 border border-gray-300 rounded-full bg-white checked:bg-[#7fd1db] checked:border-[#7fd1db] cursor-pointer"
                                 />
                                 <span className="text-xs text-gray-700">All</span>
                             </label>
@@ -56,7 +56,7 @@ const Filter: React.FC<FilterProps> = ({
                                     value="Pending"
                                     checked={statusFilter === 'Pending'}
                                     onChange={() => setStatusFilter('Pending')}
-                                    className="mr-2"
+                                    className="mr-2 appearance-none w-4 h-4 border border-gray-300 rounded-full bg-white checked:bg-[#7fd1db] checked:border-[#7fd1db] cursor-pointer"
                                 />
                                 <span className="text-xs text-gray-700">Pending</span>
                             </label>
@@ -69,7 +69,7 @@ const Filter: React.FC<FilterProps> = ({
                                     value="Accepted"
                                     checked={statusFilter === 'Accepted'}
                                     onChange={() => setStatusFilter('Accepted')}
-                                    className="mr-2"
+                                    className="mr-2 appearance-none w-4 h-4 border border-gray-300 rounded-full bg-white checked:bg-[#7fd1db] checked:border-[#7fd1db] cursor-pointer"
                                 />
                                 <span className="text-xs text-gray-700">Accepted</span>
                             </label>
@@ -82,7 +82,7 @@ const Filter: React.FC<FilterProps> = ({
                                     value="Declined"
                                     checked={statusFilter === 'Declined'}
                                     onChange={() => setStatusFilter('Declined')}
-                                    className="mr-2"
+                                    className="mr-2 appearance-none w-4 h-4 border border-gray-300 rounded-full bg-white checked:bg-[#7fd1db] checked:border-[#7fd1db] cursor-pointer"
                                 />
                                 <span className="text-xs text-gray-700">Declined</span>
                             </label>
@@ -99,7 +99,7 @@ const Filter: React.FC<FilterProps> = ({
                                     value="name"
                                     checked={sortOption === 'name'}
                                     onChange={() => setSortOption('name')}
-                                    className="mr-2"
+                                    className="mr-2 appearance-none w-4 h-4 border border-gray-300 rounded-full bg-white checked:bg-[#7fd1db] checked:border-[#7fd1db] cursor-pointer"
                                 />
                                 <span className="text-xs text-gray-700">Name</span>
                             </label>
@@ -112,7 +112,7 @@ const Filter: React.FC<FilterProps> = ({
                                     value="date"
                                     checked={sortOption === 'date'}
                                     onChange={() => setSortOption('date')}
-                                    className="mr-2"
+                                    className="mr-2 appearance-none w-4 h-4 border border-gray-300 rounded-full bg-white checked:bg-[#7fd1db] checked:border-[#7fd1db] cursor-pointer"
                                 />
                                 <span className="text-xs text-gray-700">Date</span>
                             </label>

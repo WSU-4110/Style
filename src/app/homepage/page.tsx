@@ -76,7 +76,6 @@ export default function Home() {
 
   return (
     <div className="relative w-full">
-      {/* Full-Width Background Section with Shadow */}
       <AutoRefreshPage />
       <div
         className="relative w-full h-[70vh] bg-cover bg-center flex flex-col justify-center items-center text-white"
@@ -95,10 +94,9 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Category Section */}
       <div
         className="relative w-full bg-gray-100 py-8 border border-black rounded-lg shadow-lg"
-        style={{ marginTop: '-50px' }} // Moves the container up to hide the border
+        style={{ marginTop: '-50px' }} 
       >
         <div className="max-w-screen-xl mx-auto px-4">
           <h2 className="text-3xl font-bold mb-6 text-gray-800">Recommended</h2>
@@ -106,7 +104,6 @@ export default function Home() {
             Explore businesses we've tailored for your interests.
           </p>
 
-          {/* Cards Section */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           <Homepage_Card
               businessName="Nail Palace"
@@ -114,8 +111,8 @@ export default function Home() {
               images={['https://www.greentoestucson.com/wp-content/uploads/2021/06/Nail-Salons-Tucson.jpeg']}
               about="A relaxing nail salon offering the best manicures and pedicures."
               services={['Manicure', 'Pedicure', 'Nail Art']}
-              route="/nailsalon" // Route for card navigation
-              onBookClick={(name) => router.push('/schedule')} // Update to router navigation
+              route="/nailsalon" 
+              onBookClick={(name) => router.push('/schedule')}
               />
 
             <Homepage_Card
@@ -151,7 +148,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Sidebar and Search Results */}
       <Sidebar />
       <main className="flex-1 p-8 ml-64">
         {searchResults.length > 0 && (
