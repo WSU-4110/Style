@@ -4,7 +4,7 @@
  * Note: This file contains tests for Login, Calendar, and HelpPage components.
  */
 
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Login from "../login/page";
 // import HelpPage from "../helppage/page";
 // import CalendarPage from '../schedule/page';  
