@@ -1,21 +1,23 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Login from "../login/page";
 import HelpPage from "../helppage/page";
 import CalendarPage from '../schedule/page';  
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import '@testing-library/jest-dom';
 import { describe } from "node:test";
 
-// ----------------------------------------------------------------- Endri Worked On Login Component ------------------------------------------------------------------
 
+// ----------------------------------------------------------------- Endri Worked On Login Component ------------------------------------------------------------------
 
 import React from 'react';
 
 jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+  })),
 }));
+
 
 jest.mock('axios');
 
@@ -131,67 +133,69 @@ describe('Login Component', () => {
 // ----------------------------------------------------------------- Sapana Worked on Calendar unit test ------------------------------------------------------------------
 
 
-describe('CalendarPage', () => {
-  let mockPush;
 
+describe('CalendarPage', () => {
   beforeEach(() => {
-    mockPush = jest.fn();
-    useRouter.mockReturnValue({ push: mockPush });
+    jest.clearAllMocks();
   });
 
+  const renderWithRouter = () => render(<CalendarPage />);
+
   it('renders the title correctly', () => {
-    render(CalendarPage());
+    renderWithRouter();
     expect(screen.getByText('Schedule Your Appointment')).toBeInTheDocument();
   });
 
   it('displays the month selector correctly', () => {
-    render(CalendarPage());
+    renderWithRouter();
     const monthSelect = screen.getByLabelText('Select a Month');
     expect(monthSelect).toBeInTheDocument();
-    expect(monthSelect).toHaveValue('October 2024');
+    expect(monthSelect).toHaveValue('October 2024'); // Adjust to your component's default
   });
 
   it('displays calendar dates for the selected month', () => {
-    render(CalendarPage());
+    renderWithRouter();
     const dates = screen.getAllByRole('button', { name: /\d+/ });
-    expect(dates).toHaveLength(31);
+    expect(dates).toHaveLength(31); // Example: Adjust based on your component logic
   });
 
-  it('allows the user to select a date', () => {
-    render(CalendarPage());
+  it('allows the user to select a date', async () => {
+    renderWithRouter();
     const dateButton = screen.getByLabelText('Select 2024-10-01');
     fireEvent.click(dateButton);
-    expect(dateButton).toHaveClass('bg-teal-600');
+  
+    await waitFor(() => expect(dateButton).toHaveClass('bg-teal-600')); // Example: Adjust based on your component's styles
   });
 
   it('renders the period selection after a date is selected', async () => {
-    render(CalendarPage());
-
+    renderWithRouter();
     const dateButton = screen.getByRole('button', { name: 'Select 2024-10-01' });
     fireEvent.click(dateButton);
 
-    const periodButtons = await screen.findAllByRole('button', { name: /Morning|Afternoon|Evening/ });
+    const periodButtons = await screen.findAllByRole('button', {
+      name: /Morning|Afternoon|Evening/,
+    });
 
     expect(periodButtons.length).toBe(3);
   });
 
   it('confirms the appointment correctly', async () => {
-    render(CalendarPage());
-
+    renderWithRouter();
+  
     const dateButton = screen.getAllByRole('button')[0];
     fireEvent.click(dateButton);
-
+  
     const periodButton = screen.getByText('Morning');
     fireEvent.click(periodButton);
-
+  
     await waitFor(() => {
       const timeButton = screen.getByText(/9:00 AM/i);
       fireEvent.click(timeButton);
     });
-
+  
     const confirmButton = screen.getByRole('button', { name: /Confirm/i });
     fireEvent.click(confirmButton);
-
+  
     await waitFor(() => {
       expect(screen.getByText(/Appointment confirmed/)).toBeInTheDocument();
     });
@@ -234,7 +238,9 @@ describe('HelpPage Component', () => {
 
   it('displays FAQ answer correctly', () => {
     render(HelpPage());
-    expect(screen.getByText('To change your Profile Information...')).toBeInTheDocument();
+    expect(
+      screen.getByText('To change your Profile Information, click on the Profile button at the top of the homepage.')
+    ).toBeInTheDocument();
   });
 
   it('displays the correct support message', () => {
@@ -245,3 +251,4 @@ describe('HelpPage Component', () => {
 
 
 // ----------------------------------------------------- Ragad Worked On Nail Salon ----------------------------------------------------------------------
+
