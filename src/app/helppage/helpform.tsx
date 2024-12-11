@@ -1,22 +1,34 @@
-// HelpForm.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { auth } from '../firebase'; 
 
 interface HelpFormValues {
   name: string;
   email: string;
-  message: string;
+  issue: string;
 }
 
 const HelpForm: React.FC = () => {
   const [formValues, setFormValues] = useState<HelpFormValues>({
     name: '',
     email: '',
-    message: '',
+    issue: '',
   });
-
   const [submitted, setSubmitted] = useState(false);
   const router = useRouter();
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setFormValues((prevValues) => ({
+          ...prevValues,
+          email: user.email || '',
+          name: user.displayName || '',
+        }));
+      }
+    });
+
+    return () => unsubscribe(); 
+  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -82,11 +94,11 @@ const HelpForm: React.FC = () => {
           </div>
 
           <div>
-            <label htmlFor="message" className="block text-lg font-medium text-gray-800">Message</label>
+            <label htmlFor="issue" className="block text-lg font-medium text-gray-800">Describe the issue</label>
             <textarea
-              id="message"
-              name="message"
-              value={formValues.message}
+              id="issue"
+              name="issue"
+              value={formValues.issue}
               onChange={handleChange}
               className="w-full p-2.5 mt-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#85b5b7]"
               rows={3}

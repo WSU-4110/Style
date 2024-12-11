@@ -26,7 +26,7 @@ const Homepage_Card: React.FC<CardProps> = ({
   const router = useRouter();
   const [showReportModal, setShowReportModal] = useState(false);
   const [reportReason, setReportReason] = useState('');
-  const [showReportSubmitted, setShowReportSubmitted] = useState(false); // State for the "Report Submitted" popup
+  const [showReportSubmitted, setShowReportSubmitted] = useState(false); 
 
   const handleCardClick = () => {
     if (!showReportModal && route) {
@@ -35,8 +35,8 @@ const Homepage_Card: React.FC<CardProps> = ({
   };
 
   const handleBookClick = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    onBookClick(businessName);
+    event.stopPropagation(); 
+    router.push('/schedule'); 
   };
 
   const handleReportClick = (event: React.MouseEvent) => {
