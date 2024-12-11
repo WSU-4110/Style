@@ -223,7 +223,7 @@ export default function UserProfile() {
       <div className="flex justify-end mt-8">
         <button
           onClick={handleDeleteProfile}
-          className="mt-8 bg-black text-white px-4 py-2 rounded-lg shadow hover:bg-red-600"
+          className="mt-8 bg-[#212424] text-white px-4 py-2 rounded-lg shadow hover:bg-black"
         >
           Delete Profile
         </button>
