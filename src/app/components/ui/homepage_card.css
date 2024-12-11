@@ -81,6 +81,10 @@ li {
     color: #444;
     margin-bottom: 4px;
   }
+
+  .services {
+    margin-bottom: 30px; 
+  }
   
 .book-button {
     position: absolute; 
@@ -100,4 +104,147 @@ li {
 .book-button:hover {
     background-color: #2593c7;
   }
+
+.bottom-buttons {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    gap: 15px; 
+  }
   
+  
+.icon-button img {
+    width: 24px; 
+    height: 24px;
+    object-fit: contain;
+  }
+  
+.icon-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+.icon-button:hover img {
+    transform: scale(1.1); 
+    transition: transform 0.2s;
+  }
+  
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: relative; 
+    height: 80%; 
+    max-height: 250px; 
+  }
+  
+textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 14px;
+    resize: none;
+    flex-grow: 1; 
+    margin-bottom: 10px; 
+  }
+  
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+.submit-button,
+.cancel-button {
+    padding: 5px 10px; 
+    font-size: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+.submit-button {
+    background-color: #7fd1db;
+    color: white;
+  }
+  
+.cancel-button {
+    background-color: #000000;
+    color: white;
+  }
+  
+.button {
+    padding: 5px 10px;
+    font-size: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+.button:hover {
+    opacity: 0.9;
+  }
+  
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000; 
+  width: 80%;
+  max-width: 300px;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+.popup-content h4 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 10px;
+}
+
+.popup-content p {
+  font-size: 14px;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
