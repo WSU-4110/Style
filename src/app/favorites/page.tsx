@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
+//import axios from 'axios';
 import Image from 'next/image';
 import Sidebar from '../components/Sidebar';
 
@@ -16,7 +16,7 @@ export default function FavoritesPage() {
   const router = useRouter();
   const [favorites, setFavorites] = useState<Favorite[]>([]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchFavorites = async () => {
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/favorites/');
@@ -28,6 +28,7 @@ export default function FavoritesPage() {
 
     fetchFavorites();
   }, []);
+  */
 
   return (
     <div className="min-h-screen flex flex-col bg-white-100">

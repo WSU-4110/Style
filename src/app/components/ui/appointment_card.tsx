@@ -31,9 +31,9 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
   return (
     <div className="bg-white p-6 rounded-lg shadow-md border border-gray-500">
       <h3 className="text-lg font-medium text-gray-800">{businessName}</h3>
-      <p className="text-sm text-gray-600">{service}</p>
+      <p className="text-sm text-gray-700">{service}</p>
 
-      <div className="mt-2 text-gray-600">
+      <div className="mt-2 text-gray-700">
         <div className="flex items-center space-x-2">
           <FaCalendarAlt className="text-[#d8ba7a]" />
           <span>{date}, {time}</span>
@@ -56,14 +56,14 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
         {!isHistory && onCancel && (
           <button
             onClick={() => onCancel(id)}
-            className="px-3 py-1 text-sm font-medium text-red-500 border border-red-500 rounded-md hover:bg-red-500 hover:text-white"
+            className="px-2 py-1 text-sm font-medium text-white bg-red-500 border border-red-500 rounded-md hover:bg-red-600"
           >
             Cancel
           </button>
         )}
         <button
           onClick={() => onViewDetails(id)}
-          className="px-3 py-1 text-sm font-medium text-[#d8ba7a] border border-[#d8ba7a] rounded-md hover:bg-[#d8ba7a] hover:text-white"
+          className="px-2 py-1 text-sm font-medium text-white bg-[#d8ba7a] border border-[#d8ba7a] rounded-md hover:bg-[#d8ba7a] hover:text-white"
         >
           Details
         </button>
